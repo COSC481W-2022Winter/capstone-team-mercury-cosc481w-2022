@@ -2,29 +2,29 @@
 
 
 
-## The Amsing Project
+## The Amasing Project
 [description goes here]
 
 
 
 ## Our Team
-### Name
+### Griffin Collingridge
 [description goes here]
 
-### Name
+### Olga Kochepasova
 [description goes here]
 
-### Name
+### Fatema Chandoo
 [description goes here]
 
-### Name
+### Joseph Cognata
 [description goes here]
 
-### Name
+### Kanza Mateen
 [description goes here]
 
-### Name
+### Mitchell S
 [description goes here]
 
-### Name
+### Willian Rathbun
 [description goes here]
