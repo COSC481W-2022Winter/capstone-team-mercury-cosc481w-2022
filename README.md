@@ -2,14 +2,16 @@
 
 
 
-## The Amasing Project
+## The Amazing Project
 [description goes here]
 
 
 
 ## Our Team
 ### Griffin Collingridge
-[description goes here]
+I am Griffin, 25 year Computer Science student at EMU in my senior year and the team leader for this project. I am aspiring to be a Software Engineer for a career.
+I would like to get a remote job, so I could move and live upstate. I work part time as a server at a brew pub in my hometown of Saline (the best city in Washtenaw County).
+In my spare time I play the piano.
 
 ### Olga Kochepasova
 [description goes here]
