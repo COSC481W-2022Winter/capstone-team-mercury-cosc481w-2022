@@ -16,7 +16,7 @@ In my spare time I play the piano.
 [description goes here]
 
 ### Fatema Chandoo
-[description goes here]
+Hello I am Fatema Chandoo and I am a Computer Science Student at EMu and I am in my senior year. i woould like to work in an IT firm because I have always liked solving problem. I would love to travel the world.
 
 ### Joseph Cognata
 [description goes here]
