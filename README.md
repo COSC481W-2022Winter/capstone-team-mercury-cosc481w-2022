@@ -19,7 +19,7 @@ In my spare time I play the piano.
 Hello I am Fatema Chandoo and I am a Computer Science Student at EMU and I am in my senior year. i woould like to work in an IT firm because I have always liked solving problem. I would love to travel the world.
 
 ### Joseph Cognata
-[description goes here]
+Hello, My name is Joseph Cognata. I am 20 years old and this is my 2nd year at EMU studying in the computer science major. I hope to graduate by the end of the 2022 year! I am inquisitive, energetic, and ready to work in the field. My vision is to leverage my development skills and get a well paying remote job.
 
 ### Kanza Mateen
 [description goes here]
