@@ -16,7 +16,7 @@ In my spare time I play the piano.
 [description goes here]
 
 ### Fatema Chandoo
-Hello I am Fatema Chandoo and I am a Computer Science Student at EMu and I am in my senior year. i woould like to work in an IT firm because I have always liked solving problem. I would love to travel the world.
+Hello I am Fatema Chandoo and I am a Computer Science Student at EMU and I am in my senior year. i woould like to work in an IT firm because I have always liked solving problem. I would love to travel the world.
 
 ### Joseph Cognata
 [description goes here]
@@ -28,4 +28,4 @@ Hello I am Fatema Chandoo and I am a Computer Science Student at EMu and I am in
 [description goes here]
 
 ### Willian Rathbun
-[description goes here]
+My name is William Rathbun. I'm a 21 year old computer science major and full time student in my senior year at EMU. In my free time I like to play video games and travel.
