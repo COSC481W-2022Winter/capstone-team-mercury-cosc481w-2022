@@ -2,10 +2,9 @@
 
 
 
-## The Amazing Project
-[description goes here]
-
-
+## Cutest Paw
+Pet social media website. Create profile for your pet and upload an avatar, images, status updates, bio and likes and dislikes. Add other friends on the pet social media
+and comment on their activities.
 
 ## Our Team
 ### Griffin Collingridge
