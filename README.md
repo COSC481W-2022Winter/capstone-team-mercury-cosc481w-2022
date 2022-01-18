@@ -25,7 +25,7 @@ Hello I am Fatema Chandoo and I am a Computer Science Student at EMU and I am in
 [description goes here]
 
 ### Mitchell S
-[description goes here]
+My name is Mitchell Smith and I'm 21 years old. This is my fourth year at EMU studying computer science applied. I'm hopefully going to graduate after the upcoming summer semester. My goal after my time at EMU is to find a job nearby or remote related to my feild of study.
 
 ### Willian Rathbun
 My name is William Rathbun. I'm a 21 year old computer science major and full time student in my senior year at EMU. In my free time I like to play video games and travel.
