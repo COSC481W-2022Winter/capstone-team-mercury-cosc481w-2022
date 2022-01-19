@@ -21,10 +21,11 @@ Hello I am Fatema Chandoo and I am a Computer Science Student at EMU and I am in
 Hello, My name is Joseph Cognata. I am 20 years old and this is my 2nd year at EMU studying in the computer science major. I hope to graduate by the end of the 2022 year! I am inquisitive, energetic, and ready to work in the field. My vision is to leverage my development skills and get a well paying remote job.
 
 ### Kanza Mateen
-[description goes here]
+Hi, my name is Kanza, I am 25 years old. My major is computer science, its my lest second to last semester. In my free time I like to draw, I enjoy music, travelling and working out. I hope to learn something new this semester as well as getting to work with the team. 
 
 ### Mitchell Smith
 My name is Mitchell Smith and I'm 21 years old. This is my fourth year at EMU studying computer science applied. I'm hopefully going to graduate after the upcoming summer semester. My goal after my time at EMU is to find a job nearby or remote related to my feild of study.
 
 ### Willian Rathbun
 My name is William Rathbun. I'm a 21 year old computer science major and full time student in my senior year at EMU. In my free time I like to play video games and travel.
+
