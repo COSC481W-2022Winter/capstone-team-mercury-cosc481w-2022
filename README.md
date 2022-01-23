@@ -29,3 +29,5 @@ My name is Mitchell Smith and I'm 21 years old. This is my fourth year at EMU st
 ### Willian Rathbun
 My name is William Rathbun. I'm a 21 year old computer science major and full time student in my senior year at EMU. In my free time I like to play video games and travel.
 
+### Matt Ley
+My name is Matt Ley. I am a computer science major at Eastern Michigan University. In my free time I tend to either play video games and build/paint miniatures.
