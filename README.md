@@ -31,3 +31,6 @@ My name is William Rathbun. I'm a 21 year old computer science major and full ti
 
 ### Matt Ley
 My name is Matt Ley. I am a computer science major at Eastern Michigan University. In my free time I tend to either play video games and build/paint miniatures.
+
+### Sean Mick
+Hey, my name is Sean Mick. I'm currently a senior at Eastern Michigan University studying computer science with a communication minor. If I'm not focusing on my studies, I'm probably reading, playing video games, or painting.
