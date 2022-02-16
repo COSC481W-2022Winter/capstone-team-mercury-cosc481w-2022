@@ -17,6 +17,8 @@ app.use(cors());
 // API
 const testAPI = require('./api/testAPI');
 app.use('/api/testAPI', testAPI);
+const postAPI = require('./api/postAPI');
+app.use('/api/postAPI', postAPI);
 //-----
 app.use(express.static(path.join(__dirname, '../build')))
 app.get('*', (req, res) => {
