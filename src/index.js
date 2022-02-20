@@ -2,14 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import TicTacToe from './tictac';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-   <TicTacToe />
-   <App />
-	
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
