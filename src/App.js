@@ -5,7 +5,7 @@ import Home from './components/Home';
 import About from './components/About';
 import Contact from './components/Contact';
 import Error from './components/Error';
-import Tic from './components/tictac';
+import Feed from './pages/Feed';
 import Navigation from './components/Navigation';
  
 class App extends Component {
@@ -13,16 +13,14 @@ class App extends Component {
     return (      
        <BrowserRouter>
         <div>
-          <Home />
-          <Tic />
           <Navigation />
             <Routes>
-    
              <Route path="/" element={<Home />} exact/>
              <Route path="/about" element={<About />}/>
              <Route path="/contact" element={<Contact />}/>
-            <Route element={<Error />}/>
+             <Route element={<Error />}/>
            </Routes>
+		   <Feed />
         </div> 
       </BrowserRouter>
     );

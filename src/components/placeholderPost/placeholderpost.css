@@ -1,0 +1,13 @@
+.post {
+    display: block;
+	width: 70%;
+	margin: auto;
+	border: 2px ridge #999;
+	padding: 10px;
+	text-align:left;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
