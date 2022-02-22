@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
  
 import PlaceholderPost from '../components/placeholderPost/placeholderPost';
+import '../components/placeholderPost/placeholderpost.css'
 
 class feed extends Component {
 	
@@ -34,20 +35,18 @@ class feed extends Component {
 	displayPosts = (posts) => {
 		//if there are no posts
 		if (!posts.length) return null;
-		
-		posts.map((post, index) => (
-			<div className = "post" key = {index}>
-				<h4>{post.postedBy}</h4>
-				<p><small>{post.time}</small></p>
-				<p>{post.content}</p>
-			</div>
-		))
-	}
+		return posts.map((post, index) => (
+				<div className = "post" key = {index}>
+					<h4>{post.postedBy}</h4>
+					<p><small>{post.time}</small></p>
+					<p>{post.content}</p>
+				</div>
+			));
+		}
 	
 	//rendering
 	render() {
 		return (  
-
 				<div>
 					{this.displayPosts(this.state.posts)}
 					<PlaceholderPost />

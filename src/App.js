@@ -5,7 +5,7 @@ import Home from './components/Home';
 import About from './components/About';
 import Contact from './components/Contact';
 import Error from './components/Error';
-import Feed from './pages/Feed';
+import Feed from './pages/Feed.js';
 import Navigation from './components/Navigation';
  
 class App extends Component {
@@ -20,7 +20,7 @@ class App extends Component {
              <Route path="/contact" element={<Contact />}/>
              <Route element={<Error />}/>
            </Routes>
-		   <Feed />
+		      <Feed />
         </div> 
       </BrowserRouter>
     );
