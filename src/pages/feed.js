@@ -39,7 +39,7 @@ class feed extends Component {
 			<div className = "post" key = {index}>
 				<h4>{post.postedBy}</h4>
 				<p><small>{post.time}</small></p>
-				<p className='postContents'>{post.content}</p>
+				<p>{post.content}</p>
 			</div>
 		))
 	}

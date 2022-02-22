@@ -7,23 +7,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
-.post {
-	width: 70%;
-	margin: auto;
-	border: 2px ridge #999;
-	padding: 10px;
-	text-align:left;
-}
-
-.placeholder {
-	width: 60%;
-	margin: auto;
-	border: 2px ridge #999;
-	padding: 10px;
-	text-align:center;
-}
-
-.postContents {
-	padding-left: 10px;
-}
