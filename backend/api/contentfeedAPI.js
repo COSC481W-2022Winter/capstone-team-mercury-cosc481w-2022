@@ -8,8 +8,9 @@ var bodyParser = require('body-parser');
 const Post = require('../models/post');
 
 router.use(bodyParser.urlencoded({ extended: true }));
+console.log("content Feed invoked");
 
-router.get("/getAllPost", function(req, res) {	
+router.post("/getAllPosts", function(req, res) {	
     let postString = '';
     
     Post.find()
@@ -22,3 +23,5 @@ router.get("/getAllPost", function(req, res) {
     });
 
 });
+
+module.exports = router;
