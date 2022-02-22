@@ -23,6 +23,7 @@ router.post("/checkUser", function(req, res) {
             });
         
 
+// Get the bio for the user (Placeholder for now)
 router.post("/checkUser", function(req, res) {
     const user = req.body.username;
     console.log("Checking for user w/ username: " +user);
