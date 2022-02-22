@@ -76,9 +76,12 @@ class Board extends React.Component {
 	var status;
 	if(winner) {
 		status = 'Winner: ' +winner;
-		submitGame = (<form action="/api/testAPI/send" method="POST">
+		submitGame = (<form action="/api/postAPI/newPost" method="POST">
 		<h3>Submit Game</h3>
 		<input type="hidden" id="game" name="game" value={calculateWinner(this.state.squares) + "," +this.state.squares}></input>
+    <input type="hidden" id="username" name="username" value={"Wolf"}></input>
+    <input type="hidden" id="content" name="content" value={"Hello cutestPaw world!"}></input>
+    <input type="hidden" id="attachments" name="attachments" value={""}></input>
 		<button type ="submit">Submit</button>
 		</form>);
 	}
@@ -88,6 +91,7 @@ class Board extends React.Component {
 	//renders the board as a set of 3x3 squares and a next player text
     return ( 
       <div>
+        <a href="test2nd.html">Go to 2</a>
         <div className="status">{status}</div>
 		<div className="status">{submitGame}</div>
         <div className="board-row">
