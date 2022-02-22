@@ -13,7 +13,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 
 //Get the username to return to the frontend
 
-router.post("/checkUser", function(req, res) {
+router.post("/getUsername", function(req, res) {
     const user = req.body.username;
     console.log("Checking for user w/ username: " +user);
     
@@ -24,7 +24,7 @@ router.post("/checkUser", function(req, res) {
         
 
 // Get the bio for the user (Placeholder for now)
-router.post("/checkUser", function(req, res) {
+router.post("/getBio", function(req, res) {
     const user = req.body.username;
     console.log("Checking for user w/ username: " +user);
     
