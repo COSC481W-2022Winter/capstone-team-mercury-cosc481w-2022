@@ -19,7 +19,7 @@ class feed extends Component {
 
 	//retrieves our posts
 	getPosts = () => {
-		axios.get('/api') //api route goes here
+		axios.get('/api/contentfeedAPI') //api route goes here
 		.then((response) => {
 			const data = response.data;
 		  	this.setState({ posts: data });

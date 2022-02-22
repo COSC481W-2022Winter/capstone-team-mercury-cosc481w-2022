@@ -7,8 +7,8 @@ const path = require('path')
 const app = express();
 //NOTE: Only one of these can be used at a time. Unomment accordingly when 
 //you need to use the cutestpaw DB
-require('./database');
-//require('./cutestpawDB');
+// require('./database');
+require('./cutestpawDB');
 //-----
 app.use(bodyParser.json());
 app.use(cors());
