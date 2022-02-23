@@ -5,7 +5,6 @@ import Home from './components/Home';
 import About from './components/About';
 import Contact from './components/Contact';
 import Error from './components/Error';
-import Login from './pages/login.js';
 import Feed from './pages/feed.js';
 import Profile from './pages/profile';
 import Navigation from './components/Navigation';
