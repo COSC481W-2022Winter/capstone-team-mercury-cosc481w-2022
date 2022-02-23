@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
- 
+import Logout from '../components/logout';
+import Navigation from '../components/Navigation';
+
 import PlaceholderPost from '../components/placeholderPost/placeholderPost';
 import '../components/placeholderPost/placeholderpost.css'
 
@@ -48,6 +50,7 @@ class feed extends Component {
 	render() {
 		return (  
 				<div>
+					<Navigation />
 					{this.displayPosts(this.state.posts)}
 					<PlaceholderPost />
 				</div> 

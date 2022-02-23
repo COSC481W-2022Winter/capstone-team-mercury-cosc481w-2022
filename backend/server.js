@@ -5,18 +5,14 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path')
 const app = express();
-//NOTE: Only one of these can be used at a time. Unomment accordingly when 
-//you need to use the cutestpaw DB
-// require('./database');
+
 require('./cutestpawDB');
 //-----
 app.use(bodyParser.json());
 app.use(cors());
 
 //-----
-// API
-const testAPI = require('./api/testAPI');
-app.use('/api/testAPI', testAPI);
+// API usage
 
 const userAPI = require('./api/userAPI');
 app.use('/api/userAPI', userAPI);

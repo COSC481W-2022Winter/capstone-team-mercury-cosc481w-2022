@@ -3,6 +3,7 @@ import axios from 'axios';
 import { ReactSession } from 'react-client-session';
 import profilecss from './profile.css';
 import Logout from '../components/logout';
+import Navigation from '../components/Navigation';
 
 class profile extends Component {
 	
@@ -34,6 +35,7 @@ class profile extends Component {
 	render() {
 		return (  
                 <div>
+                    <Navigation />;
                     <div className='userRelatedPosts'>
                         <h2>Likes go here</h2>
                     </div>
