@@ -17,6 +17,9 @@ app.use(cors());
 // API
 const testAPI = require('./api/testAPI');
 app.use('/api/testAPI', testAPI);
+
+const userAPI = require('./api/userAPI');
+app.use('/api/userAPI', userAPI);
 const contentfeedAPI = require('./api/contentfeedAPI');
 app.use('/api/contentfeedAPI', contentfeedAPI);
 const postAPI = require('./api/postAPI');
