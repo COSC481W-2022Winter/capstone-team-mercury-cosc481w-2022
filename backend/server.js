@@ -19,8 +19,15 @@ const testAPI = require('./api/testAPI');
 app.use('/api/testAPI', testAPI);
 const contentfeedAPI = require('./api/contentfeedAPI');
 app.use('/api/contentfeedAPI', contentfeedAPI);
+const postAPI = require('./api/postAPI');
+app.use('/api/postAPI', postAPI);
+const userAPI = require('./api/userAPI');
+app.use('/api/userAPI', userAPI);
+const profileAPI = require('./api/profileAPI');
+app.use('/api/profileAPI', profileAPI);
 //-----
 app.use(express.static(path.join(__dirname, '../build')))
+
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../build'))
 })
