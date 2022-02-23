@@ -20,14 +20,16 @@ app.use('/api/testAPI', testAPI);
 
 const userAPI = require('./api/userAPI');
 app.use('/api/userAPI', userAPI);
+
 const contentfeedAPI = require('./api/contentfeedAPI');
 app.use('/api/contentfeedAPI', contentfeedAPI);
+
 const postAPI = require('./api/postAPI');
 app.use('/api/postAPI', postAPI);
-const userAPI = require('./api/userAPI');
-app.use('/api/userAPI', userAPI);
+
 const profileAPI = require('./api/profileAPI');
 app.use('/api/profileAPI', profileAPI);
+
 const loginAPI = require('./api/loginAPI');
 app.use('/api/loginAPI', loginAPI);
 //-----
