@@ -19,12 +19,17 @@ const testAPI = require('./api/testAPI');
 app.use('/api/testAPI', testAPI);
 const contentfeedAPI = require('./api/contentfeedAPI');
 app.use('/api/contentfeedAPI', contentfeedAPI);
+<<<<<<< HEAD
 const postAPI = require('./api/postAPI');
 app.use('/api/postAPI', postAPI);
 const userAPI = require('./api/userAPI');
 app.use('/api/userAPI', userAPI);
 const profileAPI = require('./api/profileAPI');
 app.use('/api/profileAPI', profileAPI);
+=======
+const loginAPI = require('./api/loginAPI');
+app.use('/api/loginAPI', loginAPI);
+>>>>>>> 270bc4de239af0e5ef53aec4e86275c01e11b030
 //-----
 app.use(express.static(path.join(__dirname, '../build')))
 
