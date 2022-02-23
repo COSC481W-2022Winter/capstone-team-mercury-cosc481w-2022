@@ -11,6 +11,7 @@ import Profile from './pages/profile';
 import Navigation from './components/Navigation';
 import NewPost from './pages/newPost.js';
 import Register from './pages/register.js';
+import Login from './pages/login.js';
  
 class App extends Component {
   render() {
@@ -26,6 +27,8 @@ class App extends Component {
              <Route path="/signup" element={<Register />}/>
              <Route element={<Error />}/>
            </Routes>
+		      <Login />
+
         </div> 
       </BrowserRouter>
     );

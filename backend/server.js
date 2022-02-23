@@ -25,6 +25,8 @@ const userAPI = require('./api/userAPI');
 app.use('/api/userAPI', userAPI);
 const profileAPI = require('./api/profileAPI');
 app.use('/api/profileAPI', profileAPI);
+const loginAPI = require('./api/loginAPI');
+app.use('/api/loginAPI', loginAPI);
 //-----
 app.use(express.static(path.join(__dirname, '../build')))
 
