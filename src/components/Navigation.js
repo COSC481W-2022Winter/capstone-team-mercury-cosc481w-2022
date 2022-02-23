@@ -1,13 +1,19 @@
 import React from 'react';
- 
+import { ReactSession } from 'react-client-session';
+
 import { NavLink } from 'react-router-dom';
+import Logout from './logout';
  
 const Navigation = () => {
     return (
        <div>
-          <NavLink to="/">Home </NavLink>
-          <NavLink to="/about">About </NavLink>
-          <NavLink to="/contact">Contact </NavLink>
+          You are logged in as: {ReactSession.get('username')}
+          <Logout />
+          <NavLink to="/feed">Content Feed</NavLink>
+          &nbsp; &nbsp; &nbsp;
+          <NavLink to="/newpost">New Post</NavLink>
+          &nbsp; &nbsp; &nbsp;
+          <NavLink to="/profile">Profile</NavLink>
        </div>
     );
 }
