@@ -7,6 +7,7 @@ import Contact from './components/Contact';
 import Error from './components/Error';
 import Feed from './pages/Feed.js';
 import Navigation from './components/Navigation';
+import Login from './pages/login.js';
  
 class App extends Component {
   render() {
@@ -20,7 +21,7 @@ class App extends Component {
              <Route path="/contact" element={<Contact />}/>
              <Route element={<Error />}/>
            </Routes>
-		      <Feed />
+		      <Login />
         </div> 
       </BrowserRouter>
     );

@@ -35,7 +35,7 @@ class login extends React.Component {
     const hashedPassword = sha.sha512(this.state.pass);
     alert(hashedPassword);
      //insert API Call here
-     axios.post('/api',  {
+     axios.post('/api/loginAPI/checkUser',  {
       username: this.state.uname,
       password: hashedPassword
   }).then((response) => {

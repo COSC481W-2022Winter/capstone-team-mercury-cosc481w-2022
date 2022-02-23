@@ -19,6 +19,8 @@ const testAPI = require('./api/testAPI');
 app.use('/api/testAPI', testAPI);
 const contentfeedAPI = require('./api/contentfeedAPI');
 app.use('/api/contentfeedAPI', contentfeedAPI);
+const loginAPI = require('./api/loginAPI');
+app.use('/api/loginAPI', loginAPI);
 //-----
 app.use(express.static(path.join(__dirname, '../build')))
 app.get('*', (req, res) => {
