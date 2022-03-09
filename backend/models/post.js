@@ -8,6 +8,7 @@ const postSchema = new Schema({
     },
 	content: String,
 	attachments: [{link: String}],
+    commentts: [{commenter: String, comment: String}],
 	time:{ type: Date, default: Date.now },
 }, {id: true});
 
