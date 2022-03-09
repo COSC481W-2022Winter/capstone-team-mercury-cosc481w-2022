@@ -10,7 +10,7 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    name: {
+    name: { //newly added for profile customization
         type: String
     },
     bio: {
