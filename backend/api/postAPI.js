@@ -16,15 +16,18 @@ router.post("/newPost", function(req, res) {
     //get post data
 	var poster = req.body.username+"";
     var text = req.body.content+"";
-	var attachments = ""; //TBA
+	var attachment1 = req.body.attachments;
+    var attachment2 = null; //replace with the names you're sending
+    var attachment3 = null;
 	console.log("Entering a new post by " +poster);
 	console.log(text);
+    console.log(attachment1);
 
     //add post to the database
     const post = new Post({
 		postedBy: poster,
-        content: text
-        //attachments: [] TBA
+        content: text,
+        attachments: [attachment1, attachment2, attachment3]
     });
     post.save().then((result) => {
         console.log(result);

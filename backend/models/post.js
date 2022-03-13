@@ -7,7 +7,7 @@ const postSchema = new Schema({
         required: true
     },
 	content: String,
-	attachments: [{link: String}],
+	attachments: [{type: String}],
 	time:{ type: Date, default: Date.now },
 }, {id: true});
 
