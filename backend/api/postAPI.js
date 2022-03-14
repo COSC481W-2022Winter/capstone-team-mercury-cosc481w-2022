@@ -36,7 +36,7 @@ router.post("/newPost", function(req, res) {
 });
 
 
-//like button 
+//API like button 
 
 router.put('/like/:id', auth, async(req, res) =>{
     try{ 
@@ -45,6 +45,7 @@ router.put('/like/:id', auth, async(req, res) =>{
         if(post.likes.filter(like => like.user.toString() === req.user.id).length>0){
             return res.json(400).json({msg: 'Post already liked'}); //message saying the post the post has already been liked by a certain user
         }
+        
 
         post.likes.unshift({user: req.user.id});
 
