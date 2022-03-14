@@ -8,6 +8,8 @@ const postSchema = new Schema({
     },
 	content: String,
 	attachments: [{link: String}],
+    likeCt: number,
+    likers: [{user: String}],
 	time:{ type: Date, default: Date.now },
 }, {id: true});
 
