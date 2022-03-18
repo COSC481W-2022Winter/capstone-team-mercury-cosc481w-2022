@@ -25,6 +25,8 @@ router.post("/getUsername", function(req, res) {
 
 // Get the bio for the user (Placeholder for now)
 router.post("/getBio", function(req, res) {
+
+    var bio;
     const user = req.body.username;
     console.log("Checking for user w/ username: " +user);
     
@@ -38,11 +40,12 @@ router.post("/getBio", function(req, res) {
 
 router.post("/changeBio",function(req,res){
     const user = req.body.username;
+    var newBio;
     console.log("Checking user validity for: "+username);
 
     User.find({username: user}, function(err)
     {
-        res.sendFile("newBio.txt");
+       findOneAndUpdate(User.data.bio, newBio);
         });
     
 })
@@ -57,6 +60,7 @@ router.post("/getName", function(req,res)
     User.find({name: user}).then((data) => {
         console.log(data)
     res.send(data.name);
+    });
 });
 
 
@@ -67,9 +71,9 @@ router.post("/getWebLink", function(req,res){
     const user = req.body.website;
     console.log("Checking for website link..." + user);
 
-    User.find({name: user}) {
+    User.find({name: user}); {
         res.send(data.photo);
-    });
+    };
 });
 
 
