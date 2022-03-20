@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Logout from '../components/logout';
 import Navigation from '../components/Navigation';
+import { NavLink } from 'react-router-dom';
 
 import PlaceholderPost from '../components/placeholderPost/placeholderPost';
 import '../components/placeholderPost/placeholderpost.css';
@@ -60,7 +61,7 @@ class feed extends Component {
 		if (!posts.length) return null;
 		return posts.map((post, index) => (
 			<div className = "post" key = {index}>
-				<h4>{post.postedBy}</h4>
+				<h4> <NavLink to={'/user/' + post.postedBy}>{post.postedBy}</NavLink></h4> 
 				<p><small>{post.time}</small></p>
 				<p>{post.content}</p>
 				{this.displayImages(post.attachments)}
