@@ -29,11 +29,15 @@ app.use('/api/profileAPI', profileAPI);
 const loginAPI = require('./api/loginAPI');
 app.use('/api/loginAPI', loginAPI);
 //-----
-app.use(express.static(path.join(__dirname, '../build')))
+//app.use(express.static(path.join(__dirname, '../build/')))
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../build'))
-})
+app.use(express.static(path.join(__dirname, "..", "build")));
+app.use(express.static("public"));
+
+app.use((req, res, next) => {
+  res.sendFile(path.join(__dirname, "..", "build", "index.html"));
+});
+
 //-----
 const port = process.env.PORT || 10577;
 app.listen(port, () => {

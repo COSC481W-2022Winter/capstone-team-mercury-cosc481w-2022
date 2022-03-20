@@ -5,6 +5,7 @@ import axios from 'axios';
 import sha from 'js-sha512';
 import { Navigate } from "react-router-dom";
 import logincss from './/login.css'
+import CheckLogin from '../components/mustLogin'
 import Navigation from '../components/Navigation';
  
 //The idea is to give the react component control over the form
@@ -49,6 +50,7 @@ class login extends React.Component {
     else {
      return (
        <div>
+          <CheckLogin />
           <Navigation />
            <h1 className='header'>New Post</h1>
         <div className='post'>
