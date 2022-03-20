@@ -8,8 +8,8 @@ const postSchema = new Schema({
     },
 	content: String,
 	attachments: [{link: String}],
-  commentts: [{commenter: String, comment: String}],
-  likeCt: number,
+  comments: [{commenter: String, comment: String}],
+  likeCt: {type: Number},
   likers: [{user: String}],
 
 	time:{ type: Date, default: Date.now },

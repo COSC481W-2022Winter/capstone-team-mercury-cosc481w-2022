@@ -3,6 +3,7 @@ import axios from 'axios';
 import Logout from '../components/logout';
 import Navigation from '../components/Navigation';
 
+import Comments from '../components/Comments';
 import PlaceholderPost from '../components/placeholderPost/placeholderPost';
 import '../components/placeholderPost/placeholderpost.css'
 
@@ -42,6 +43,8 @@ class feed extends Component {
 					<h4>{post.postedBy}</h4>
 					<p><small>{post.time}</small></p>
 					<p>{post.content}</p>
+					<p>{post.id}</p>
+					<Comments postID={post.id} />
 				</div>
 			));
 		}

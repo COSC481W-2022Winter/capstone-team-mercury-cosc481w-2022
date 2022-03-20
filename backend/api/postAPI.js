@@ -42,23 +42,31 @@ router.post("/newPost", function(req, res) {
 // post from the database
 
 router.post("/getAllComments", function(req,res){
+    const postID = req.body.postID;
+    console.log("Getting all comments for post: "+postID);
 
-    console.log("Getting all comments for post: "+post);
+    Post.findOne({ id:  postID }).then(post => {
+        
+            res.send(post.comments);
+    }); 
 
-    res.send(comments);
-
-    console.log(comment);
+    //console.log(comment);
 });
-
 
 
 
 // Attach a new comment to a post
 
 router.post("/writeNewComment", function(req,res){
-
+    var postID = req.body.postID
 	var commenter = req.body.username+"";
     var comment = req.body.content+"";
+
+
+    Post.find({id: postID}, function(err)
+    {
+       findOneAndUpdate(Post.data.comments, Post.data.comments + [commenter, comment]);
+        });
 
     post.save().then((result) => {
         console.log(result);
@@ -73,7 +81,7 @@ router.post("/writeNewComment", function(req,res){
 
 //API like button 
 
-router.put('/like/:id', auth, async(req, res) =>{
+router.put('/like/:id', async(req, res) =>{
     try{ 
         const post = await Post.findById(req.params.id); 
         //check if the post has not already been liked
