@@ -25,6 +25,8 @@ router.post("/getUsername", function(req, res) {
 
 // Get the bio for the user (Placeholder for now)
 router.post("/getBio", function(req, res) {
+
+    var bio;
     const user = req.body.username;
     console.log("Checking for user w/ username: " +user);
     
@@ -32,4 +34,70 @@ router.post("/getBio", function(req, res) {
         res.send("Placeholder Bio");
         });
 });
+
+
+// Update/Change the user's bio
+
+router.post("/changeBio",function(req,res){
+    const user = req.body.username;
+    var newBio;
+    console.log("Checking user validity for: "+username);
+
+    User.find({username: user}, function(err)
+    {
+       findOneAndUpdate(User.data.bio, newBio);
+        });
+    
+})
+
+// Get the user's name
+
+router.post("/getName", function(req,res)
+{
+    const user = req.body.name;
+    console.log("Checking for user w/ name: " +user);
+    
+    User.find({name: user}).then((data) => {
+        console.log(data)
+    res.send(data.name);
+    });
+});
+
+
+
+// Get the user's website link to their profile page
+
+router.post("/getWebLink", function(req,res){
+    const user = req.body.website;
+    console.log("Checking for website link..." + user);
+
+    User.find({name: user}); {
+        res.send(data.photo);
+    };
+});
+
+
+// Get user's profile picture for display
+router.post("/getProfilePic", function(req,res){
+    const user = req.body.us;
+    console.log("Verifying valid username: " + user);
+
+    User.find({website:user}, function(err){
+        res.send(data.newPhoto);
+    });
+});
+
+
+
+// Change the user's profile picture
+router.post("/changeProfilePic", function(req,res){
+    const user = req.body.website;
+    console.log("Checking for website link..." + user);
+
+    User.find({website:user}, function(err){
+        res.send(data.newphoto);
+    });
+});
+
+
 module.exports = router;
