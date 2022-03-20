@@ -10,88 +10,101 @@ import { FOCUSABLE_SELECTOR } from '@testing-library/user-event/dist/utils';
  
 //The idea is to give the react component control over the form
 class login extends React.Component {
-   constructor(props) {
-     super(props);
-     this.state = {content: '', filename: '', redir: false, selectedFile: null, imgURL: null};
- 
-     this.handleContentChange = this.handleContentChange.bind(this);
-     this.handleSubmit = this.handleSubmit.bind(this);
-     this.fileUpload = this.fileUpload.bind(this);
-   }
+  constructor(props) {
+    super(props);
+    this.state = {content: '', filename: '', redir: false, selectedFiles: [], imgURL: null};
 
-   onFileChange = event => {
-    
+    this.handleContentChange = this.handleContentChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.uploadAllFiles = this.uploadAllFiles.bind(this);
+  }
+
+  onFileChange = event => {
+    if (event.target.files.length > 3) {
       // Update the state
-      this.setState({ selectedFile: event.target.files[0] });
-    
-    };
-
-
-      fileUpload() {
-        const imageData = new FormData();
-        imageData.append("file", this.state.selectedFile);
-        imageData.append("upload_preset", "cutestpaw");
-        imageData.append("cloud_name", "cutestpaw");
-
-        return new Promise(function (resolve, reject) {
-          fetch("https://api.cloudinary.com/v1_1/cutestpaw/image/upload", {
-          method: "post",
-          body: imageData
-        })
-        .then(res=>res.json())
-        .then(data=> {
-          console.log(data)
-          var result = data.secure_url;
-          resolve(result);
-        })
-        .catch(err=> {
-          alert("An error occoured uploading your image: " +err)
-          reject(null);
-        });
-      });
+      this.setState({ selectedFiles: [] });
+      event.target.value = null;
+      alert("Too many images selected! Please only upload three at a time.");
+    } else {
+      // Update the state
+      this.setState({ selectedFiles: event.target.files });
     }
- 
-   //runs and updates the state whenever the form's value changes
-   handleContentChange(event) {
-     this.setState({content: event.target.value});
-   }
- 
-    async handleSubmit(event) {
-      var fileResult = "";
-   
-     if(this.state.content =='') {//&& if no file later
-       alert("You can't post an empty post! Please try again.");
-       return;
-     }
-     
-     if(this.state.selectedFile != null)
-        fileResult = await this.fileUpload();
-     axios.post('/api/postAPI/newPost',  {
-        username: ReactSession.get("username"),
-        content: this.state.content,
-        attachments: fileResult
-    }).then((response) => {
+  };
+
+  async uploadAllFiles() {
+    var promises = [];
+    for (var i = 0; i < this.state.selectedFiles.length; i++) {
+      var curPromise = this.fileUpload(this.state.selectedFiles[i]);
+      promises.push(curPromise);
+    }
+
+    return Promise.all(promises);
+  }
+
+  fileUpload(file) {
+    const imageData = new FormData();
+    imageData.append("file", file);
+    imageData.append("upload_preset", "cutestpaw");
+    imageData.append("cloud_name", "cutestpaw");
+
+    return new Promise(function (resolve, reject) {
+      fetch("https://api.cloudinary.com/v1_1/cutestpaw/image/upload", {
+      method: "post",
+      body: imageData
     })
-            .catch(() => {
-                  console.log('An error occoured uploading your post');
-                  return;
-            });
-      this.setState({redir: true});
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      var result = data.secure_url;
+      resolve(result);
+    })
+    .catch(err => {
+        alert("An error occurred uploading your image: " + err)
+        reject(null);
+      });
+    });
+  }
 
+  //runs and updates the state whenever the form's value changes
+  handleContentChange(event) {
+    this.setState({content: event.target.value});
+  }
 
+  async handleSubmit(event) {
+    var fileResult = "";
+    var needsText = (this.state.content == "");
+    var needsImage = (this.state.selectedFiles.length == 0);
+
+    if (needsText && needsImage) {
+      alert("You can't post an empty post! Please try again.");
+      return;
     }
-   render() {
-     if(this.state.redir)
-        return (<Navigate to="../feed" />);
-    else {
-     return (
-       <div>
+
+    fileResult = await this.uploadAllFiles();
+    axios.post('/api/postAPI/newPost', {
+      username: ReactSession.get("username"),
+      content: this.state.content,
+      attachments: fileResult
+    }).then((response) => {})
+    .catch(() => {
+      console.log('An error occurred uploading your post');
+      return;
+    });
+    this.setState({redir: true});
+  }
+
+  render() {
+    if (this.state.redir) {
+      return (<Navigate to="../feed" />);
+    } else {
+      return (
+        <div>
           <Navigation />
-           <h1 className='header'>New Post</h1>
+            <h1 className='header'>New Post</h1>
         <div className='post'>
             <label>
             Image: &nbsp;
-              <input type="file"  onChange={this.onFileChange} />
+              <input type="file"  onChange={this.onFileChange} multiple accept="image/"/>
             </label>
             <br />
             <label>
@@ -99,13 +112,13 @@ class login extends React.Component {
             </label>
             <br />
             <input type="submit" value="Post" onClick={this.handleSubmit} />
-         
+          
           </div>
           
         </div>
-    
-     )};
+      );
+    }
+  }
+}
 
-     }
-   }
 export default login;

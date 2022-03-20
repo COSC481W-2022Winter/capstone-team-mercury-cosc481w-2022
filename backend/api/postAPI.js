@@ -14,14 +14,27 @@ router.use(bodyParser.urlencoded({ extended: true }));
 //puts a new post into the database
 router.post("/newPost", function(req, res) {
     //get post data
+	var poster = req.body.username + "";
+    var text = req.body.content + "";
+    var attachments = req.body.attachments;
+    var postData = { postedBy: poster };
+    console.log("Entering a new post by " + poster);
+    if (text) {
+        postData.content = text;
+        console.log(text);
+    }
+    if (attachments) {
+        postData.attachments = attachments;
+        console.log(attachments);
+    }
+
+    //add post to the database
 	var poster = req.body.username+"";
     var text = req.body.content+"";
-
 	var attachments = ""; //TBA
     var comments = [""];
 	console.log("Entering a new post by " +poster);
 	console.log(text);
-    console.log(attachment1);
 
     //add post to the database
     const post = new Post({
