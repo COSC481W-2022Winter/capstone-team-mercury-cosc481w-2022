@@ -9,6 +9,15 @@ const userSchema = new Schema({
 	password: {
         type: String,
         required: true
+    },
+    name: { //newly added for profile customization
+        type: String
+    },
+    bio: {
+        type: String
+    },
+    website: {
+        type: String
     }
 }, {id: true});
 
