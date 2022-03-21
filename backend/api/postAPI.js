@@ -31,22 +31,7 @@ router.post("/newPost", function(req, res) {
     }
 
     //add post to the database
-	var poster = req.body.username+"";
-    var text = req.body.content+"";
-	var attachments = ""; //TBA
-    var comments = [""];
-	console.log("Entering a new post by " +poster);
-	console.log(text);
-
-    //add post to the database
-    const post = new Post({
-		postedBy: poster,
-        content: text,
-        comments: [],
-
-        attachments: [attachment1, attachment2, attachment3]
-
-    });
+    const post = new Post(postData);
     post.save().then((result) => {
         console.log(result);
         console.log("Success!");

@@ -66,11 +66,10 @@ class feed extends Component {
 				<p><small>{post.time}</small></p>
 				<p>{post.content}</p>
 				{this.displayImages(post.attachments)}
-        <Comments postID={""+post._id} />
+				<Comments postID={""+post._id} />
 			</div>
 		));
 	}
-
 	
 	//rendering
 	render() {
