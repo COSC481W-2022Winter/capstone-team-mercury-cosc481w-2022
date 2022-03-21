@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Logout from '../components/logout';
 import Navigation from '../components/Navigation';
 import { NavLink } from 'react-router-dom';
+import pagecss from './page.css'
 
+import MustLogin from '../components/mustLogin';
 import Comments from '../components/Comments';
 import Likes from '../components/Likes';
 import PlaceholderPost from '../components/placeholderPost/placeholderPost';
@@ -31,7 +32,6 @@ class feed extends Component {
 		.then((response) => {
 			const data = response.data;
 		  	this.setState({ posts: data });
-		  	console.log('Data has been received!' + data);
 		})
 		.catch(() => {
 		  	console.log('Error retrieving data!');
@@ -62,7 +62,7 @@ class feed extends Component {
 		//if there are no posts
 		if (!posts.length) return null;
 		return posts.map((post, index) => (
-			<div className = "post" key = {index}>
+			<div className = "post" style={{margin: "auto"}} key = {index}>
 				<h4> <NavLink to={'/user/' + post.postedBy}>{post.postedBy}</NavLink></h4> 
 				<p><small>{post.time}</small></p>
 				<p>{post.content}</p>
@@ -77,6 +77,7 @@ class feed extends Component {
 	render() {
 		return (  
 			<div>
+				<MustLogin />
 				<Navigation />
 				{this.displayPosts(this.state.posts)}
 				<PlaceholderPost />

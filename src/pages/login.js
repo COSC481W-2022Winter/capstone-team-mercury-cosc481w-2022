@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { ReactSession } from 'react-client-session';
 import axios from 'axios';
 import sha from 'js-sha512';
-import logincss from './/login.css'
+import pagecss from './page.css'
 import { Navigate } from "react-router-dom";
  
 //The idea is to give the react component control over the form

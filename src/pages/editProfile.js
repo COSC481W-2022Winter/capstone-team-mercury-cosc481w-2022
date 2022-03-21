@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { ReactSession } from 'react-client-session';
-import profilecss from './profile.css';
-import Logout from '../components/logout';
+import Pagecss from './page.css';
+import MustLogin from '../components/mustLogin';
 import Navigation from '../components/Navigation';
 import { Navigate } from 'react-router-dom';
 
@@ -56,18 +56,6 @@ class profile extends Component {
 
     componentDidMount() {
 
-        axios.post('/api/userAPI/checkUser',  {
-            username: this.state.username
-        }).then((response) => {
-            if(!response.data) {
-                alert("This user does not exist!");
-                this.setState({redir: true});
-            }
-        })
-                .catch(() => {
-                        console.log('An error occoured');
-                });
-
         axios.post('/api/profileAPI/getUserDetails',  {
             username: this.state.username
         }).then((response) => {
@@ -88,8 +76,20 @@ class profile extends Component {
         else 
             return (  
                 <div>
+                    <MustLogin />
                     <Navigation />;
                     <div className='userRelatedPosts'>
+                    <label>
+                        Banner image (coming soon) &nbsp;
+                        <input type="file"/>
+                    </label>
+                    <br />
+                    <label>
+                        profile picture (coming soon) &nbsp;
+                        <input type="file"/>
+                    </label>
+                    <br />
+
                         <label>
                         name: &nbsp;
                             <input type="text" className='inform' value={this.state.name} onChange={this.handleNameChange} />
@@ -112,7 +112,7 @@ class profile extends Component {
                         <h2>{this.state.username}</h2>
                         <h3>{this.state.name}</h3>
                         <p>{this.state.bio}</p>
-                        {this.state.website !=undefined? (<p><a href={this.state.website} target="_blank">Website</a></p>) : null}
+                        {this.state.website !=undefined || this.state.website !=""?(<p><a href={this.state.website} target="_blank">Website</a></p>) : null}
                     </div> 
                 </div>
 		);

@@ -1,12 +1,11 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import { ReactSession } from 'react-client-session';
 import axios from 'axios';
-import sha from 'js-sha512';
 import { Navigate } from "react-router-dom";
-import logincss from './/login.css'
+import pagecss from './page.css'
 import Navigation from '../components/Navigation';
 import { FOCUSABLE_SELECTOR } from '@testing-library/user-event/dist/utils';
+import MustLogin from '../components/mustLogin';
  
 //The idea is to give the react component control over the form
 class login extends React.Component {
@@ -17,26 +16,46 @@ class login extends React.Component {
     this.handleContentChange = this.handleContentChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.uploadAllFiles = this.uploadAllFiles.bind(this);
+    this.checkFileSize = this.checkFileSize.bind(this)
   }
 
+  checkFileSize(files) {
+    for(var i=0; i < files.length; i++)
+      if(files[i].size > 2000000)
+        return false;
+      return true;
+  }
+
+  
   onFileChange = event => {
+    
     if (event.target.files.length > 3) {
       // Update the state
       this.setState({ selectedFiles: [] });
       event.target.value = null;
       alert("Too many images selected! Please only upload three at a time.");
-    } else {
-      // Update the state
+    }
+    else if(!this.checkFileSize(event.target.files)) {
+      this.setState({ selectedFiles: [] });
+      event.target.value = null;
+      alert("One or more of your images exceeded 2MB! Please upload smaller files.");
+    }
+    else {       
+    
       this.setState({ selectedFiles: event.target.files });
     }
   };
 
   async uploadAllFiles() {
     var promises = [];
+
+    
     for (var i = 0; i < this.state.selectedFiles.length; i++) {
       var curPromise = this.fileUpload(this.state.selectedFiles[i]);
       promises.push(curPromise);
     }
+
+    alert("Please wait while your post uploads (You will be automatically redirected)");
 
     return Promise.all(promises);
   }
@@ -99,6 +118,7 @@ class login extends React.Component {
     } else {
       return (
         <div>
+          <MustLogin />
           <Navigation />
             <h1 className='header'>New Post</h1>
         <div className='post'>
