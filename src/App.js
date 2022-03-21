@@ -7,6 +7,7 @@ import Profile from './pages/profile';
 import NewPost from './pages/newPost.js';
 import Register from './pages/register.js';
 import Login from './pages/login.js';
+import UserProfileWrapper from './components/getUsername';
  
 ReactSession.setStoreType('localStorage');
 class App extends Component {
@@ -20,6 +21,7 @@ class App extends Component {
              <Route path="/newpost" element = {<NewPost />}/>
              <Route path="/feed" element={<Feed />}/>
              <Route path="/signup" element={<Register />}/>
+             <Route path="/user/:username" element={<UserProfileWrapper />}/>
            </Routes>
 
         </div> 
