@@ -80,25 +80,52 @@ router.post("/writeNewComment", function(req,res){
 
 
 //API like button 
+router.post('/getLikes', function(req, res){
+    console.log("Getting like information for " +req.body.postID)
+    
+    Post.findById(
+        { _id: req.body.postID }
+    ).then(post => {
+        let count = post.likeCt;
+        if(count == undefined)
+            count = 0;
+        res.send(count +"");
+    });
 
-router.put('/like/:id', async(req, res) =>{
-    try{ 
-        const post = await Post.findById(req.params.id); 
-        //check if the post has not already been liked
-        if(post.likes.filter(like => like.user.toString() === req.user.id).length>0){
-            return res.json(400).json({msg: 'Post already liked'}); //message saying the post the post has already been liked by a certain user
-        }
-        
+});
 
-        post.likes.unshift({user: req.user.id});
+router.post('/didUserLike', async(req, res) =>{
+    console.log("Getting like information for " +req.body.postID)
+    
+    Post.findById( {_id: req.body.postID }).then(post => {
+        res.send(post.likers.includes(req.body.username))
+    });
+});
 
-        await post.save(); //saves the like button 
-        res.json(post.likes); // check the length
+router.post('/like', async(req, res) =>{
+    console.log("Liking " +req.body.postID)
+    
+    Post.findById( {_id: req.body.postID }).then(post => {
+        if(post.likers.includes(req.body.username))
+            res.send(true)
+    });
 
-    } catch(err){
-        console.error(err.message); 
-        res.status(500).send('Server Error'); 
-    }
-} )
+
+    Post.findOneAndUpdate(
+        { _id: req.body.postID }, 
+        { $push: {likers: req.body.username}}
+    ).then(post => {
+        console.log("liked!");
+    });
+
+    Post.findOneAndUpdate(
+        { _id: req.body.postID }, 
+        { $inc: {likeCt: 1}  }
+    ).then(post => {
+        console.log("liked!");
+    });
+
+
+});
 
 module.exports = router;

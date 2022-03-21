@@ -11,7 +11,7 @@ const postSchema = new Schema({
   comments: [{commenter: String, comment: String}],
   likeCt: {type: Number},
 
-  likers: [{user: String}],
+  likers: [{type: String}],
 
 	time:{ type: Date, default: Date.now },
 }, {id: true});
