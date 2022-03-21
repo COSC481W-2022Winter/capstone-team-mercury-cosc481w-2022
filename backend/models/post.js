@@ -7,7 +7,7 @@ const postSchema = new Schema({
         required: true
     },
 	content: String,
-	attachments: [{link: String}],
+	attachments: [{type: String}],
   comments: [{commenter: String, comment: String}],
   likeCt: {type: Number},
 

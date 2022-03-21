@@ -5,7 +5,6 @@ import axios from 'axios';
 import sha from 'js-sha512';
 import { Navigate } from "react-router-dom";
 import logincss from './/login.css'
-import CheckLogin from '../components/mustLogin'
 import Navigation from '../components/Navigation';
 import { FOCUSABLE_SELECTOR } from '@testing-library/user-event/dist/utils';
  
