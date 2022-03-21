@@ -3,11 +3,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ReactSession } from 'react-client-session';
  
 import Feed from './pages/feed.js';
-import Profile from './pages/profile';
 import NewPost from './pages/newPost.js';
 import Register from './pages/register.js';
 import Login from './pages/login.js';
 import UserProfileWrapper from './components/getUsername';
+import EditProile from './pages/editProfile';
  
 ReactSession.setStoreType('localStorage');
 class App extends Component {
@@ -17,11 +17,11 @@ class App extends Component {
         <div>
             <Routes>
              <Route path="/" element={<Login />} exact/>
-             <Route path="/profile" element = {<Profile />}/>
              <Route path="/newpost" element = {<NewPost />}/>
              <Route path="/feed" element={<Feed />}/>
              <Route path="/signup" element={<Register />}/>
              <Route path="/user/:username" element={<UserProfileWrapper />}/>
+             <Route path="/editProfile" element={<EditProile />}/>
            </Routes>
 
         </div> 

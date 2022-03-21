@@ -13,7 +13,7 @@ const Navigation = () => {
           &nbsp; &nbsp; &nbsp;
           <NavLink to="/newpost">New Post</NavLink>
           &nbsp; &nbsp; &nbsp;
-          <NavLink to="/profile">Profile</NavLink>
+          <NavLink to={"/user/" +ReactSession.get('username')} >My Profile</NavLink>
        </div>
     );
 }
