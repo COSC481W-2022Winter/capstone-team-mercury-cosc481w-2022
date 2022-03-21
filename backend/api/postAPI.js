@@ -1,4 +1,5 @@
 var express = require("express");
+var ObjectId = require('mongodb').ObjectId; 
 const app = express();
 
 var router = express.Router();
@@ -8,6 +9,7 @@ var bodyParser = require('body-parser');
 const Post = require('../models/post');
 
 router.use(bodyParser.urlencoded({ extended: true }));
+
 
 
 //new post callback
@@ -26,7 +28,6 @@ router.post("/newPost", function(req, res) {
 		postedBy: poster,
         content: text,
         comments: []
-        //attachments: [] TBA
     });
     post.save().then((result) => {
         console.log(result);
@@ -45,8 +46,7 @@ router.post("/getAllComments", function(req,res){
     const postID = req.body.postID;
     console.log("Getting all comments for post: "+postID);
 
-    Post.findOne({ id:  postID }).then(post => {
-        
+    Post.findOne({_id:  postID }).then(post => {
             res.send(post.comments);
     }); 
 
@@ -58,22 +58,19 @@ router.post("/getAllComments", function(req,res){
 // Attach a new comment to a post
 
 router.post("/writeNewComment", function(req,res){
-    var postID = req.body.postID
-	var commenter = req.body.username+"";
-    var comment = req.body.content+"";
 
-
-    Post.find({id: postID}, function(err)
-    {
-       findOneAndUpdate(Post.data.comments, Post.data.comments + [commenter, comment]);
-        });
-
-    post.save().then((result) => {
-        console.log(result);
-        console.log("Success!");
-    })
-    .catch((err) => {
-        console.log(err);
+    console.log("Adding a new comment on " +req.body.postID)
+    console.log(req.body.commenter);
+    console.log(req.body.comment);
+    var comment = {
+        commenter: req.body.commenter,
+        comment: req.body.comment
+    };
+    Post.findOneAndUpdate(
+        { _id: req.body.postID }, 
+        { $push: { comments: comment } },
+    ).then(post => {
+        console.log(post.comments)
     });
 
 });

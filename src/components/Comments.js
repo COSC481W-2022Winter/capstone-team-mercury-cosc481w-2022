@@ -5,12 +5,12 @@ import { ReactSession } from 'react-client-session';
 
 
 class CommentBox extends React.Component {
-    constructor() {
+    constructor(props) {
       super();
       
       this.state = {
-        postID :this.props.postID,
-        showComments: false,
+        postID : props.postID,
+        showComments: true,
         comments: []
       };
     }
@@ -27,7 +27,6 @@ class CommentBox extends React.Component {
       
       return(
         <div className="comment-box">
-          this.state.postID
           <CommentForm addComment={this.addComment.bind(this)}/>
           <button id="comment-reveal" onClick={this._handleClick.bind(this)}>
             {buttonText}
@@ -42,34 +41,7 @@ class CommentBox extends React.Component {
     } // end render
 
     addComment(author, body) {
-      const comment = {
-        id: this.state.comments.length + 1,
-        author, // change to username
-        body // comment of user on post
-      };
-      this.setState({ comments: this.state.comments.concat([comment]) }); // *new array references help React stay fast, so concat works better than push here.
-    }
-    
-    componentDidMount = () => {
-        axios.post('/api/postAPI/getAllComments', {
-          postID: this.state.postID
-        })
-        .then((response) => {
-            const data = response.data;
-              for (var i=0; data.length > i; i++){
-                this.addComment(data[i].commenter, data[i].comment)
-              }
-        })
-        .catch(() => {
-              console.log('Error retrieving data!');
-        });    
-    }
-
-    postcomment(author, body) {
-        if(body = ""){
-        alert("you can't post an empty comment")
-        return;}
-        this.addComment(author, body)
+        this.postcomment(author, body)
         axios.post('/api/postAPI/writeNewComment',  {
             postID: this.state.postID,
             commenter: author,
@@ -79,6 +51,30 @@ class CommentBox extends React.Component {
         }).catch(() => {
                       console.log('An error occoured');
                 });
+    }
+    
+    componentDidMount = () => {
+        axios.post('/api/postAPI/getAllComments', {
+          postID: this.state.postID
+        })
+        .then((response) => {
+            const data = response.data;
+              for (var i=0; data.length > i; i++){
+                this.postcomment(data[i].commenter, data[i].comment)
+              }
+        })
+        .catch(() => {
+              console.log('Error retrieving data!');
+        });    
+    }
+
+    postcomment(author, body) {
+      const comment = {
+        id: this.state.comments.length + 1,
+        author, // change to username
+        body // comment of user on post
+      };
+      this.setState({ comments: this.state.comments.concat([comment]) }); // *new array references help React stay fast, so concat works better than push here.       
 
     }
     
@@ -111,12 +107,23 @@ class CommentBox extends React.Component {
   } // end CommentBox component
   
   class CommentForm extends React.Component {
+
+    constructor(props) {
+      super(props);
+      this.state = {content: ''};
+  
+      this.handleContentChange = this.handleContentChange.bind(this);
+    }
+
+    handleContentChange(event) {
+      this.setState({content: event.target.value});
+    }
+
     render() {
       return (
         <form className="comment-form" onSubmit={this._handleSubmit.bind(this)}>
           <div className="comment-form-fields">
-            <input placeholder="Name" type = "hidden" value = {ReactSession.get("username")} required ref={(input) => this._author = input}></input><br />
-            <textarea placeholder="Comment" rows="4" required ref={(textarea) => this._body = textarea}></textarea>
+          <textarea placeholder="Comment" rows="4" value={this.state.content} onChange={this.handleContentChange}></textarea>
           </div>
           <div className="comment-form-actions">
             <button type="submit">Post Comment</button>
@@ -124,12 +131,11 @@ class CommentBox extends React.Component {
         </form>
       );
     } // end render
-    
+
     _handleSubmit(event) { 
       event.preventDefault();   // prevents page from reloading on submit
-      let author = this._author;
-      let body = this._body;
-      this.props.addComment(author.value, body.value);
+      let author = ReactSession.get("username");
+      this.props.addComment(author, this.state.content);
     }
   } // end CommentForm component
   

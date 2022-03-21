@@ -43,8 +43,8 @@ class feed extends Component {
 					<h4>{post.postedBy}</h4>
 					<p><small>{post.time}</small></p>
 					<p>{post.content}</p>
-					<p>{post.id}</p>
-					<Comments postID={post.id} />
+					<Comments postID={""+post._id} />
+					
 				</div>
 			));
 		}
