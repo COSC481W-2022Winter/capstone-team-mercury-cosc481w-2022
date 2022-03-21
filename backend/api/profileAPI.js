@@ -24,57 +24,32 @@ router.post("/getUsername", function(req, res) {
 });
 
 // Get the bio for the user (Placeholder for now)
-router.post("/getBio", function(req, res) {
-
-    var bio;
+router.post("/getUserDetails", function(req, res) {
     const user = req.body.username;
-    console.log("Checking for user w/ username: " +user);
+    console.log("getting data for user w/ username: " +user);
     
-    User.find({username: user}, function (err){ 
-        res.send("Placeholder Bio");
-        });
+    User.find({username: user}) .then((data) => {
+        res.json(data);
+    })
 });
 
 
 // Update/Change the user's bio
 
-router.post("/changeBio",function(req,res){
-    const user = req.body.username;
-    var newBio;
-    console.log("Checking user validity for: "+username);
-
-    User.find({username: user}, function(err)
-    {
-       findOneAndUpdate(User.data.bio, newBio);
-        });
+router.post("/editProfile",function(req,res){
+    console.log("Updating "+req.body.username +"'s profile");
+    var profileChanges = {
+        name: req.body.name,
+        bio: req.body.bio,
+        website: req.body.website
+    };
+    User.findOneAndUpdate(
+        { username: req.body.username }, 
+        { $set: profileChanges },
+    ).then(post => {
+    });
     
 })
-
-// Get the user's name
-
-router.post("/getName", function(req,res)
-{
-    const user = req.body.name;
-    console.log("Checking for user w/ name: " +user);
-    
-    User.find({name: user}).then((data) => {
-        console.log(data)
-    res.send(data.name);
-    });
-});
-
-
-
-// Get the user's website link to their profile page
-
-router.post("/getWebLink", function(req,res){
-    const user = req.body.website;
-    console.log("Checking for website link..." + user);
-
-    User.find({name: user}); {
-        res.send(data.photo);
-    };
-});
 
 
 // Get user's profile picture for display
