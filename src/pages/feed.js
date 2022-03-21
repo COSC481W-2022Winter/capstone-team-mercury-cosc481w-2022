@@ -4,6 +4,7 @@ import Logout from '../components/logout';
 import Navigation from '../components/Navigation';
 import { NavLink } from 'react-router-dom';
 
+import Comments from '../components/Comments';
 import PlaceholderPost from '../components/placeholderPost/placeholderPost';
 import '../components/placeholderPost/placeholderpost.css';
 import { Carousel } from 'react-responsive-carousel';
@@ -65,9 +66,11 @@ class feed extends Component {
 				<p><small>{post.time}</small></p>
 				<p>{post.content}</p>
 				{this.displayImages(post.attachments)}
+        <Comments postID={""+post._id} />
 			</div>
 		));
 	}
+
 	
 	//rendering
 	render() {

@@ -1,4 +1,5 @@
 var express = require("express");
+var ObjectId = require('mongodb').ObjectId; 
 const app = express();
 
 var router = express.Router();
@@ -8,6 +9,7 @@ var bodyParser = require('body-parser');
 const Post = require('../models/post');
 
 router.use(bodyParser.urlencoded({ extended: true }));
+
 
 
 //new post callback
@@ -40,6 +42,8 @@ router.post("/newPost", function(req, res) {
     const post = new Post({
 		postedBy: poster,
         content: text,
+        comments: [],
+
         attachments: [attachment1, attachment2, attachment3]
 
     });
@@ -57,14 +61,15 @@ router.post("/newPost", function(req, res) {
 // post from the database
 
 router.post("/getAllComments", function(req,res){
+    const postID = req.body.postID;
+    console.log("Getting all comments for post: "+postID);
 
-    console.log("Getting all comments for post: "+post);
+    Post.findOne({_id:  postID }).then(post => {
+            res.send(post.comments);
+    }); 
 
-    res.send(comments);
-
-    console.log(comment);
+    //console.log(comment);
 });
-
 
 
 
@@ -72,15 +77,18 @@ router.post("/getAllComments", function(req,res){
 
 router.post("/writeNewComment", function(req,res){
 
-	var commenter = req.body.username+"";
-    var comment = req.body.content+"";
-
-    post.save().then((result) => {
-        console.log(result);
-        console.log("Success!");
-    })
-    .catch((err) => {
-        console.log(err);
+    console.log("Adding a new comment on " +req.body.postID)
+    console.log(req.body.commenter);
+    console.log(req.body.comment);
+    var comment = {
+        commenter: req.body.commenter,
+        comment: req.body.comment
+    };
+    Post.findOneAndUpdate(
+        { _id: req.body.postID }, 
+        { $push: { comments: comment } },
+    ).then(post => {
+        console.log(post.comments)
     });
 
 });
@@ -88,7 +96,7 @@ router.post("/writeNewComment", function(req,res){
 
 //API like button 
 
-router.put('/like/:id', auth, async(req, res) =>{
+router.put('/like/:id', async(req, res) =>{
     try{ 
         const post = await Post.findById(req.params.id); 
         //check if the post has not already been liked
