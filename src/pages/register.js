@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import sha from 'js-sha512';
 import { Navigate } from "react-router-dom";
-import logincss from './/login.css'
+import pagecss from './page.css'
  
 //The idea is to give the react component control over the form
 class register extends React.Component {
@@ -90,7 +90,7 @@ class register extends React.Component {
               <input type="password" className='inform' value={this.state.confPass} onChange={this.handleConfPassChange} />
             </label>
             <br />
-            <input type="submit" value="Login" onClick={this.handleSubmit} />
+            <input type="submit" value="Sign Up" onClick={this.handleSubmit} />
             <br />
             <p> Already have an account? &nbsp;<NavLink to="../">Login Here!</NavLink></p>
           </div>

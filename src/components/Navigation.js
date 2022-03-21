@@ -1,5 +1,6 @@
 import React from 'react';
 import { ReactSession } from 'react-client-session';
+import logo from '../img/logo.png';
 
 import { NavLink } from 'react-router-dom';
 import Logout from './logout';
@@ -7,6 +8,7 @@ import Logout from './logout';
 const Navigation = () => {
     return (
        <div>
+          <img src={logo}/>
           You are logged in as: {ReactSession.get('username')}
           <Logout />
           <NavLink to="/feed">Content Feed</NavLink>
