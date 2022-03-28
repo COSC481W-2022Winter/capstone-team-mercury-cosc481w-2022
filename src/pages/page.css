@@ -1,6 +1,7 @@
 .post {
     display: block;
 	width: 70%;
+    margin-top: 10px;
 	margin: auto;
 	border: 2px ridge #999;
 	padding: 10px;
@@ -79,3 +80,19 @@
     padding: 10px;
 }
 
+.searchbox {
+
+    border: none;
+    border-bottom: 2px solid slateblue;
+    width: 50%;
+    margin-right: 5%;
+}
+.searchbox:focus {
+    border: none;
+    border-bottom: 2px solid blue;
+    outline: none;
+}
+
+.searchOrder {
+    width: 200px;
+}
