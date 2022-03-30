@@ -59,7 +59,7 @@ class profile extends Component {
                     <div className='userRelatedPosts'>
                         <h2>Posts go here</h2>
                     </div>
-                    {this.state.user!=null ?<ProfileBlock user={this.state.user}/> : null}
+                    {this.state.user!=null ?<ProfileBlock user={this.state.user} align={"right"}/> : null}
                     
                 </div>
 		);

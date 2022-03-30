@@ -3,6 +3,7 @@
 	width: 70%;
     margin-top: 10px;
 	margin: auto;
+    margin-bottom: 20px;
 	border: 2px ridge #999;
 	padding: 10px;
 	text-align:left;
@@ -45,9 +46,8 @@
     text-align: center;
 }
 .profile {
-    display: block;
+    display: table;
 	width: 30%;
-    float: right;
 	margin: 10px;
 	border: 2px ridge #999;
 	padding: 10px;

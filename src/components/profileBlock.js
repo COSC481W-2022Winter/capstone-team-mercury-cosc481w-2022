@@ -8,13 +8,14 @@ class profileBLock extends Component {
 	constructor(props) {
         super();
         this.state = {
-          user: props.user
+          user: props.user,
+          align: props.align
         };
       }
 
     render() {
         return (
-        <div className='profile'>
+        <div className='profile' style={ this.state.align === "center"? {margin: "auto"} : {float: this.state.align}}>
             <h2>{this.state.user.username}</h2>
             <h3>{this.state.user.name}</h3>
             <p>{this.state.user.bio}</p>

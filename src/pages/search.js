@@ -1,53 +1,100 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Navigation from '../components/Navigation';
-import { NavLink } from 'react-router-dom';
 import pagecss from './page.css'
+import Post from '../components/post'
+import ProfileBlock from '../components/ProfileBlock';
 
 import MustLogin from '../components/mustLogin';
-import Comments from '../components/Comments';
-import Likes from '../components/Likes';
-import PlaceholderPost from '../components/placeholderPost/placeholderPost';
-import '../components/placeholderPost/placeholderpost.css';
-import { Carousel } from 'react-responsive-carousel';
-import '../../node_modules/react-responsive-carousel/lib/styles/carousel.min.css';
 
 class search extends Component {
-	
-	state = 
-	{
-        query: '',
-        searchPost: true,
-        searchRecent: true,
-        order: true,
-        ready: false,
-		posts: []
-	}
+	constructor(props) {
+        super(props);
+        this.state = 
+        {
+            query: '',
+            selectedType: "posts",
+            selectedSort: "recent",
+            selectedOrder: "descending",
+            gotResults: false,
+            searchExact: false,
+            results: []
+        }
+        this.dispPostOptions = this.dispPostOptions.bind(this);
+        this.handleQueryChange = this.handleQueryChange.bind(this);
+        this.handleTypeChange = this.handleTypeChange.bind(this);
+        this.handleOrderChange = this.handleOrderChange.bind(this);
+        this.handleSortChange = this.handleSortChange.bind(this);
+        this.handleExactChange = this.handleExactChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.getResults = this.getResults.bind(this);
+
+    }
 
 
 
+    handleExactChange(event) {
+        this.setState({searchExact: !this.state.searchExact});
+    }
     handleQueryChange(event) {
         this.setState({query: event.target.value});
     }
 
     handleTypeChange(event) {
-        this.setState({searchPost: event.target.value});
+        this.setState({results: [], selectedType: event.target.value, gotResults: false});
     }
     handleOrderChange(event) {
-        this.setState({order: event.target.value});
+        this.setState({selectedOrder: event.target.value});
+    }
+    handleSortChange(event) {
+        this.setState({selectedSort: event.target.value});
+    }
+    handleSubmit(event) {
+        if(this.state.query ==="") {
+            alert("Please enter a search query!")
+            return;
+        }
+       this.setState({results: [], gotResults: false});
+       this.getResults();
     }
 
-	//retrieves posts whenever component mounts
-	componentDidMount = () => {
-		this.getPosts();
+    displayResults() {
+		//if there are no posts
+		 if (!this.state.results.length && this.state.gotResults) {
+            return(<h2 style={{textAlign: "center"}}>This query did not match any  {this.state.selectedType}  </h2>)
+        } 
+        else if(this.state.selectedType === "posts") {
+            return this.state.results.map((post, index) => (
+                <div>
+                    <Post post={post}/>
+                    <br />
+                </div>
+            ));
+            
+        }
+        else {
+            return this.state.results.map((user, index) => (
+                <div>
+                    <ProfileBlock user={user} align={"center"}/>
+                    <br />
+                </div>
+            ));
+        }
 	}
 
 	//retrieves our posts
-	getPosts = () => {
-		axios.post('/api/contentfeedAPI/getAllPosts', {}) //api route goes here
-		.then((response) => {
+	getResults() {
+		axios.post('/api/searchAPI/search', {
+            type: this.state.selectedType,
+            query: this.state.query,
+            sort: this.state.selectedSort,
+            order: this.state.selectedOrder,
+            exact: this.state.searchExact
+        }).then((response) => {
 			const data = response.data;
-		  	this.setState({ posts: data });
+		  	console.log(data);
+            this.setState({results: data, gotResults: true});
+            
 		})
 		.catch(() => {
 		  	console.log('Error retrieving data!');
@@ -57,13 +104,22 @@ class search extends Component {
 	
 
     dispPostOptions() {
-        if(this.state.searchPost)
+         if(this.state.selectedType === "posts")
             return (
-                    <select className="searchOrder">
-                        <option value="0">Most Recent</option>
-                        <option value="1">Most Popular</option>
+                    <div>
+                    <select className="searchOrder" onChange={this.handleSortChange}>
+                        <option value="recent" selected={this.state.selectedSort === "recent"}>Most Recent</option>
+                        <option value="popular" selected={this.state.selectedSort === "popular"}>Most Popular</option>
                     </select>
-
+                    <label>
+                        <input type="radio" name="order" id="asc" value="ascending" checked={this.state.selectedOrder === "ascending"} onChange={this.handleOrderChange}/>
+                        Ascending
+                    </label>
+                    <label>
+                        <input type="radio" name="order" id="dec" value="descending" checked={this.state.selectedOrder === "descending"} onChange={this.handleOrderChange}/>
+                        Decending
+                    </label>
+                    </div>
             );
         else return null;
     }
@@ -75,20 +131,26 @@ class search extends Component {
 				<MustLogin />
 				<Navigation />
                 <div className="post">
-                    <input type="text" className='searchbox' value={this.state.user} placeholder="Search..." onChange={this.handleQueryChange.bind(this)}/>
-                    <input type="radio" name="type" id="post" value="true" checked={true} onChange={this.handleTypeChange.bind(this)}/>
-                    <label for="post">Posts</label>
-                    <input type="radio" name="type" id="user" value="false" onChange={this.handleTypeChange.bind(this)}/>
-                    <label for="user">Users</label>
+                    <input type="text" className='searchbox' value={this.state.query} placeholder="Search..." onChange={this.handleQueryChange} required/>
+                    <label>
+                        <input type="radio" name="type" id="post" value="posts" checked={this.state.selectedType === "posts"} onChange={this.handleTypeChange}/>
+                        Posts
+                    </label>
+                    <label>
+                        <input type="radio" name="type" id="user" value="users" checked={this.state.selectedType === "users"} onChange={this.handleTypeChange}/>
+                        Users
+                    </label>
+                    <label>
+                    <input type="checkbox" id="exact" name="exact" value="exact" checked={this.state.searchExact} onChange={this.handleExactChange}></input>
+                    Exact matches only
+                    </label>
                     <br/>
-                    {this.state.searchPost? this.dispPostOptions() :null }
-                    <input type="radio" name="order" id="asc" value="true" onChange={this.handleOrderChange.bind(this)}/>
-                    <label for="asc">Ascending</label>
-                    <input type="radio" name="order" id="dec" value="false" checked={true} onChange={this.handleOrderChange.bind(this)}/>
-                    <label for="dec">Decending</label>
+                    {this.dispPostOptions()}
+                    <br />
+                    <input type="submit" value="Search" onClick={this.handleSubmit} />
                 </div>
-				{this.state.ready? this.displayPosts(this.state.posts) : null}
-                {this.state.ready? <PlaceholderPost /> : null}
+                < br/>
+				{this.displayResults()}
 			</div> 
 		);
 	}

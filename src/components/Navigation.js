@@ -15,6 +15,8 @@ const Navigation = () => {
           &nbsp; &nbsp; &nbsp;
           <NavLink to="/newpost">New Post</NavLink>
           &nbsp; &nbsp; &nbsp;
+          <NavLink to="/search">Search</NavLink>
+          &nbsp; &nbsp; &nbsp;
           <NavLink to={"/user/" +ReactSession.get('username')} >My Profile</NavLink>
        </div>
     );
