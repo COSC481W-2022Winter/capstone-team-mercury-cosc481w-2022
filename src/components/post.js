@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import pagecss from '../pages/page.css'
 import Comments from './Comments';
-import Tags from './Tags';
 import Likes from './Likes';
 import { Carousel } from 'react-responsive-carousel';
 import '../../node_modules/react-responsive-carousel/lib/styles/carousel.min.css';
@@ -41,8 +40,6 @@ class post extends Component {
                 <p><small>{post.time}</small></p>
                 <p>{post.content}</p>
                 {this.displayImages(post.attachments)}
-                <div><b>Tags: </b><Tags tagList={post.tags} /></div> 
-                <br />
                 <Likes postID={""+post._id} />
                 <Comments postID={""+post._id} />
             </div>
