@@ -10,7 +10,7 @@ const postSchema = new Schema({
 	attachments: [{type: String}],
   comments: [{commenter: String, comment: String}],
   likeCt: {type: Number},
-
+  tags: [{type: String}],
   likers: [{type: String}],
 
 	time:{ type: Date, default: Date.now },
