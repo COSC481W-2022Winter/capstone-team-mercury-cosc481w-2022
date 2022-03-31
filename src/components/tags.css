@@ -1,0 +1,12 @@
+.tag-name {
+    display: block;
+    position: relative;
+}
+
+.tag-list {
+    border: 2px double #000;
+    height: 100px;
+    position: relative;
+    margin-bottom: 10px;
+    width: 100px;
+}
