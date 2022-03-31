@@ -4,11 +4,13 @@ import axios from 'axios';
 import { Navigate } from "react-router-dom";
 import pagecss from './page.css'
 import Navigation from '../components/Navigation';
+import TagAdder from '../components/TagAdder';
 import { FOCUSABLE_SELECTOR } from '@testing-library/user-event/dist/utils';
 import MustLogin from '../components/mustLogin';
- 
+
 //The idea is to give the react component control over the form
 class login extends React.Component {
+  
   constructor(props) {
     super(props);
     this.state = {content: '', filename: '', redir: false, selectedFiles: [], imgURL: null};
@@ -91,6 +93,7 @@ class login extends React.Component {
 
   async handleSubmit(event) {
     var fileResult = "";
+    var tags = [];
     var needsText = (this.state.content == "");
     var needsImage = (this.state.selectedFiles.length == 0);
 
@@ -99,11 +102,18 @@ class login extends React.Component {
       return;
     }
 
+    var tagList = document.querySelector(".tag-list");
+    for (var i = 0; i < tagList.options.length; i++) {
+      if (tagList.options[i].selected) {
+        tags.push(tagList.options[i].value);
+      }
+    }
     fileResult = await this.uploadAllFiles();
     axios.post('/api/postAPI/newPost', {
       username: ReactSession.get("username"),
       content: this.state.content,
-      attachments: fileResult
+      attachments: fileResult,
+      tags: tags
     }).then((response) => {})
     .catch(() => {
       console.log('An error occurred uploading your post');
@@ -131,6 +141,7 @@ class login extends React.Component {
               <textarea rows="25" cols="100" placeholder="Write something to post..." className='inform' value={this.state.content} onChange={this.handleContentChange} />
             </label>
             <br />
+            <TagAdder />
             <input type="submit" value="Post" onClick={this.handleSubmit} />
           
           </div>
