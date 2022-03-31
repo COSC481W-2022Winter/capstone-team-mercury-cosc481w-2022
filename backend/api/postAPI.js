@@ -19,7 +19,8 @@ router.post("/newPost", function(req, res) {
 	var poster = req.body.username + "";
     var text = req.body.content + "";
     var attachments = req.body.attachments;
-    var postData = { postedBy: poster };
+    var tags = req.body.tags || [];
+    var postData = { postedBy: poster, tags: tags };
     console.log("Entering a new post by " + poster);
     if (text) {
         postData.content = text;
