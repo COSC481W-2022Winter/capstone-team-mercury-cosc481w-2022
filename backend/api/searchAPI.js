@@ -3,19 +3,8 @@ const app = express();
 
 var router = express.Router();
 var bodyParser = require('body-parser');
-const post = require('../models/post');
+const Post = require('../models/post');
 const User = require('../models/user');
-
-//API for tags
-axios.post('/api/searchAPI/getPostsWithTag', {
-    tag: this.state.tag
-     }).then((response) => {
-     const data = response.data;
-         this.setState({results: data});
- })
- .catch(() => {
-         console.log('Error retrieving data!');
- });
 
 router.use(bodyParser.urlencoded({ extended: true }));
 
@@ -24,8 +13,6 @@ router.post("/search", function(req, res) {
     const type = req.body.type;
     const sort = req.body.sort;
     const order = req.body.order==="ascending"? 1 : -1;
-    const tag = req.body.tag;
-  
     
     switch (type) {
         case "posts":
@@ -42,12 +29,6 @@ router.post("/search", function(req, res) {
                         res.json(data);
                     });
                 break;
-
-                case "tag": 
-                    Post.find({tags: tag}).sort({"$natural":-1}).then((data) => {
-                        res.json(data);
-                    });
-                break; 
             }
         break;
         case "users":
@@ -56,7 +37,6 @@ router.post("/search", function(req, res) {
             });
 
         break;
-        
     }
 
 });
