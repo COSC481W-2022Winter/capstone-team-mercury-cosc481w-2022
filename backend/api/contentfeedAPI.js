@@ -6,10 +6,11 @@ const app = express();
 var router = express.Router();
 var bodyParser = require('body-parser');
 const Post = require('../models/post');
+const User = require('../models/user');
 
 router.use(bodyParser.urlencoded({ extended: true }));
 console.log("content Feed invoked");
-
+/*
 router.post("/getAllPosts", function(req, res) {	
     let postString = '';
     
@@ -22,6 +23,19 @@ router.post("/getAllPosts", function(req, res) {
         console.log(err);
     });
 
+});
+
+*/
+router.post("/getFollowingPosts", function(req,res){
+    let user = req.body.username;
+
+    User.findOne({username: user}).then((userData) =>{
+        let following = userData.following;
+        Post.find({$or:[{postedBy: following}, {postedBy: user}]}).sort({"$natural":-1}).limit(25)
+            .then((postData) =>{
+                res.json(postData);
+            })
+    });
 });
 
 module.exports = router;
