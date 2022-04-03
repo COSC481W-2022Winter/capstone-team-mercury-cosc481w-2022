@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Logout from '../components/logout';
 import Navigation from '../components/Navigation';
+import { NavLink } from 'react-router-dom';
+import pagecss from './page.css'
 
+import MustLogin from '../components/mustLogin';
+import Comments from '../components/Comments';
+import Likes from '../components/Likes';
 import PlaceholderPost from '../components/placeholderPost/placeholderPost';
-import '../components/placeholderPost/placeholderpost.css'
+import Post from '../components/post';
+import '../components/placeholderPost/placeholderpost.css';
+import { Carousel } from 'react-responsive-carousel';
+import '../../node_modules/react-responsive-carousel/lib/styles/carousel.min.css';
 
 class feed extends Component {
 	
 	state = 
 	{
-		title: '',
-		body: '',
-		posts: []
+		posts:[]
 	}
 
 	//retrieves posts whenever component mounts
@@ -26,7 +31,6 @@ class feed extends Component {
 		.then((response) => {
 			const data = response.data;
 		  	this.setState({ posts: data });
-		  	console.log('Data has been received!' + data);
 		})
 		.catch(() => {
 		  	console.log('Error retrieving data!');
@@ -38,22 +42,19 @@ class feed extends Component {
 		//if there are no posts
 		if (!posts.length) return null;
 		return posts.map((post, index) => (
-				<div className = "post" key = {index}>
-					<h4>{post.postedBy}</h4>
-					<p><small>{post.time}</small></p>
-					<p>{post.content}</p>
-				</div>
-			));
-		}
+			<Post post={post}/>
+		));
+	}
 	
 	//rendering
 	render() {
 		return (  
-				<div>
-					<Navigation />
-					{this.displayPosts(this.state.posts)}
-					<PlaceholderPost />
-				</div> 
+			<div>
+				<MustLogin />
+				<Navigation />
+				{this.displayPosts(this.state.posts)}
+				<PlaceholderPost />
+			</div> 
 		);
 	}
 }

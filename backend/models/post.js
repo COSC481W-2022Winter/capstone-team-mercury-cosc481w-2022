@@ -7,7 +7,12 @@ const postSchema = new Schema({
         required: true
     },
 	content: String,
-	attachments: [{link: String}],
+	attachments: [{type: String}],
+  comments: [{commenter: String, comment: String}],
+  likeCt: {type: Number},
+  tags: [{type: String}],
+  likers: [{type: String}],
+
 	time:{ type: Date, default: Date.now },
 }, {id: true});
 

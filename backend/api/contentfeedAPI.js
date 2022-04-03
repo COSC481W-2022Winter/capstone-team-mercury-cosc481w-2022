@@ -13,9 +13,9 @@ console.log("content Feed invoked");
 router.post("/getAllPosts", function(req, res) {	
     let postString = '';
     
-    Post.find().sort({"$natural":-1})
+    Post.find().sort({"$natural":-1}).limit(25)
         .then((data) => {
-        console.log("Data: " + data);
+        //console.log("Data: " + data);
         res.json(data);
     })
     .catch((err) => {
