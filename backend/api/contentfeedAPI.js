@@ -9,7 +9,7 @@ const Post = require('../models/post');
 
 router.use(bodyParser.urlencoded({ extended: true }));
 console.log("content Feed invoked");
-
+/*
 router.post("/getAllPosts", function(req, res) {	
     let postString = '';
     
@@ -22,6 +22,19 @@ router.post("/getAllPosts", function(req, res) {
         console.log(err);
     });
 
+});
+
+*/
+router.post("/getFollowingPosts", function(req,res){
+    let postString = '';
+
+    Post.find().sort({"following":-1}).limit(25)
+    .then((data) =>{
+        res.json(data);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 });
 
 module.exports = router;

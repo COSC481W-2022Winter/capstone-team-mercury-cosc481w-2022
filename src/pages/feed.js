@@ -26,9 +26,9 @@ class feed extends Component {
 		this.getPosts();
 	}
 
-	//retrieves our posts
+	//retrieves our posts from people that are currently followed
 	getPosts = () => {
-		axios.post('/api/contentfeedAPI/getAllPosts', {}) //api route goes here
+		axios.post('/api/contentfeedAPI/getFollowingPosts', {}) //api route goes here
 		.then((response) => {
 			const data = response.data;
 		  	this.setState({ posts: data });
