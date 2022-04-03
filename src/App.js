@@ -8,6 +8,7 @@ import Register from './pages/register.js';
 import Login from './pages/login.js';
 import UserProfileWrapper from './components/getUsername';
 import EditProile from './pages/editProfile';
+import Search from './pages/search';
  
 ReactSession.setStoreType('localStorage');
 class App extends Component {
@@ -19,6 +20,7 @@ class App extends Component {
              <Route path="/" element={<Login />} exact/>
              <Route path="/newpost" element = {<NewPost />}/>
              <Route path="/feed" element={<Feed />}/>
+             <Route path="/search" element={<Search />}/>
              <Route path="/signup" element={<Register />}/>
              <Route path="/user/:username" element={<UserProfileWrapper />}/>
              <Route path="/editProfile" element={<EditProile />}/>

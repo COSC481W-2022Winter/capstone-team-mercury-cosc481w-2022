@@ -28,6 +28,9 @@ app.use('/api/profileAPI', profileAPI);
 
 const loginAPI = require('./api/loginAPI');
 app.use('/api/loginAPI', loginAPI);
+
+const searchAPI = require('./api/searchAPI');
+app.use('/api/searchAPI', searchAPI);
 //-----
 //app.use(express.static(path.join(__dirname, '../build/')))
 

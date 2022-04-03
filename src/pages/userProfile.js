@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { ReactSession } from 'react-client-session';
 import pagecss from './page.css';
-import Logout from '../components/logout';
+import ProfileBlock from '../components/profileBlock';
 import Navigation from '../components/Navigation';
 import { Navigate, NavLink } from 'react-router-dom';
 
@@ -12,9 +12,7 @@ class profile extends Component {
         state = 
         {
             username: this.props.username,
-            bio: '',
-            name: '',
-            website: '',
+            user: null,
             posts: [],
             likes: [],
             redir: false
@@ -38,9 +36,7 @@ class profile extends Component {
         axios.post('/api/profileAPI/getUserDetails',  {
             username: this.state.username
         }).then((response) => {
-            console.log(response)
-            console.log(response.data[0].website);
-            this.setState({bio: response.data[0].bio,name: response.data[0].name, website: response.data[0].website});
+            this.setState({user: response.data[0]});
         })
                 .catch(() => {
                         console.log('An error occoured');
@@ -63,13 +59,8 @@ class profile extends Component {
                     <div className='userRelatedPosts'>
                         <h2>Posts go here</h2>
                     </div>
-                    <div className='profile'>
-                        <h2>{this.state.username}</h2>
-                        <h3>{this.state.name}</h3>
-                        <p>{this.state.bio}</p>
-                        {this.state.website !=undefined || this.state.website !=""? (<p><a href={this.state.website}>Website</a></p>) : null}
-                        {(ReactSession.get("username") == this.state.username)? (<div><NavLink to="../../editProfile"><input type="submit" value="Edit Profile" /></NavLink> <Logout /> </div>): null}
-                    </div> 
+                    {this.state.user!=null ?<ProfileBlock user={this.state.user} align={"right"}/> : null}
+                    
                 </div>
 		);
 	}
