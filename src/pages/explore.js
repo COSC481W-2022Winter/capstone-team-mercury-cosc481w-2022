@@ -12,10 +12,14 @@ import { FOCUSABLE_SELECTOR } from '@testing-library/user-event/dist/utils';
 class explore extends React.Component {
    constructor(props) {
      super(props);
-     this.state = {results: [], gotResults: false};
+     this.state = {results: [], gotResults: false, selectedSort:'recent' };
      this.displayResults = this.displayResults.bind(this);
      this.handleSubmit = this.handleSubmit.bind(this);
+     this.handleSortChange = this.handleSortChange.bind(this);
    }
+   handleSortChange(event) {
+    this.setState({selectedSort: event.target.value});
+}
 
  
    handleSubmit(event) {
@@ -33,7 +37,8 @@ class explore extends React.Component {
 
     this.setState({results: [], gotResults: false});
     axios.post('/api/searchAPI/getPostsWithTag', {
-        tag: tags
+        tag: tags,
+        sort: this.state.selectedSort
          }).then((response) => {
          const data = response.data;
             for(var i=0;i< data.length; i++) {
@@ -72,7 +77,11 @@ class explore extends React.Component {
           <Navbar />
           <div className='post'>
             <TagAdder />
-            <input type="submit" value="Search" onClick={this.handleSubmit}/>
+            <select className="searchOrder" onChange={this.handleSortChange}>
+                        <option value="recent" selected={this.state.selectedSort === "recent"}>Most Recent</option>
+                        <option value="popular" selected={this.state.selectedSort === "popular"}>Most Popular</option>
+            </select>
+            &nbsp;&nbsp;<input type="submit" value="Search" onClick={this.handleSubmit}/>
           </div>
           <br/>
             <div className='exploreImageWrapper'>

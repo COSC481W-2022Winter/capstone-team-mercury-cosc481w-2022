@@ -9,9 +9,18 @@ router.use(bodyParser.urlencoded({ extended: true }));
 
 router.post("/getPostsWithTag", function(req, res) {    
     const tag = req.body.tag;
-    Post.find({tags: {$in: tag}}).sort({"$natural":-1}).then((data) => {
-        res.json(data);
-    });
+    const recent = req.body.sort === 'recent'? true : false;
+
+    if(recent) {
+        Post.find({tags: {$in: tag}}).sort({"$natural":-1}).then((data) => {
+            res.json(data);
+        });
+    }
+    else {
+        Post.find({tags: {$in: tag}}).sort({likeCt:-1}).then((data) => {
+            res.json(data);
+        });
+    }
  });
 
 
