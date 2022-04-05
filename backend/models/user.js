@@ -18,7 +18,9 @@ const userSchema = new Schema({
     },
     website: {
         type: String
-    }
+    },
+    following: [{type: String}],
+    followers: [{type: String}]
 }, {id: true});
 
 const User = mongoose.model('User', userSchema);

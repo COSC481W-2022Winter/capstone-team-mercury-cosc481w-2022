@@ -14,13 +14,12 @@ router.post("/getPostsWithTag", function(req, res) {
     });
  });
 
+
 router.post("/search", function(req, res) {	
     const query = req.body.exact? req.body.query : { "$regex": req.body.query, "$options": "i" };
     const type = req.body.type;
     const sort = req.body.sort;
     const order = req.body.order==="ascending"? 1 : -1;
-    const tag = req.body.tag;
-  
     
     switch (type) {
         case "posts":
@@ -37,12 +36,6 @@ router.post("/search", function(req, res) {
                         res.json(data);
                     });
                 break;
-
-                case "tag": 
-                    Post.find({tags: tag}).sort({"$natural":-1}).then((data) => {
-                        res.json(data);
-                    });
-                break; 
             }
         break;
         case "users":
@@ -51,7 +44,6 @@ router.post("/search", function(req, res) {
             });
 
         break;
-        
     }
 
 });
