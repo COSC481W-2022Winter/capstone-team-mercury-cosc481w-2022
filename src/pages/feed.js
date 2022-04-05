@@ -24,7 +24,8 @@ class feed extends Component {
 
 	//retrieves posts whenever component mounts
 	componentDidMount = () => {
-		this.getPosts();
+		if(ReactSession.get('username') != "")
+			this.getPosts();
 	}
 
 	//retrieves our posts from people that are currently followed
