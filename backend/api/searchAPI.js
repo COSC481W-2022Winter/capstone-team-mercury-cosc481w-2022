@@ -3,21 +3,16 @@ const app = express();
 
 var router = express.Router();
 var bodyParser = require('body-parser');
-const post = require('../models/post');
+const Post = require('../models/post');
 const User = require('../models/user');
-
-//API for tags
-axios.post('/api/searchAPI/getPostsWithTag', {
-    tag: this.state.tag
-     }).then((response) => {
-     const data = response.data;
-         this.setState({results: data});
- })
- .catch(() => {
-         console.log('Error retrieving data!');
- });
-
 router.use(bodyParser.urlencoded({ extended: true }));
+
+router.post("/getPostsWithTag", function(req, res) {    
+    const tag = req.body.tag;
+    Post.find({tags: {$in: tag}}).sort({"$natural":-1}).then((data) => {
+        res.json(data);
+    });
+ });
 
 router.post("/search", function(req, res) {	
     const query = req.body.exact? req.body.query : { "$regex": req.body.query, "$options": "i" };
