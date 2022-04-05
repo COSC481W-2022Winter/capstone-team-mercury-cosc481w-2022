@@ -136,6 +136,7 @@ class CommentBox extends React.Component {
     _handleSubmit(event) { 
       event.preventDefault();   // prevents page from reloading on submit
       let author = ReactSession.get("username");
+      this.setState({content: ""});
       this.props.addComment(author, this.state.content);
     }
   } // end CommentForm component
