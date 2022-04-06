@@ -86,7 +86,6 @@ class profile extends Component {
     var bodyFormData = new FormData();
     bodyFormData.append("username", this.state.username);
     bodyFormData.append("image", this.state.avataradr);
-    console.log(this.state.avataradr);
 
     axios({
       method: "post",
@@ -95,17 +94,14 @@ class profile extends Component {
       headers: { "Content-Type": "multipart/form-data" },
     })
       .then(function (response) {
-        console.log(response);
       })
       .catch(function (response) {
-        console.log(response);
       });
   }
   banner(params) {
     var bodyFormData = new FormData();
     bodyFormData.append("username", this.state.username);
     bodyFormData.append("image", this.state.banneradr);
-    console.log(this.state.banneradr);
 
     axios({
       method: "post",
@@ -114,10 +110,8 @@ class profile extends Component {
       headers: { "Content-Type": "multipart/form-data" },
     })
       .then(function (response) {
-        console.log(response);
       })
       .catch(function (response) {
-        console.log(response);
       });
   }
 
@@ -127,8 +121,6 @@ class profile extends Component {
         username: this.state.username,
       })
       .then((response) => {
-        console.log(response);
-        console.log(response.data[0].username);
         this.setState({
           bio: response.data[0].bio,
           name: response.data[0].name,

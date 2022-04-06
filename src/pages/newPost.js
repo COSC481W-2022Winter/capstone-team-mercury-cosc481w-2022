@@ -75,7 +75,6 @@ class login extends React.Component {
     })
     .then(res => res.json())
     .then(data => {
-      console.log(data)
       var result = data.secure_url;
       resolve(result);
     })

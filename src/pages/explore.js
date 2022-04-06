@@ -47,7 +47,6 @@ class explore extends React.Component {
                 }
             }
             this.setState({gotResults: true});
-            console.log(this.state.results);
      })
      .catch((err) => {
              console.log(err);

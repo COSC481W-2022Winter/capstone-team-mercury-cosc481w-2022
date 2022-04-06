@@ -49,9 +49,10 @@ class search extends Component {
     handleSortChange(event) {
         this.setState({selectedSort: event.target.value});
     }
-    handleSubmit(event) {
+    async handleSubmit(event) {
+        await this.setState({query: this.state.query.trim()})
         if(this.state.query ==="") {
-            alert("Please enter a search query!")
+            alert("Please enter a valid search query!")
             return;
         }
        this.setState({results: [], gotResults: false});
@@ -92,7 +93,6 @@ class search extends Component {
             exact: this.state.searchExact
         }).then((response) => {
 			const data = response.data;
-		  	console.log(data);
             this.setState({results: data, gotResults: true});
             
 		})

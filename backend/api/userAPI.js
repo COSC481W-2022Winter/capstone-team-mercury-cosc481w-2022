@@ -13,14 +13,11 @@ router.use(bodyParser.urlencoded({ extended: true }));
 //results in "false" if this is not the case
 router.post("/checkUser", function (req, res) {
   const user = req.body.username;
-  console.log("Checking for user w/ username: " + user);
 
   User.countDocuments({ username: user }, function (err, count) {
     if (count > 0) {
-      console.log("They exist");
       res.send("true");
     } else {
-      console.log("They don't exist");
       res.send(false);
     }
   });
@@ -32,7 +29,6 @@ router.post("/newUser", function (req, res) {
   //get user data
   var name = req.body.username + "";
   var pass = req.body.password + "";
-  console.log("Entering a new user: " + req.body.username);
 
   //add user to the database
   const user = new User({
@@ -47,8 +43,6 @@ router.post("/newUser", function (req, res) {
   user
     .save()
     .then((result) => {
-      console.log(result);
-      console.log("Success!");
     })
     .catch((err) => {
       console.log(err);

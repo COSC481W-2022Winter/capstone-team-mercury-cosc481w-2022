@@ -35,20 +35,20 @@ router.post("/search", function(req, res) {
 
             switch (sort) {
                 case "recent":
-                    Post.find({$or:[{postedBy: query },{content: query }, {tags: query}]}).sort({"$natural":order}).limit(25).then((data) => {
+                    Post.find({$or:[{postedBy: query },{content: query }, {tags: query}]}).sort({"$natural":order}).then((data) => {
                         res.json(data);
                     });
                 break;
             
                 case "popular":
-                    Post.find({$or:[{postedBy: query },{content: query } , {tags: query}]}).sort({likeCt:order}).limit(25).then((data) => {
+                    Post.find({$or:[{postedBy: query },{content: query } , {tags: query}]}).sort({likeCt:order}).then((data) => {
                         res.json(data);
                     });
                 break;
             }
         break;
         case "users":
-            User.find({$or:[{username: query },{name: query }]}).sort({"$natural":-1}).limit(25).then((data) => {
+            User.find({$or:[{username: query },{name: query }]}).sort({"$natural":-1}).then((data) => {
                 res.json(data);
             });
 

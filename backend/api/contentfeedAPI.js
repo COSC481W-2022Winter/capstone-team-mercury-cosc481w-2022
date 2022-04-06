@@ -9,8 +9,7 @@ const Post = require('../models/post');
 const User = require('../models/user');
 
 router.use(bodyParser.urlencoded({ extended: true }));
-console.log("content Feed invoked");
-/*
+/* //old content feed route
 router.post("/getAllPosts", function(req, res) {	
     let postString = '';
     
@@ -31,7 +30,7 @@ router.post("/getFollowingPosts", function(req,res){
 
     User.findOne({username: user}).then((userData) =>{
         let following = userData.following;
-        Post.find({$or:[{postedBy: following}, {postedBy: user}]}).sort({"$natural":-1}).limit(25)
+        Post.find({$or:[{postedBy: following}, {postedBy: user}]}).sort({"$natural":-1}).limit(50)
             .then((postData) =>{
                 res.json(postData);
             })
