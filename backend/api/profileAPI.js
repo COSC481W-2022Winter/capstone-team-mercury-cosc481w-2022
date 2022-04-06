@@ -1,5 +1,7 @@
 var express = require("express");
 const app = express();
+const cloudinary = require("../utils/cloudinary");
+const upload = require("../utils/multer");
 
 var router = express.Router();
 var bodyParser = require('body-parser');
@@ -49,27 +51,21 @@ router.post("/editProfile",function(req,res){
     
 })
 
-
-// Get user's profile picture for display
-router.post("/getProfilePic", function(req,res){
-    const user = req.body.us;
-    console.log("Verifying valid username: " + user);
-
-    User.find({website:user}, function(err){
-        res.send(data.newPhoto);
-    });
+router.post("/getprofilepic", async (req, res) => {
+  try {
+    let user = await User.findOne({ username: req.body.username });
+    res.json(user.avatarurl);
+  } catch (err) {
+    console.log(err);
+  }
 });
-
-
-
-// Change the user's profile picture
-router.post("/changeProfilePic", function(req,res){
-    const user = req.body.website;
-    console.log("Checking for website link..." + user);
-
-    User.find({website:user}, function(err){
-        res.send(data.newphoto);
-    });
+router.post("/getbanner", async (req, res) => {
+  try {
+    let user = await User.findOne({ username: req.body.username });
+    res.json(user.bannerurl);
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 
@@ -112,6 +108,7 @@ router.post("/follow", function(req, res) {
 router.post("/doesUserFollow", function(req, res) {
     const thisUser = req.body.thisUser;
     const userToCheckFollow = req.body.username;
+    console.log(thisUser + "    " + userToCheckFollow);
     
     User.findOne({username: thisUser}).then((user) => {
         console.log(user.following);
@@ -122,6 +119,59 @@ router.post("/doesUserFollow", function(req, res) {
         else 
             res.send(false);
     });
+});
+
+router.post("/updateProfilePic", upload.single("image"), async (req, res) => {
+  try {
+    // Upload image to cloudinary
+    console.log("in uploading proflie pic");
+    console.log(req.body.username);
+    const user1 = await User.findOne({ username: req.body.username });
+    if (user1.avatarid != null) {
+      await cloudinary.uploader.destroy(user1.avatarid);
+    }
+    const result = await cloudinary.uploader.upload(req.file.path);
+    console.log("Updating " + req.body.username + "'s profile picture");
+    User.findOneAndUpdate(
+      { username: req.body.username },
+      {
+        $set: {
+          avatarurl: result.secure_url,
+          avatarid: result.public_id,
+        },
+      }
+    ).exec();
+    const user = await User.findOne({ username: req.body.username });
+    res.json(user.avatarurl);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.post("/updatebanner", upload.single("image"), async (req, res) => {
+  try {
+    // Upload image to cloudinary
+    const user1 = await User.findOne({ username: req.body.username });
+    console.log(user1);
+    if (user1.bannerid != null) {
+      await cloudinary.uploader.destroy(user1.bannerid);
+    }
+    const result = await cloudinary.uploader.upload(req.file.path);
+    console.log("Updating " + req.body.username + "'s banner");
+    User.findOneAndUpdate(
+      { username: req.body.username },
+      {
+        $set: {
+          bannerurl: result.secure_url,
+          bannerid: result.public_id,
+        },
+      }
+    ).exec();
+    const user = await User.findOne({ username: req.body.username });
+    res.json(user.bannerurl);
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 
