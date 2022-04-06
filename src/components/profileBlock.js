@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { ReactSession } from "react-client-session";
 import pagecss from "../pages/page.css";
+import FollowButton from './followButton';
 import Logout from "./logout";
 import { NavLink } from "react-router-dom";
 
@@ -21,8 +22,7 @@ class profileBLock extends Component {
           this.state.align === "center"
             ? { margin: "auto" }
             : { float: this.state.align }
-        }
-      >
+        }>
         <div class="card">
           <div class="ds-top">
             <img src={this.state.user.bannerurl} alt="Banner"></img>
@@ -47,9 +47,11 @@ class profileBLock extends Component {
                 <input type="submit" value="Edit Profile" />
               </NavLink>{" "}
               <Logout />{" "}
-            {!(((ReactSession.get("username") == this.state.user.username) || ReactSession.get("username") == "")) && <FollowButton username={this.state.user.username}/>}
         </div> 
-         );
-    }
+         ) : null};
+         {!(((ReactSession.get("username") == this.state.user.username) || ReactSession.get("username") == "")) && <FollowButton username={this.state.user.username}/>}
+         </div> 
+         </div> 
+    );}
 }
 export default profileBLock;

@@ -108,6 +108,7 @@ router.post("/follow", function(req, res) {
 router.post("/doesUserFollow", function(req, res) {
     const thisUser = req.body.thisUser;
     const userToCheckFollow = req.body.username;
+    console.log(thisUser + "    " + userToCheckFollow);
     
     User.findOne({username: thisUser}).then((user) => {
         console.log(user.following);
