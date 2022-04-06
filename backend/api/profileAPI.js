@@ -9,8 +9,6 @@ const User = require('../models/user');
 
 router.use(bodyParser.urlencoded({ extended: true }));
 
-
-
 //Get the username to return to the frontend
 
 router.post("/getUsername", function(req, res) {
@@ -71,6 +69,58 @@ router.post("/changeProfilePic", function(req,res){
 
     User.find({website:user}, function(err){
         res.send(data.newphoto);
+    });
+});
+
+
+router.post("/follow", function(req, res) {
+    const thisUser = req.body.thisUser;
+    const userToFollow = req.body.username;
+
+    User.findOne({username: thisUser}).then((user) => {
+        if(user.following.includes(userToFollow)) {
+            User.findOneAndUpdate(
+                { username: userToFollow }, 
+                { $pull: {followers: thisUser}}
+            ).then(result => {});
+            
+            User.findOneAndUpdate(
+                { username: thisUser }, 
+                { $pull: {following: userToFollow}}
+            ).then(result => {});
+
+        }
+
+
+        else {
+            User.findOneAndUpdate(
+                { username: userToFollow }, 
+                { $push: {followers: thisUser}}
+            ).then(result => {});
+            
+            User.findOneAndUpdate(
+                { username: thisUser }, 
+                { $push: {following: userToFollow}}
+            ).then(result => {});
+        }
+
+    });
+    res.json(true);
+});
+
+
+router.post("/doesUserFollow", function(req, res) {
+    const thisUser = req.body.thisUser;
+    const userToCheckFollow = req.body.username;
+    
+    User.findOne({username: thisUser}).then((user) => {
+        console.log(user.following);
+        console.log(userToCheckFollow);
+        if(user.following.includes(userToCheckFollow+"")) {
+            res.send("true")
+        }
+        else 
+            res.send(false);
     });
 });
 

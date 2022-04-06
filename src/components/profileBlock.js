@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ReactSession } from 'react-client-session';
+import FollowButton from './followButton';
 import pagecss from '../pages/page.css';
 import Logout from './logout';
 import { NavLink } from 'react-router-dom';
@@ -21,6 +22,7 @@ class profileBLock extends Component {
             <p>{this.state.user.bio}</p>
             {this.state.user.website !=undefined || this.state.user.website !=""? (<p><a href={this.state.user.website}>Website</a></p>) : null}
             {(ReactSession.get("username") == this.state.user.username)? (<div><NavLink to="../../editProfile"><input type="submit" value="Edit Profile" /></NavLink> <Logout /> </div>): null}
+            {!(((ReactSession.get("username") == this.state.user.username) || ReactSession.get("username") == "")) && <FollowButton username={this.state.user.username}/>}
         </div> 
          );
     }
