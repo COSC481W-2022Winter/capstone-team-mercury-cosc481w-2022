@@ -3,7 +3,7 @@ import axios from 'axios';
 import Navigation from '../components/Navigation';
 import pagecss from './page.css'
 import Post from '../components/post'
-import ProfileBlock from '../components/ProfileBlock';
+import ProfileBlock from '../components/profileBlock';
 
 import MustLogin from '../components/mustLogin';
 
