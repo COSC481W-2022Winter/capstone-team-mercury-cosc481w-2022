@@ -48,7 +48,7 @@ class profileBLock extends Component {
               </NavLink>{" "}
               <Logout />{" "}
         </div> 
-         ) : null};
+         ) : null}
          {!(((ReactSession.get("username") == this.state.user.username) || ReactSession.get("username") == "")) && <FollowButton username={this.state.user.username}/>}
          </div> 
          </div> 

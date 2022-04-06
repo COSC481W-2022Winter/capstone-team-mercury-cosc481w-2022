@@ -33,6 +33,8 @@ const userSchema = new Schema(
     bannerurl: {
       type: String,
     },
+    following: [{type: String}],
+    followers: [{type: String}]
   },
   { id: true }
 );
