@@ -15,10 +15,8 @@ router.use(bodyParser.urlencoded({ extended: true }));
 
 router.post("/getUsername", function(req, res) {
     const user = req.body.username;
-    console.log("Checking for user w/ username: " +user);
     
     User.find({username: user}).then((data) => {
-        console.log(data)
     res.send(data.username);
 })
 });
@@ -26,7 +24,6 @@ router.post("/getUsername", function(req, res) {
 // Get the bio for the user (Placeholder for now)
 router.post("/getUserDetails", function(req, res) {
     const user = req.body.username;
-    console.log("getting data for user w/ username: " +user);
     
     User.find({username: user}) .then((data) => {
         res.json(data);
@@ -37,7 +34,6 @@ router.post("/getUserDetails", function(req, res) {
 // Update/Change the user's bio
 
 router.post("/editProfile",function(req,res){
-    console.log("Updating "+req.body.username +"'s profile");
     var profileChanges = {
         name: req.body.name,
         bio: req.body.bio,
@@ -108,11 +104,8 @@ router.post("/follow", function(req, res) {
 router.post("/doesUserFollow", function(req, res) {
     const thisUser = req.body.thisUser;
     const userToCheckFollow = req.body.username;
-    console.log(thisUser + "    " + userToCheckFollow);
     
     User.findOne({username: thisUser}).then((user) => {
-        console.log(user.following);
-        console.log(userToCheckFollow);
         if(user.following.includes(userToCheckFollow+"")) {
             res.send("true")
         }
@@ -124,14 +117,11 @@ router.post("/doesUserFollow", function(req, res) {
 router.post("/updateProfilePic", upload.single("image"), async (req, res) => {
   try {
     // Upload image to cloudinary
-    console.log("in uploading proflie pic");
-    console.log(req.body.username);
     const user1 = await User.findOne({ username: req.body.username });
     if (user1.avatarid != null) {
       await cloudinary.uploader.destroy(user1.avatarid);
     }
     const result = await cloudinary.uploader.upload(req.file.path);
-    console.log("Updating " + req.body.username + "'s profile picture");
     User.findOneAndUpdate(
       { username: req.body.username },
       {
@@ -144,7 +134,6 @@ router.post("/updateProfilePic", upload.single("image"), async (req, res) => {
     const user = await User.findOne({ username: req.body.username });
     res.json(user.avatarurl);
   } catch (err) {
-    console.log(err);
   }
 });
 
@@ -152,12 +141,11 @@ router.post("/updatebanner", upload.single("image"), async (req, res) => {
   try {
     // Upload image to cloudinary
     const user1 = await User.findOne({ username: req.body.username });
-    console.log(user1);
+  
     if (user1.bannerid != null) {
       await cloudinary.uploader.destroy(user1.bannerid);
     }
     const result = await cloudinary.uploader.upload(req.file.path);
-    console.log("Updating " + req.body.username + "'s banner");
     User.findOneAndUpdate(
       { username: req.body.username },
       {

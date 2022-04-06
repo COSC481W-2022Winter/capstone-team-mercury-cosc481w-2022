@@ -65,7 +65,7 @@
 }
 .profile {
     display: table;
-	width: 30%;
+	width: 310px;
 	margin: 10px;
 	border: 2px ridge #999;
 	padding: 10px;
@@ -168,4 +168,16 @@
   border-radius: 50%;
   background: white;
   overflow: hidden;
+}
+
+.navbarLogo {
+	display: inline;
+	vertical-align: middle;
+	margin-right: 5px;
+	background: white;
+}
+
+.navbar {
+    width: 100%;
+    border-bottom: 2px ridge black;
 }

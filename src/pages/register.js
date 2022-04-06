@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import sha from 'js-sha512';
+import Navbar from '../components/Navigation';
 import { Navigate } from "react-router-dom";
 import pagecss from './page.css'
  
@@ -74,6 +75,7 @@ class register extends React.Component {
     else {
      return (
        <div>
+         <Navbar/>
         <div className='login'>
             <label>
             Username: &nbsp;

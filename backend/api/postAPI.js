@@ -21,21 +21,16 @@ router.post("/newPost", function(req, res) {
     var attachments = req.body.attachments;
     var tags = req.body.tags || [];
     var postData = { postedBy: poster, tags: tags };
-    console.log("Entering a new post by " + poster);
     if (text) {
         postData.content = text;
-        console.log(text);
     }
     if (attachments) {
         postData.attachments = attachments;
-        console.log(attachments);
     }
 
     //add post to the database
     const post = new Post(postData);
     post.save().then((result) => {
-        console.log(result);
-        console.log("Success!");
     })
     .catch((err) => {
         console.log(err);
@@ -48,13 +43,11 @@ router.post("/newPost", function(req, res) {
 
 router.post("/getAllComments", function(req,res){
     const postID = req.body.postID;
-    console.log("Getting all comments for post: "+postID);
 
     Post.findOne({_id:  postID }).then(post => {
             res.send(post.comments);
     }); 
 
-    //console.log(comment);
 });
 
 
@@ -62,10 +55,6 @@ router.post("/getAllComments", function(req,res){
 // Attach a new comment to a post
 
 router.post("/writeNewComment", function(req,res){
-
-    console.log("Adding a new comment on " +req.body.postID)
-    console.log(req.body.commenter);
-    console.log(req.body.comment);
     var comment = {
         commenter: req.body.commenter,
         comment: req.body.comment
@@ -74,7 +63,6 @@ router.post("/writeNewComment", function(req,res){
         { _id: req.body.postID }, 
         { $push: { comments: comment } },
     ).then(post => {
-        console.log(post.comments)
     });
 
 });
@@ -82,7 +70,6 @@ router.post("/writeNewComment", function(req,res){
 
 //API like button 
 router.post('/getLikes', function(req, res){
-    console.log("Getting like information for " +req.body.postID)
     
     Post.findById(
         { _id: req.body.postID }
@@ -96,7 +83,6 @@ router.post('/getLikes', function(req, res){
 });
 
 router.post('/didUserLike', async(req, res) =>{
-    console.log("Getting like information for " +req.body.postID)
     
     Post.findById( {_id: req.body.postID }).then(post => {
         res.send(post.likers.includes(req.body.username))
@@ -104,7 +90,6 @@ router.post('/didUserLike', async(req, res) =>{
 });
 
 router.post('/like', async(req, res) =>{
-    console.log("Liking " +req.body.postID)
     
     Post.findById( {_id: req.body.postID }).then(post => {
         if(post.likers.includes(req.body.username))
@@ -116,14 +101,12 @@ router.post('/like', async(req, res) =>{
         { _id: req.body.postID }, 
         { $push: {likers: req.body.username}}
     ).then(post => {
-        console.log("liked!");
     });
 
     Post.findOneAndUpdate(
         { _id: req.body.postID }, 
         { $inc: {likeCt: 1}  }
     ).then(post => {
-        console.log("liked!");
     });
 
 

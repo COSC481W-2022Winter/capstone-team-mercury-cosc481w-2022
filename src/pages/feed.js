@@ -47,7 +47,10 @@ class feed extends Component {
 		//if there are no posts
 		if (!posts.length) return null;
 		return posts.map((post, index) => (
-			<Post post={post}/>
+			<>
+				<Post post={post}/>
+				<br/>
+			</>
 		));
 	}
 	
