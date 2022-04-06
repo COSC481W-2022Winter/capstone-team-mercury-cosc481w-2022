@@ -5,8 +5,24 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 const Post = require('../models/post');
 const User = require('../models/user');
-
 router.use(bodyParser.urlencoded({ extended: true }));
+
+router.post("/getPostsWithTag", function(req, res) {    
+    const tag = req.body.tag;
+    const recent = req.body.sort === 'recent'? true : false;
+
+    if(recent) {
+        Post.find({tags: {$in: tag}}).sort({"$natural":-1}).then((data) => {
+            res.json(data);
+        });
+    }
+    else {
+        Post.find({tags: {$in: tag}}).sort({likeCt:-1}).then((data) => {
+            res.json(data);
+        });
+    }
+ });
+
 
 router.post("/search", function(req, res) {	
     const query = req.body.exact? req.body.query : { "$regex": req.body.query, "$options": "i" };

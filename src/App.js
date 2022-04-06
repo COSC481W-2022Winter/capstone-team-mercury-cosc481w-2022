@@ -9,6 +9,7 @@ import Login from './pages/login.js';
 import UserProfileWrapper from './components/getUsername';
 import EditProile from './pages/editProfile';
 import Search from './pages/search';
+import Explore from './pages/explore';
  
 ReactSession.setStoreType('localStorage');
 class App extends Component {
@@ -24,6 +25,7 @@ class App extends Component {
              <Route path="/signup" element={<Register />}/>
              <Route path="/user/:username" element={<UserProfileWrapper />}/>
              <Route path="/editProfile" element={<EditProile />}/>
+             <Route path="/explore" element={<Explore />}/>
            </Routes>
 
         </div> 

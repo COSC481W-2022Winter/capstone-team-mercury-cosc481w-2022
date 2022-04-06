@@ -12,6 +12,24 @@
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
+.exploreImageWrapper {
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.exploreImage {
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+    height: 300px;
+    border: 2px ridge #999;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
 
 .inform {
     padding: 3px;
