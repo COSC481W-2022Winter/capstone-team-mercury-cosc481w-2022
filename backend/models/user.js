@@ -34,7 +34,8 @@ const userSchema = new Schema(
       type: String,
     },
     following: [{type: String}],
-    followers: [{type: String}]
+    followers: [{type: String}],
+    likesVisible: {type: Boolean, default: true},
   },
   { id: true }
 );
