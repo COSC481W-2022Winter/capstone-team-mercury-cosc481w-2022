@@ -26,6 +26,7 @@ const Navigation = () => {
             You are logged in as: {ReactSession.get('username')}
             &nbsp; &nbsp;
             <Logout />
+            <NavLink to="/settings" style={{float: 'right'}}>Account Settings</NavLink>
          </div>
          <br />
         </>

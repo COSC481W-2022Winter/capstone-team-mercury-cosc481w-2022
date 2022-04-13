@@ -5,6 +5,8 @@ var router = express.Router();
 var bodyParser = require("body-parser");
 
 const User = require("../models/user");
+const Post = require("../models/post");
+const Notif = require("../models/notification");
 
 router.use(bodyParser.urlencoded({ extended: true }));
 
@@ -47,5 +49,21 @@ router.post("/newUser", function (req, res) {
     .catch((err) => {
       console.log(err);
     });
+});
+
+router.post("/deleteUser", function (req, res) {
+  const user = req.body.username;
+
+  Post.deleteMany({postedBy: user}).exec(); //removes all posts by the user
+  Post.updateMany({}, {$pull: {comments: {commenter: user}}}).exec(); //removes comments from user from all posts
+  Post.updateMany({likers: user}, {$pull: {likers: user}, $inc: {likeCt: -1} }).exec(); //removes user's likes
+  Notif.deleteMany({$or: [{toUser: user}, {fromUser: user}]}).exec(); //removes all notifications a user is a part of
+  User.updateMany({}, {$pull: {followers: user}}).exec(); //removes the user from other's follower/following lists
+  User.updateMany({}, {$pull: {following: user}}).exec();
+  User.deleteOne({username: user}).exec(); //removes the user themselves
+  res.send(true);
+
+
+
 });
 module.exports = router;
