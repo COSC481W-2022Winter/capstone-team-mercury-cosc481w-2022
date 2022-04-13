@@ -10,6 +10,7 @@ import UserProfileWrapper from './components/getUsername';
 import EditProile from './pages/editProfile';
 import Search from './pages/search';
 import Explore from './pages/explore';
+import AccountSettings from './pages/accountSettings'
  
 ReactSession.setStoreType('localStorage');
 class App extends Component {
@@ -26,6 +27,7 @@ class App extends Component {
              <Route path="/user/:username" element={<UserProfileWrapper />}/>
              <Route path="/editProfile" element={<EditProile />}/>
              <Route path="/explore" element={<Explore />}/>
+             <Route path="/settings" element={<AccountSettings />}/>
            </Routes>
 
         </div> 
