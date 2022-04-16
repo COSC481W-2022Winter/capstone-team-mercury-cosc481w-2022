@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 
 const Post = require('../models/post');
+const Notif = require('../models/notification');
 
 router.use(bodyParser.urlencoded({ extended: true }));
 
@@ -59,10 +60,27 @@ router.post("/writeNewComment", function(req,res){
         commenter: req.body.commenter,
         comment: req.body.comment
     };
+    var postAuthor = "";
     Post.findOneAndUpdate(
         { _id: req.body.postID }, 
         { $push: { comments: comment } },
     ).then(post => {
+
+        var fromUser = req.body.commenter + "";
+        var toUser = post.postedBy + "";
+        var notifType = "comment";
+        var context = req.body.postID;
+        if(fromUser !== toUser) {
+            var notifData = {fromUser: fromUser, toUser: toUser, notifType: notifType, context: context};
+            const notif = new Notif(notifData);
+            notif.save()
+        }
+
+
+
+    })
+    .catch((err) => {
+        console.log(err);
     });
 
 });
@@ -97,19 +115,21 @@ router.post('/like', async(req, res) =>{
     });
 
 
-    Post.findOneAndUpdate(
-        { _id: req.body.postID }, 
-        { $push: {likers: req.body.username}}
-    ).then(post => {
-    });
 
     Post.findOneAndUpdate(
         { _id: req.body.postID }, 
-        { $inc: {likeCt: 1}  }
+        { $push: {likers: req.body.username}, $inc: {likeCt: 1}  }
     ).then(post => {
+        var fromUser = req.body.username + "";
+        var toUser = post.postedBy + "";
+        var notifType = "like";
+        var context = req.body.postID;
+        if(fromUser !== toUser) {
+            var notifData = {fromUser: fromUser, toUser: toUser, notifType: notifType, context: context};
+            const notif = new Notif(notifData);
+            notif.save()
+        }
     });
-
-
 });
 
 module.exports = router;

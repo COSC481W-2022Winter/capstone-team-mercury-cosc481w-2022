@@ -6,9 +6,10 @@ import UserProfile from '../pages/userProfile';
 function GetUsername() {
 
     const { username } = useParams();
+    const k = username;
 
     return (
-            <UserProfile username={username} />
+            <UserProfile username={username} key={k} />
       
     );
 }
