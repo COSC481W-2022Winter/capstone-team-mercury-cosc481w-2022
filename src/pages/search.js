@@ -130,7 +130,7 @@ class search extends Component {
 			<div>
 				<MustLogin />
 				<Navigation />
-                <div className="post">
+                <div className="default-div">
                     <input type="text" className='searchbox' value={this.state.query} placeholder="Search..." onChange={this.handleQueryChange} required/>
                     <label>
                         <input type="radio" name="type" id="post" value="posts" checked={this.state.selectedType === "posts"} onChange={this.handleTypeChange}/>

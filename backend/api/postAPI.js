@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 
 const Post = require('../models/post');
+const User = require('../models/user');
 
 router.use(bodyParser.urlencoded({ extended: true }));
 
@@ -110,6 +111,21 @@ router.post('/like', async(req, res) =>{
     });
 
 
+});
+
+router.post("/getPost", function (req, res) {
+    const postId = req.body.postId;
+
+    Post.findById(
+        { _id: postId }
+    ).then(post => {
+        User.findOne({ username: post.postedBy }).then((user) => {
+            res.send({
+                user: user,
+                post: post
+            });
+        })
+    });
 });
 
 module.exports = router;

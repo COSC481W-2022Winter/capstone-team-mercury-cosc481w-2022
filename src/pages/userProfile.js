@@ -52,14 +52,15 @@ class profile extends Component {
             return (  
                 <div>
                     
-                    <Navigation />;
+                    <Navigation />
+                    {this.state.user!=null ?<ProfileBlock user={this.state.user} align={"right"}/> : null}
+
                     <div className='userRelatedPosts'>
                         <h2>Likes go here</h2>
                     </div>
                     <div className='userRelatedPosts'>
                         <h2>Posts go here</h2>
                     </div>
-                    {this.state.user!=null ?<ProfileBlock user={this.state.user} align={"right"}/> : null}
                     
                 </div>
 		);
