@@ -21,6 +21,8 @@ const Navigation = () => {
           &nbsp; &nbsp; &nbsp;
           <NavLink to="/explore">Explore</NavLink>
           &nbsp; &nbsp; &nbsp;
+          <NavLink to="/notifications">Notifications</NavLink>
+          &nbsp; &nbsp; &nbsp;
             <NavLink to={"/user/" +ReactSession.get('username')} >My Profile</NavLink>
             &nbsp; &nbsp; &nbsp;
             You are logged in as: {ReactSession.get('username')}

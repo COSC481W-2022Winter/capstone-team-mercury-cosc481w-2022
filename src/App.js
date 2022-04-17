@@ -11,6 +11,7 @@ import PostPageWrapper from './components/getPost';
 import EditProile from './pages/editProfile';
 import Search from './pages/search';
 import Explore from './pages/explore';
+import Notifications from './pages/notifications';
 import AccountSettings from './pages/accountSettings'
  
 ReactSession.setStoreType('localStorage');
@@ -30,6 +31,7 @@ class App extends Component {
              <Route path="/post/:postId" element={<PostPageWrapper />}/>
              <Route path="/editProfile" element={<EditProile />}/>
              <Route path="/explore" element={<Explore />}/>
+             <Route path="/notifications" element={<Notifications />}/>
              <Route path="/settings" element={<AccountSettings />}/>
            </Routes>
 
