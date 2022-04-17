@@ -7,6 +7,7 @@ import NewPost from './pages/newPost.js';
 import Register from './pages/register.js';
 import Login from './pages/login.js';
 import UserProfileWrapper from './components/getUsername';
+import PostPageWrapper from './components/getPost';
 import EditProile from './pages/editProfile';
 import Search from './pages/search';
 import Explore from './pages/explore';
@@ -26,6 +27,8 @@ class App extends Component {
              <Route path="/search" element={<Search />}/>
              <Route path="/signup" element={<Register />}/>
              <Route path="/user/:username" element={<UserProfileWrapper />}/>
+             {/* Get a list of all posts from the db. Loop over list. Render the following route for each post. */}
+             <Route path="/post/:postId" element={<PostPageWrapper />}/>
              <Route path="/editProfile" element={<EditProile />}/>
              <Route path="/explore" element={<Explore />}/>
              <Route path="/notifications" element={<Notifications />}/>

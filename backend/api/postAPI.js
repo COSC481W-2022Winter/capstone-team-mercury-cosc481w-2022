@@ -7,11 +7,10 @@ var bodyParser = require('body-parser');
 
 
 const Post = require('../models/post');
+const User = require('../models/user');
 const Notif = require('../models/notification');
 
 router.use(bodyParser.urlencoded({ extended: true }));
-
-
 
 //new post callback
 //puts a new post into the database
@@ -129,6 +128,21 @@ router.post('/like', async(req, res) =>{
             const notif = new Notif(notifData);
             notif.save()
         }
+    });
+});
+
+router.post("/getPost", function (req, res) {
+    const postId = req.body.postId;
+
+    Post.findById(
+        { _id: postId }
+    ).then(post => {
+        User.findOne({ username: post.postedBy }).then((user) => {
+            res.send({
+                user: user,
+                post: post
+            });
+        })
     });
 });
 

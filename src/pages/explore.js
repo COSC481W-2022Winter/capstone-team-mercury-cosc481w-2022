@@ -74,7 +74,7 @@ class explore extends React.Component {
       return (
         <div>
           <Navbar />
-          <div className='post'>
+          <div className="default-div">
             <TagAdder />
             <select className="searchOrder" onChange={this.handleSortChange}>
                         <option value="recent" selected={this.state.selectedSort === "recent"}>Most Recent</option>

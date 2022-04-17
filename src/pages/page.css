@@ -5,6 +5,50 @@
 	margin: auto;
     margin-bottom: 20px;
 	border: 2px ridge #999;
+	text-align:left;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    text-decoration: none;
+}
+
+.default-div {
+    display: block;
+	width: 70%;
+    padding: 10px;
+    margin-top: 10px;
+	margin: auto;
+    margin-bottom: 20px;
+	border: 2px ridge #999;
+	text-align:left;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    text-decoration: none;
+}
+
+.margin-zero {
+    margin: 0;
+}
+
+.post-link{
+    text-decoration: none;
+    color: black;
+}
+
+.post:hover{
+    background-color: rgb(225, 235, 245);
+}
+
+.post-page {
+    margin: 0;
+    float: left;
+	width: 70%;
+    margin-top: 10px;
+    margin-bottom: 20px;
+	border: 2px ridge #999;
 	padding: 10px;
 	text-align:left;
     border-top-left-radius: 5px;
@@ -12,6 +56,7 @@
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
+
 .exploreImageWrapper {
     display:block;
     margin-left: auto;
