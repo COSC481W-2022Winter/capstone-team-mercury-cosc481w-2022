@@ -17,8 +17,7 @@ class profile extends Component {
             likes: [],
             redir: false
         }
-    
-
+        
     componentDidMount() {
 
         axios.post('/api/userAPI/checkUser',  {

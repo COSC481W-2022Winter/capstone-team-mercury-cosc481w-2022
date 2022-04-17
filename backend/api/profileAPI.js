@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 
 
 const User = require('../models/user');
+const Notif = require('../models/notification');
 
 router.use(bodyParser.urlencoded({ extended: true }));
 
@@ -93,7 +94,32 @@ router.post("/follow", function(req, res) {
             User.findOneAndUpdate(
                 { username: thisUser }, 
                 { $push: {following: userToFollow}}
-            ).then(result => {});
+            ).then(result => {     
+
+              var fromUser = req.body.thisUser + "";
+              var toUser = req.body.username + "";
+              var notifType = "follow";
+              var context = "";
+              if(fromUser !== toUser) {
+                 var notifData = {fromUser: fromUser, toUser: toUser, notifType: notifType, context: context};
+                 const notif = new Notif(notifData);
+                 notif.save()
+              }
+            });
+
+
+            //new notif on comment
+            var fromUser = req.body.thisUser + "";
+            var toUser = req.body.userToFollow + "";
+            var notifType = "follow";
+            var context = "";
+            var notifData = {fromUser: fromUser, toUser: toUser, notifType: notifType, context: context};
+            const notif = new Notif(notifData);
+            notif.save()
+            .catch((err) => {
+                console.log(err);
+            });
+
         }
 
     });
