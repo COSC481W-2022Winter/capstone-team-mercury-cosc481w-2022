@@ -110,6 +110,14 @@ router.post('/like', async(req, res) =>{
     });
 
 
+
+
+    router.post("/deleteMany", function(req,res){
+        const user = req.body.username;
+      
+        
+      });
+
 });
 
 module.exports = router;
