@@ -51,9 +51,9 @@ router.post("/newUser", function (req, res) {
     });
 });
 
-router.post("/deleteUsersPosts", function(req,res)
+router.post("/deletePosts", function(req,res)
 {
-  const user = req.body.password;
+  const user = req.body.username;
   Post.deleteMany({postedBy: user}).exec(); //removes all posts by the users
 });
 
