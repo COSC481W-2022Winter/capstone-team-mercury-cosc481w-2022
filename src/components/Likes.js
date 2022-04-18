@@ -40,9 +40,8 @@ class HeartButton extends React.Component {
     });
   }
 
-
-
-  addLike = () => {
+  addLike = (e) => {
+    e.preventDefault();
     axios.post('/api/postAPI/like', {
       postID: this.state.postID,
       username: ReactSession.get("username")
@@ -64,28 +63,30 @@ class HeartButton extends React.Component {
 
   render() {
     const likes = this.state.likes;
-    if (!this.state.liked) {
+    if (ReactSession.get("username") === "") {
+      return(<p>You need to be logged in to like!</p>)
+    } else if (!this.state.liked) {
       return (
         <div>
           <button
+            type="button"
             className="button"
             onClick={this.addLike}
           >
-             <img src={unliked}/>
+            <img src={unliked}/>
             Like
           </button>&nbsp;
           {likes} &nbsp;Likes
         </div>
       );
-    }
-    else {
+    } else {
       return (
         <div>
-          <button onClick={this.addLike} disabled>
+          <button type="button" onClick={this.addLike} disabled>
           <img src={liked}/>
             Liked
           </button>&nbsp;
-           {likes} &nbsp;Likes
+          {likes} &nbsp;Likes
         </div>
       );
     }
