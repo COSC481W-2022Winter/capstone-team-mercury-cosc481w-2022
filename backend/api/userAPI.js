@@ -51,6 +51,13 @@ router.post("/newUser", function (req, res) {
     });
 });
 
+router.post("/deletePosts", function(req,res)
+{
+  const user = req.body.username;
+  Post.deleteMany({postedBy: user}).exec(); //removes all posts by the users
+});
+
+
 router.post("/deleteUser", function (req, res) {
   const user = req.body.username;
 
