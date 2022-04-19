@@ -51,6 +51,8 @@ router.post("/newUser", function (req, res) {
     });
 });
 
+
+
 router.post("/deleteUser", function (req, res) {
   const user = req.body.username;
 
