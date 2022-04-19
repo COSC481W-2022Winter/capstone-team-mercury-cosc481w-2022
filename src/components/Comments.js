@@ -3,8 +3,6 @@ import axios from 'axios';
 import { ReactSession } from 'react-client-session';
 import {NavLink} from 'react-router-dom';
 
-
-
 class CommentBox extends React.Component {
     constructor(props) {
       super();
@@ -79,7 +77,7 @@ class CommentBox extends React.Component {
 
     }
     
-    _handleClick() {
+    _handleClick(e) {
       this.setState({
         showComments: !this.state.showComments
       });
@@ -107,7 +105,7 @@ class CommentBox extends React.Component {
     }
   } // end CommentBox component
   
-  class CommentForm extends React.Component {
+class CommentForm extends React.Component {
 
     constructor(props) {
       super(props);
@@ -121,20 +119,31 @@ class CommentBox extends React.Component {
     }
 
     render() {
-      return (
-        <form className="comment-form" onSubmit={this._handleSubmit.bind(this)}>
-          <div className="comment-form-fields">
-          <textarea placeholder="Comment" rows="4" value={this.state.content} onChange={this.handleContentChange} required></textarea>
-          </div>
-          <div className="comment-form-actions">
-            <button type="submit">Post Comment</button>
-          </div>
-        </form>
-      );
+      if (ReactSession.get("username") !== "") {
+        return (
+          <>
+            <div className="comment-form-fields">
+            <textarea placeholder="Comment" rows="4" value={this.state.content} onChange={this.handleContentChange} required></textarea>
+            </div>
+            <div className="comment-form-actions">
+              <button type="button" onClick={this._handleSubmit.bind(this)}>Post Comment</button>
+              {console.log()}
+            </div>
+          </>
+        );
+      } else {
+        return(<p>You need to be logged in to post a comment!</p>);
+      }
     } // end render
 
     _handleSubmit(event) { 
       event.preventDefault();   // prevents page from reloading on submit
+
+      if (this.state.content === "") {
+        alert("You cant post an empty comment");
+        return;
+      }
+      console.log()
       let author = ReactSession.get("username");
       this.setState({content: ""});
       this.props.addComment(author, this.state.content);

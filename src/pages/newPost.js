@@ -130,7 +130,7 @@ class login extends React.Component {
           <MustLogin />
           <Navigation />
             <h1 className='header'>New Post</h1>
-        <div className='post'>
+        <div className="default-div">
             <label>
             Image: &nbsp;
               <input type="file"  onChange={this.onFileChange} multiple accept="image/"/>

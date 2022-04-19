@@ -22,7 +22,6 @@ class accountSettings extends Component {
 			<div>
 				<MustLogin />
 				<Navigation />
-				{/*<LikesVisibleButton/>*/}
 				<ChangePassword/>
 				<DeletePosts />
 				<DeleteUser />

@@ -48,7 +48,7 @@ class feed extends Component {
 		if (!posts.length) return null;
 		return posts.map((post, index) => (
 			<>
-				<Post post={post}/>
+				<Post post={post}><NavLink to={"/post/" + post._id} className="post-link"/></Post>
 				<br/>
 			</>
 		));
