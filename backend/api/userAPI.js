@@ -25,6 +25,24 @@ router.post("/checkUser", function (req, res) {
   });
 });
 
+router.post("/areLikesVisible", function (req, res) {
+  const user = req.body.username;
+
+  User.findOne({ username: user }) .then((user) => {
+        res.send(user.likesVisible);
+  });
+});
+
+router.post("/toggleLikeVisibility", function (req, res) {
+  const user = req.body.username;
+
+  User.findOneAndUpdate({ username: user }) .then((user) => {
+        user.likesVisible = !user.likesVisible;
+        user.save();
+  });
+  res.send(true);
+});
+
 //new user callback
 //puts a new user into the database
 router.post("/newUser", function (req, res) {
