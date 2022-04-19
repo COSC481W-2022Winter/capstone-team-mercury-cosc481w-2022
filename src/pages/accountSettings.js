@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Navigation from '../components/Navigation';
 import DeleteUser from '../components/deleteUser';
-import deletePosts from '../components/deletePosts';
+import LikesVisibleButton from '../components/likesVisibilityButton';
+import DeletePosts from '../components/deletePosts';
 import { NavLink } from 'react-router-dom';
 import { ReactSession } from 'react-client-session';
 import pagecss from './page.css'
@@ -21,7 +22,8 @@ class accountSettings extends Component {
 			<div>
 				<MustLogin />
 				<Navigation />
-				<deletePosts />
+				<LikesVisibleButton/>
+				<DeletePosts />
 				<DeleteUser />
 				
 			</div> 
@@ -30,3 +32,4 @@ class accountSettings extends Component {
 }
 
 export default accountSettings;
+
