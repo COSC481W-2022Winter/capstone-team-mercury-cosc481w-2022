@@ -1,93 +1,116 @@
-import React, { Component, useImperativeHandle } from 'react';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import sha from 'js-sha512';
-import pagecss from '../pages/page.css'
-import { ReactSession } from 'react-client-session';
-import unliked from '../img/unliked.png';
-import liked from '../img/liked.png';
-import yesno from "yesno-dialog";
+import Navbar from '../components/Navigation';
 import { Navigate } from "react-router-dom";
-class HeartButton extends React.Component {
-  constructor(props) {
-    super();
-    this.state = {
-      redir: false,
-      pass: ""
-    };
-    this.handlePassChange = this.handlePassChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+import { ReactSession } from 'react-client-session';
+ 
+
+class changePassword extends React.Component {
+   constructor(props) {
+     super(props);
+     this.state = {oldPass: '', newPass: '', newConfPass: ''};
+ 
+     this.handleOldPassChange = this.handleOldPassChange.bind(this);
+     this.handleNewPassChange = this.handleNewPassChange.bind(this);
+     this.handleNewConfPassChange = this.handleNewConfPassChange.bind(this);
+     this.handleSubmit = this.handleSubmit.bind(this);
+   }
+ 
+   //runs and updates the state whenever the form's value changes
+   handleOldPassChange(event) {
+     this.setState({oldPass: event.target.value});
+   }
+   handleNewPassChange(event) {
+    this.setState({newPass: event.target.value});
   }
-
-  handlePassChange(event) {
-    this.setState({pass: event.target.value});
+  handleNewConfPassChange(event) {
+    this.setState({newConfPass: event.target.value});
   }
+ 
+   handleSubmit(event) {
+     if(this.state.oldPass ==='' || this.state.newPass === '' || this.state.newConfPass === '') {
+       alert("Missing required field(s) Please try again.");
+       return;
+     }
 
+     if(this.state.newPass.length < 8 || (this.state.newPass === this.state.newPass.toUpperCase()) || (this.state.newPass === this.state.newPass.toLowerCase())) {
+        alert('New Password too weak! Please use a stronger password.');
+        return;
+     }
 
-  componentDidMount = () => {
-    
-  }
-
-   async handleSubmit(event) {
-    if(this.state.pass == '') {
-      alert("Missing username or password! Please try again.")
+     if(this.state.newPass !== this.state.newConfPass) {
+      alert('New Passwords do not match! Please try again.');
       return;
+     }
+
+     if(this.state.newPass === this.state.oldPass) {
+      alert('The old and new passwords you provided are the same!');
+      return;
+     }
+
+
+    const hashedOldPassword = sha.sha512(this.state.oldPass);
+    const hashedNewPassword = sha.sha512(this.state.newPass);
+
+    axios.post('/api/loginAPI/checkUser',  {
+      username: ReactSession.get("username"),
+      password: hashedOldPassword
+  }).then((response) => {
+              console.log(response);
+              const success = response.data;
+              if(!success) {
+                alert("Incorrect Password");
+                return;
+              }
+                else {
+                  axios.post('/api/userAPI/changePassword',  {
+                    username: ReactSession.get("username"),
+                    oldPassword: hashedOldPassword,
+                    newPassword: hashedNewPassword
+                }).then((response) => {
+                            const success = response.data;
+                            if(success) {
+                              alert("Successfully changed your password");
+                                this.setState({oldPass: "", newPass: "", newConfPass: ""})
+                            }
+                            else {
+                              alert("Incorrect Password");
+                            }
+                            }).catch(() => {
+                              console.log('An error occoured');
+                        });
+              }
+              }).catch(() => {
+                console.log('An error occoured');
+          });
     }
-   const hashedPassword = sha.sha512(this.state.pass);
 
-    await axios.post('/api/loginAPI/checkUser',  {
-     username: ReactSession.get("username"),
-     password: hashedPassword
-     
-    }).then((response) => {
-             const data = response.data;
-             if(!data) {
-               alert("Incorrect Password")
-               return;
-             }
-             else {
-                  if (window.confirm("Warning: This will permanently change your Cutest Paw password. Are you sure you would like to continue?") === true) {
-                  
-                    axios.post('/api/profileAPI/changeUsersPassword', {
-                      username: ReactSession.get("username")
-                    })
-                    .then((response) => {
-                      alert("Password changed successfully");
-                      ReactSession.set("password", "");
-                      this.setState({redir: true});
-                    })
-                    .catch(() => {
-                          console.log('Error retrieving data!');
-                    });  
-                  }
-            }
+   render() {
+     return (
+       <div>
+          <h3>Change Password</h3>
+            <label>
+            Old Password: &nbsp;
+              <input type="password" className='inform' value={this.state.oldPass} onChange={this.handleOldPassChange} />
+            </label>
+            <br />
+            <label>
+              New Password: &nbsp;
+              <input type="password" className='inform' value={this.state.newPass} onChange={this.handleNewPassChange} />
+            </label>
+            &nbsp;&nbsp;&nbsp;
+            <label>
+              Confirm New Password: &nbsp;
+              <input type="password" className='inform' value={this.state.newConfPass} onChange={this.handleNewConfPassChange} />
+            </label>
+            <br />
+            <input type="submit" value="Change Password" onClick={this.handleSubmit} />
+        </div>
+    
+     )};
 
-    }).catch(() => {
-               console.log('An error occoured');
-         }
-    );
-  }
-
-  render() {
-    const likes = this.state.likes;
-    if (this.state.redir) {
-        return (
-            <Navigate to="../" />
-        );
-    }
-    else {
-        return (
-            <>
-              <h3>Delete my Account</h3>
-              <p>Permanently delete your account, including your posts, likes, comments, and all other information</p>
-              <p>WARNING: This action can not be undone!</p>
-                Confirm your password: <input type="password"  className='inform' value={this.state.pass} onChange={this.handlePassChange} />
-                <input type="submit" value="Delete Account" id='deleteButton' onClick={this.handleSubmit} />
-            </>
-        );
-    }
-  }
-}
-
-
-
-export default HeartButton;
+     }
+   
+export default changePassword;
