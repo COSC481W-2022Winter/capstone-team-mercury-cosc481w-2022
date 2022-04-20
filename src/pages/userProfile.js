@@ -4,6 +4,8 @@ import { ReactSession } from 'react-client-session';
 import pagecss from './page.css';
 import ProfileBlock from '../components/profileBlock';
 import Navigation from '../components/Navigation';
+import UserPosts from '../components/profilePosts';
+import UserLikes from '../components/profileLikes';
 import { Navigate, NavLink } from 'react-router-dom';
 
 
@@ -15,7 +17,8 @@ class profile extends Component {
             user: null,
             posts: [],
             likes: [],
-            redir: false
+            redir: false,
+            loaded: false
         }
         
     componentDidMount() {
@@ -35,7 +38,7 @@ class profile extends Component {
         axios.post('/api/profileAPI/getUserDetails',  {
             username: this.state.username
         }).then((response) => {
-            this.setState({user: response.data[0]});
+            this.setState({user: response.data[0], loaded: true});
         })
                 .catch(() => {
                         console.log('An error occoured');
@@ -48,21 +51,22 @@ class profile extends Component {
         if(this.state.redir) 
             return (<Navigate  to="../../feed" />);
         else 
-            return (  
-                <div>
+            if(this.state.loaded) {
+                return (  
                     
-                    <Navigation />
-                    {this.state.user!=null ?<ProfileBlock user={this.state.user} align={"right"}/> : null}
-
-                    <div className='userRelatedPosts'>
-                        <h2>Likes go here</h2>
+                    <div>
+                        
+                        <Navigation />
+                        {this.state.user!=null ?<ProfileBlock user={this.state.user} align={"right"}/> : null}
+                        {this.state.user.likesVisible?  <UserLikes username={this.state.username}/> : <div className='userRelatedPosts'><h3 style={{textAlign: "center"}}>This user's likes are hidden.</h3></div>}
+                        
+                        
+                        <UserPosts username={this.state.username}/>
+                        
                     </div>
-                    <div className='userRelatedPosts'>
-                        <h2>Posts go here</h2>
-                    </div>
-                    
-                </div>
-		);
+                );
+            }
+            else return null;
 	}
 }
 export default profile;

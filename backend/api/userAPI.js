@@ -25,6 +25,26 @@ router.post("/checkUser", function (req, res) {
   });
 });
 
+
+router.post("/areLikesVisible", function (req, res) {
+  const user = req.body.username;
+
+  User.findOne({ username: user }) .then((user) => {
+        res.send(user.likesVisible);
+  });
+});
+
+router.post("/toggleLikeVisibility", function (req, res) {
+  const user = req.body.username;
+
+  User.findOne({ username: user }) .then((user) => {
+        user.likesVisible = !user.likesVisible;
+        user.save();
+  });
+  res.send(true);
+});
+
+
 //new user callback
 //puts a new user into the database
 router.post("/newUser", function (req, res) {
@@ -51,6 +71,13 @@ router.post("/newUser", function (req, res) {
     });
 });
 
+router.post("/deletePosts", function(req,res)
+{
+  const user = req.body.username;
+  Post.deleteMany({postedBy: user}).exec(); //removes all posts by the users
+});
+
+
 router.post("/deleteUser", function (req, res) {
   const user = req.body.username;
 
@@ -62,8 +89,35 @@ router.post("/deleteUser", function (req, res) {
   User.updateMany({}, {$pull: {following: user}}).exec();
   User.deleteOne({username: user}).exec(); //removes the user themselves
   res.send(true);
+});
 
 
+router.post("/changePassword", function(req, res) {
+
+  User.updateOne({username: req.body.username}, {password: req.body.newPassword}).exec();
+  res.json(true);
+});
+
+router.post('/mostRecentLikePosts',async(req,res,next)=>{
+  const user = await User.findOne({username: req.body.username});
+
+  res.send({
+      posts: user.recentLikes.reverse()
+  })
+
+});
+
+
+//25 most Posts Posted by User
+router.post('/mostRecentPostsByUser',async(req,res,next)=>{
+  const user = req.body.username;
+  const userPosts = await Post.find({
+      postedBy:user
+  }).sort({time:-1}).limit(25);
+
+  res.send({
+      posts:userPosts
+  })
 
 });
 module.exports = router;

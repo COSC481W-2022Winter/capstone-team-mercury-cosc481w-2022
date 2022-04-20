@@ -29,20 +29,46 @@ router.post("/search", function(req, res) {
     const type = req.body.type;
     const sort = req.body.sort;
     const order = req.body.order==="ascending"? 1 : -1;
+    let start = req.body.firstPostTime;
+    if(start == null)
+        start = new Date().toISOString();
+        console.log(start);
+    let skipCt = req.body.page * 25;
     
     switch (type) {
         case "posts":
 
             switch (sort) {
+
                 case "recent":
+
+                    Post.find({$and: [{time: {$lt: start}}, {$or:[{postedBy: query },{content: query }, {tags: query}]}]}).sort({"$natural":order}).skip(skipCt).limit(26).then((postData) => {
+                        if(postData.length > 25) {
+                            postData.pop();
+                            res.json({posts: postData, more: true});
+                        }
+                        else
+                            res.json({posts: postData, more: false});
+                
+
                     Post.find({$or:[{postedBy: query },{content: query }, {tags: query}]}).sort({"$natural":order}).then((data) => {
                         res.json(data);
                     });
                 break;
             
                 case "popular":
+
+                    Post.find({$and: [{time: {$lt: start}}, {$or:[{postedBy: query },{content: query }, {tags: query}]}]}).sort({likeCt:order}).skip(skipCt).limit(26).then((postData) => {
+                        if(postData.length > 25) {
+                            postData.pop();
+                            res.json({posts: postData, more: true});
+                        }
+                        else
+                            res.json({posts: postData, more: false});
+
                     Post.find({$or:[{postedBy: query },{content: query } , {tags: query}]}).sort({likeCt:order}).then((data) => {
                         res.json(data);
+
                     });
                 break;
             }

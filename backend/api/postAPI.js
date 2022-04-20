@@ -128,8 +128,21 @@ router.post('/like', async(req, res) =>{
             const notif = new Notif(notifData);
             notif.save()
         }
+
+        User.findOne({username: req.body.username}).then(user => {
+            var likes = user.recentLikes;
+            likes.reverse();
+            likes.push(post);
+            likes.reverse();
+            if(likes.length > 25)
+            likes.pop();
+            user.recentLikes = likes;
+            user.save();
+        });
+
     });
 });
+
 
 router.post("/getPost", function (req, res) {
     const postId = req.body.postId;

@@ -6,7 +6,7 @@
 
 .post {
     display: block;
-	width: 70%;
+	width: 80%;
     margin-top: 10px;
 	margin: auto;
     margin-bottom: 20px;
@@ -137,16 +137,17 @@ a.nav-link {
 }
 .userRelatedPosts {
     float: left;
-    width: 50%;
-    margin: 10px;
-    padding: 10px;
+    width: 850px;
+    margin: 5px;
+	height: 250px;
     border: 2px ridge #999;
-	padding: 10px;
+	padding: 3px;
 	text-align:left;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+	overflow-y:scroll;
 }
 
 .editPreview {

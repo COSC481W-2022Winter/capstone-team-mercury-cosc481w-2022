@@ -36,6 +36,7 @@ const userSchema = new Schema(
     following: [{type: String}],
     followers: [{type: String}],
     likesVisible: {type: Boolean, default: true},
+    recentLikes: [{type: Object}],
     notifCheckedTime: {type: Date, default: Date.now},
   },
   { id: true }

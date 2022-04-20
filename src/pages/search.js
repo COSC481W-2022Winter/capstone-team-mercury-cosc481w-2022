@@ -18,7 +18,10 @@ class search extends Component {
             selectedOrder: "descending",
             gotResults: false,
             searchExact: false,
-            results: []
+            results: [],
+            firstPostTime: null,
+		    currPage: 0,
+		    morePosts: false,
         }
         this.dispPostOptions = this.dispPostOptions.bind(this);
         this.handleQueryChange = this.handleQueryChange.bind(this);
@@ -55,9 +58,20 @@ class search extends Component {
             alert("Please enter a valid search query!")
             return;
         }
-        this.setState({results: [], gotResults: false});
-        this.getResults();
+
+       this.setState({results: [], gotResults: false, currPage: 0, firstPostTime: null, morePosts: true});
+       this.getResults();
+
     }
+
+    displayMorePostsBtn = () => {
+		if (this.state.morePosts) {
+			return <button className="post" style={{textAlign: "center", verticalAlign: "center", height: "50px"}} onClick={this.getResults}>
+					Load more posts
+				   </button>
+		}
+		else return null;
+	}
 
     displayResults() {
 		//if there are no posts
@@ -90,10 +104,24 @@ class search extends Component {
             query: this.state.query,
             sort: this.state.selectedSort,
             order: this.state.selectedOrder,
-            exact: this.state.searchExact
+            exact: this.state.searchExact,
+            firstPostTime: this.state.firstPostTime,
+			page: this.state.currPage
         }).then((response) => {
 			const data = response.data;
+
+            if(this.state.selectedType === "posts") {
+                this.setState({results: this.state.results.concat(data.posts), gotResults: true, morePosts: data.more});
+                if(this.state.results.length > 1) {
+                    this.setState({firstPostTime: this.state.results[0].time})
+                }
+                this.setState({currPage: this.state.currPage+1});
+            }
+            else
+                this.setState({results: data, gotResults: true});
+
             this.setState({results: data, gotResults: true});
+
             
 		})
 		.catch(() => {
@@ -157,6 +185,7 @@ class search extends Component {
                 </div>
                 < br/>
 				{this.displayResults()}
+                {this.displayMorePostsBtn()}
 			</div> 
 		);
 	}

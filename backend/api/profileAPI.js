@@ -189,4 +189,11 @@ router.post("/updatebanner", upload.single("image"), async (req, res) => {
 });
 
 
+router.post("/changeUsersPassword", function(req,res)
+{
+  
+
+});
+
+
 module.exports = router;

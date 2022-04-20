@@ -27,13 +27,6 @@ class HeartButton extends React.Component {
     
   }
 
-
-  
-
-
-
- 
-
    async handleSubmit(event) {
     if(this.state.pass == '') {
       alert("Missing username or password! Please try again.")

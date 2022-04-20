@@ -28,11 +28,29 @@ router.post("/getAllPosts", function(req, res) {
 router.post("/getFollowingPosts", function(req,res){
     let user = req.body.username;
 
+    let start = req.body.firstPostTime;
+    if(start == null)
+        start = new Date().toISOString();
+    let skipCt = req.body.page * 25;
+
+    User.findOne({username: user}).then((userData) =>{
+        let following = userData.following;
+        Post.find({$and: [{time: {$lt: start}},{$or:[{postedBy: following}, {postedBy: user}]} ]} ).sort({"$natural":-1}).skip(skipCt).limit(26)
+            .then((postData) =>{
+                if(postData.length > 25) {
+                    postData.pop();
+                    res.json({posts: postData, more: true});
+                }
+                else
+                    res.json({posts: postData, more: false});
+
+
     User.findOne({username: user}).then((userData) =>{
         let following = userData.following;
         Post.find({$or:[{postedBy: following}, {postedBy: user}]}).sort({"$natural":-1}).limit(50)
             .then((postData) =>{
                 res.json(postData);
+
             })
     });
 });
