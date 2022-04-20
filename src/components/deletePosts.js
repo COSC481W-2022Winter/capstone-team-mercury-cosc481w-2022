@@ -3,15 +3,10 @@ import axios from 'axios';
 import sha from 'js-sha512';
 import pagecss from '../pages/page.css'
 import { ReactSession } from 'react-client-session';
-import unliked from '../img/unliked.png';
-import liked from '../img/liked.png';
-import yesno from "yesno-dialog";
-import { Navigate } from "react-router-dom";
-class HeartButton extends React.Component {
+class deletePosts extends React.Component {
   constructor(props) {
     super();
     this.state = {
-      redir: false,
       pass: ""
     };
     this.handlePassChange = this.handlePassChange.bind(this);
@@ -50,9 +45,8 @@ class HeartButton extends React.Component {
                       username: ReactSession.get("username")
                     })
                     .then((response) => {
-                      alert("Your posts has been successfully deleted");
-                      ReactSession.set("username", "");
-                      this.setState({redir: true});
+                      alert("Your posts have been successfully deleted");
+                      this.setState({pass: ""})
                     })
                     .catch(() => {
                           console.log('Error retrieving data!');
@@ -67,26 +61,19 @@ class HeartButton extends React.Component {
   }
 
   render() {
-    const likes = this.state.likes;
-    if (this.state.redir) {
-        return (
-            <Navigate to="../" />
-        );
-    }
-    else {
-        return (
-            <>
-              <h3>Delete my Posts</h3>
-              <p>Permanently delete your posts</p>
-              <p>WARNING: This action can not be undone!</p>
-                Confirm your password: <input type="password"  className='inform' value={this.state.pass} onChange={this.handlePassChange} />
-                <input type="submit" value="Delete Account" id='deleteButton' onClick={this.handleSubmit} />
-            </>
-        );
-    }
+  
+      return (
+        <div style={{marginLeft: "2%"}}>
+            <h3>Delete my Posts</h3>
+            <p>Permanently delete all of your posts</p>
+            <p>WARNING: This action can not be undone!</p>
+              Confirm your password: <input type="password"  className='inform' value={this.state.pass} onChange={this.handlePassChange} />
+              <input type="submit" value="Delete Posts" id='deleteButton' onClick={this.handleSubmit} />
+          </div>
+      );
   }
 }
 
 
 
-export default HeartButton;
+export default deletePosts;

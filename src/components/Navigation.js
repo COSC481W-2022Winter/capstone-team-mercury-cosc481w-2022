@@ -16,7 +16,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Navigation = () => {
 
-   if(ReactSession.get("username") !== "" && ReactSession.get("username") != 'undefined') {
+   console.log(ReactSession.get("username"));
+   if(ReactSession.get("username") !== "" && ReactSession.get("username") != undefined) {
       return (
          <Navbar className="nav-color" activeClassName="active" collapseOnSelect expand="lg" variant="dark">
             <Container>

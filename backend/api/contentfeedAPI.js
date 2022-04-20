@@ -1,5 +1,3 @@
-//jshint esversion: 6
-
 const express = require("express");
 const app = express();
 
@@ -27,7 +25,6 @@ router.post("/getAllPosts", function(req, res) {
 */
 router.post("/getFollowingPosts", function(req,res){
     let user = req.body.username;
-
     let start = req.body.firstPostTime;
     if(start == null)
         start = new Date().toISOString();
@@ -43,14 +40,6 @@ router.post("/getFollowingPosts", function(req,res){
                 }
                 else
                     res.json({posts: postData, more: false});
-
-
-    User.findOne({username: user}).then((userData) =>{
-        let following = userData.following;
-        Post.find({$or:[{postedBy: following}, {postedBy: user}]}).sort({"$natural":-1}).limit(50)
-            .then((postData) =>{
-                res.json(postData);
-
             })
     });
 });

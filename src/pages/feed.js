@@ -34,9 +34,6 @@ class feed extends Component {
 			username: ReactSession.get('username'),
 			firstPostTime: this.state.firstPostTime,
 			page: this.state.currPage
-
-			username: ReactSession.get('username')
-
 		}) //api route goes here
 		.then((response) => {
 			const data = response.data;
@@ -55,7 +52,7 @@ class feed extends Component {
 
 	displayMorePostsBtn = () => {
 		if (this.state.morePosts) {
-			return <button className="post" style={{textAlign: "center", verticalAlign: "center", height: "50px"}} onClick={this.getPosts}>
+			return <button className="post" style={{textAlign: "center", verticalAlign: "center", height: "50px", width: "45%"}} onClick={this.getPosts}>
 					Load more posts
 				   </button>
 		}
@@ -81,11 +78,8 @@ class feed extends Component {
 				<MustLogin />
 				<Navigation />
 				{this.displayPosts(this.state.posts)}
-
 				{this.state.posts.length ==0? <NoPostsPlaceholder /> : this.state.morePosts? this.displayMorePostsBtn() : <PlaceholderPost />}
-
-				{this.state.posts.length ==0? <NoPostsPlaceholder /> : <PlaceholderPost />}
-
+				<br/>
 			</div> 
 		);
 	}
