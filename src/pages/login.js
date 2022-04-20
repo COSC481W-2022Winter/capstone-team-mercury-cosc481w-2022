@@ -59,6 +59,7 @@ class login extends React.Component {
       return (
         <div>
           <Navbar/>
+          <h2 style={{textAlign:"center"}}>Welcome back to CutestPaw!</h2>
           <div className='login'>
             <form onSubmit={this.handleSubmit}>
               <label>
@@ -77,7 +78,6 @@ class login extends React.Component {
             </form>
             </div>
             <div className='side'>
-              <h2>Welcome back to CutestPaw!</h2>
             </div>
           </div>
       );

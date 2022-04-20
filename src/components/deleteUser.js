@@ -75,13 +75,13 @@ class HeartButton extends React.Component {
     }
     else {
         return (
-            <>
+            <div style={{marginLeft: "2%"}}>
               <h3>Delete my Account</h3>
               <p>Permanently delete your account, including your posts, likes, comments, and all other information</p>
               <p>WARNING: This action can not be undone!</p>
                 Confirm your password: <input type="password"  className='inform' value={this.state.pass} onChange={this.handlePassChange} />
                 <input type="submit" value="Delete Account" id='deleteButton' onClick={this.handleSubmit} />
-            </>
+            </div>
         );
     }
   }

@@ -137,7 +137,7 @@ class login extends React.Component {
             </label>
             <br />
             <label>
-              <textarea rows="25" cols="100" placeholder="Write something to post..." className='inform' value={this.state.content} onChange={this.handleContentChange} />
+              <textarea rows="20" cols="100" placeholder="Write something to post..." className='inform' value={this.state.content} onChange={this.handleContentChange} />
             </label>
             <br />
             <TagAdder />

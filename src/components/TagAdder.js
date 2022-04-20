@@ -17,6 +17,9 @@ const TagAdder = () => {
             <option value="Hamster">Hamster</option>
             <option value="Guinea Pig">Guinea Pig</option>
             <option value="Mouse">Mouse</option>
+            <option value="Fish">Fish</option>
+            <option value="Insect">Insect</option>
+            <option value="Amphibian">Amphibian</option>
          </select>
       </div>
     );
