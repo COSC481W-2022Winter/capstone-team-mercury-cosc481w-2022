@@ -3,7 +3,7 @@ import axios from 'axios';
 import Navigation from '../components/Navigation';
 import pagecss from './page.css'
 import Post from '../components/post'
-import ProfileBlock from '../components/ProfileBlock';
+import ProfileBlock from '../components/profileBlock';
 
 import MustLogin from '../components/mustLogin';
 
@@ -18,7 +18,10 @@ class search extends Component {
             selectedOrder: "descending",
             gotResults: false,
             searchExact: false,
-            results: []
+            results: [],
+            firstPostTime: null,
+		    currPage: 0,
+		    morePosts: false,
         }
         this.dispPostOptions = this.dispPostOptions.bind(this);
         this.handleQueryChange = this.handleQueryChange.bind(this);
@@ -49,14 +52,24 @@ class search extends Component {
     handleSortChange(event) {
         this.setState({selectedSort: event.target.value});
     }
-    handleSubmit(event) {
+    async handleSubmit(event) {
+        await this.setState({query: this.state.query.trim()})
         if(this.state.query ==="") {
-            alert("Please enter a search query!")
+            alert("Please enter a valid search query!")
             return;
         }
-       this.setState({results: [], gotResults: false});
+       this.setState({results: [], gotResults: false, currPage: 0, firstPostTime: null, morePosts: true});
        this.getResults();
     }
+
+    displayMorePostsBtn = () => {
+		if (this.state.morePosts) {
+			return <button className="post" style={{textAlign: "center", verticalAlign: "center", height: "50px"}} onClick={this.getResults}>
+					Load more posts
+				   </button>
+		}
+		else return null;
+	}
 
     displayResults() {
 		//if there are no posts
@@ -89,11 +102,20 @@ class search extends Component {
             query: this.state.query,
             sort: this.state.selectedSort,
             order: this.state.selectedOrder,
-            exact: this.state.searchExact
+            exact: this.state.searchExact,
+            firstPostTime: this.state.firstPostTime,
+			page: this.state.currPage
         }).then((response) => {
 			const data = response.data;
-		  	console.log(data);
-            this.setState({results: data, gotResults: true});
+            if(this.state.selectedType === "posts") {
+                this.setState({results: this.state.results.concat(data.posts), gotResults: true, morePosts: data.more});
+                if(this.state.results.length > 1) {
+                    this.setState({firstPostTime: this.state.results[0].time})
+                }
+                this.setState({currPage: this.state.currPage+1});
+            }
+            else
+                this.setState({results: data, gotResults: true});
             
 		})
 		.catch(() => {
@@ -130,7 +152,7 @@ class search extends Component {
 			<div>
 				<MustLogin />
 				<Navigation />
-                <div className="post">
+                <div className="default-div">
                     <input type="text" className='searchbox' value={this.state.query} placeholder="Search..." onChange={this.handleQueryChange} required/>
                     <label>
                         <input type="radio" name="type" id="post" value="posts" checked={this.state.selectedType === "posts"} onChange={this.handleTypeChange}/>
@@ -151,6 +173,7 @@ class search extends Component {
                 </div>
                 < br/>
 				{this.displayResults()}
+                {this.displayMorePostsBtn()}
 			</div> 
 		);
 	}
