@@ -4,6 +4,8 @@ import { ReactSession } from 'react-client-session';
 import pagecss from './page.css';
 import ProfileBlock from '../components/profileBlock';
 import Navigation from '../components/Navigation';
+import UserPosts from '../components/profilePosts';
+import UserLikes from '../components/profileLikes';
 import { Navigate, NavLink } from 'react-router-dom';
 
 
@@ -37,7 +39,6 @@ class profile extends Component {
             username: this.state.username
         }).then((response) => {
             this.setState({user: response.data[0], loaded: true});
-            console.log(response.data[0]);
         })
                 .catch(() => {
                         console.log('An error occoured');
@@ -57,14 +58,10 @@ class profile extends Component {
                         
                         <Navigation />
                         {this.state.user!=null ?<ProfileBlock user={this.state.user} align={"right"}/> : null}
-
-                        <div className='userRelatedPosts'>
-                            {this.state.user.likesVisible?  <h2>Likes go here</h2> : <h2>This user's likes are hidden.</h2>}
+                        {this.state.user.likesVisible?  <UserLikes username={this.state.username}/> : <div className='userRelatedPosts'><h3 style={{textAlign: "center"}}>This user's likes are hidden.</h3></div>}
                         
-                        </div>
-                        <div className='userRelatedPosts'>
-                            <h2>Posts go here</h2>
-                        </div>
+                        
+                        <UserPosts username={this.state.username}/>
                         
                     </div>
                 );

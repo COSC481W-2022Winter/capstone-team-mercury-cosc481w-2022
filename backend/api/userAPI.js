@@ -37,7 +37,7 @@ router.post("/areLikesVisible", function (req, res) {
 router.post("/toggleLikeVisibility", function (req, res) {
   const user = req.body.username;
 
-  User.findOneAndUpdate({ username: user }) .then((user) => {
+  User.findOne({ username: user }) .then((user) => {
         user.likesVisible = !user.likesVisible;
         user.save();
   });
@@ -96,5 +96,28 @@ router.post("/changePassword", function(req, res) {
 
   User.updateOne({username: req.body.username}, {password: req.body.newPassword}).exec();
   res.json(true);
+});
+
+router.post('/mostRecentLikePosts',async(req,res,next)=>{
+  const user = await User.findOne({username: req.body.username});
+
+  res.send({
+      posts: user.recentLikes.reverse()
+  })
+
+});
+
+
+//25 most Posts Posted by User
+router.post('/mostRecentPostsByUser',async(req,res,next)=>{
+  const user = req.body.username;
+  const userPosts = await Post.find({
+      postedBy:user
+  }).sort({time:-1}).limit(25);
+
+  res.send({
+      posts:userPosts
+  })
+
 });
 module.exports = router;
