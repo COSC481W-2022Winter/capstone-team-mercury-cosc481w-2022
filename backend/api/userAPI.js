@@ -25,6 +25,7 @@ router.post("/checkUser", function (req, res) {
   });
 });
 
+
 router.post("/areLikesVisible", function (req, res) {
   const user = req.body.username;
 
@@ -42,6 +43,7 @@ router.post("/toggleLikeVisibility", function (req, res) {
   });
   res.send(true);
 });
+
 
 //new user callback
 //puts a new user into the database
@@ -87,8 +89,12 @@ router.post("/deleteUser", function (req, res) {
   User.updateMany({}, {$pull: {following: user}}).exec();
   User.deleteOne({username: user}).exec(); //removes the user themselves
   res.send(true);
+});
 
 
+router.post("/changePassword", function(req, res) {
 
+  User.updateOne({username: req.body.username}, {password: req.body.newPassword}).exec();
+  res.json(true);
 });
 module.exports = router;

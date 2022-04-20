@@ -1,15 +1,16 @@
+
 import React, { Component } from 'react';
 import axios from 'axios';
 import Navigation from '../components/Navigation';
 import DeleteUser from '../components/deleteUser';
 import LikesVisibleButton from '../components/likesVisibilityButton';
 import DeletePosts from '../components/deletePosts';
+import ChangePassword from '../components/changePassword';
 import { NavLink } from 'react-router-dom';
 import { ReactSession } from 'react-client-session';
 import pagecss from './page.css'
 
 import MustLogin from '../components/mustLogin';
-import '../../node_modules/react-responsive-carousel/lib/styles/carousel.min.css';
 
 class accountSettings extends Component {
 	
@@ -22,6 +23,7 @@ class accountSettings extends Component {
 			<div>
 				<MustLogin />
 				<Navigation />
+        <ChangePassword/>
 				<LikesVisibleButton/>
 				<DeletePosts />
 				<DeleteUser />
@@ -32,4 +34,3 @@ class accountSettings extends Component {
 }
 
 export default accountSettings;
-

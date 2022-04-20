@@ -5,6 +5,7 @@ import Pagecss from "./page.css";
 
 import MustLogin from "../components/mustLogin";
 import Navigation from "../components/Navigation";
+import ChangePassword from "../components/changePassword";
 import { Navigate } from "react-router-dom";
 var FormData = require("form-data");
 class profile extends Component {
@@ -26,7 +27,8 @@ class profile extends Component {
     this.handleWebsiteChange = this.handleWebsiteChange.bind(this);
     this.handleavatarChange = this.handleavatarChange.bind(this);
     this.handlebannerChange = this.handlebannerChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handlePassChange = this.handlePassChange(this);
+    this.handleSubmit = this.handleSubmit.bind(this);  
   }
 
   handleNameChange(event) {
@@ -58,6 +60,11 @@ class profile extends Component {
     }
     this.setState({ bannerurl: URL.createObjectURL(event.target.files[0]) });
     this.setState({ banneradr: event.target.files[0] });
+  }
+
+
+  handlePassChange(event){
+    
   }
 
   handleSubmit(event) {
