@@ -34,9 +34,6 @@ class feed extends Component {
 			username: ReactSession.get('username'),
 			firstPostTime: this.state.firstPostTime,
 			page: this.state.currPage
-
-			username: ReactSession.get('username')
-
 		}) //api route goes here
 		.then((response) => {
 			const data = response.data;
@@ -81,11 +78,7 @@ class feed extends Component {
 				<MustLogin />
 				<Navigation />
 				{this.displayPosts(this.state.posts)}
-
 				{this.state.posts.length ==0? <NoPostsPlaceholder /> : this.state.morePosts? this.displayMorePostsBtn() : <PlaceholderPost />}
-
-				{this.state.posts.length ==0? <NoPostsPlaceholder /> : <PlaceholderPost />}
-
 			</div> 
 		);
 	}

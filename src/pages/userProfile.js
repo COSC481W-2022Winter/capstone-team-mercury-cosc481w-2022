@@ -58,7 +58,7 @@ class profile extends Component {
                         
                         <Navigation />
                         {this.state.user!=null ?<ProfileBlock user={this.state.user} align={"right"}/> : null}
-                        {this.state.user.likesVisible?  <UserLikes username={this.state.username}/> : <div className='userRelatedPosts'><h3 style={{textAlign: "center"}}>This user's likes are hidden.</h3></div>}
+                        {this.state.user.likesVisible || this.state.username === ReactSession.get("username")?  <UserLikes username={this.state.username}/> : <div className='userRelatedPosts'><h3 style={{textAlign: "center"}}>This user's likes are hidden.</h3></div>}
                         
                         
                         <UserPosts username={this.state.username}/>
@@ -67,6 +67,6 @@ class profile extends Component {
                 );
             }
             else return null;
-	}
+	} 
 }
 export default profile;

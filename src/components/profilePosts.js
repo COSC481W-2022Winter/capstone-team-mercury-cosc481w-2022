@@ -25,7 +25,7 @@ class feed extends Component {
 	//retrieves our posts from people that are currently followed
 	getPosts = () => {
 		axios.post('/api/userAPI/mostRecentPostsByUser', {
-			username: ReactSession.get('username')
+			username: this.state.username
 		}) //api route goes here
 		.then((response) => {
 			const data = response.data;
@@ -52,7 +52,7 @@ class feed extends Component {
 	render() {
 		return (  
 			<div className="userRelatedPosts">
-				<h3 style={{textAlign: "center"}}>User's Posts</h3>
+				{this.state.posts.length !==0? <h3 style={{textAlign: "center"}}>User's Posts</h3> : null}
 				{this.displayPosts(this.state.posts)}
 				{this.state.posts.length ==0? <h3 style={{textAlign: "center"}}>This user hasn't posted any posts</h3> : null}
 			</div> 

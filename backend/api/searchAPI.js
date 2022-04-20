@@ -41,7 +41,6 @@ router.post("/search", function(req, res) {
             switch (sort) {
 
                 case "recent":
-
                     Post.find({$and: [{time: {$lt: start}}, {$or:[{postedBy: query },{content: query }, {tags: query}]}]}).sort({"$natural":order}).skip(skipCt).limit(26).then((postData) => {
                         if(postData.length > 25) {
                             postData.pop();
@@ -50,14 +49,10 @@ router.post("/search", function(req, res) {
                         else
                             res.json({posts: postData, more: false});
                 
-
-                    Post.find({$or:[{postedBy: query },{content: query }, {tags: query}]}).sort({"$natural":order}).then((data) => {
-                        res.json(data);
                     });
                 break;
             
                 case "popular":
-
                     Post.find({$and: [{time: {$lt: start}}, {$or:[{postedBy: query },{content: query }, {tags: query}]}]}).sort({likeCt:order}).skip(skipCt).limit(26).then((postData) => {
                         if(postData.length > 25) {
                             postData.pop();
@@ -65,10 +60,6 @@ router.post("/search", function(req, res) {
                         }
                         else
                             res.json({posts: postData, more: false});
-
-                    Post.find({$or:[{postedBy: query },{content: query } , {tags: query}]}).sort({likeCt:order}).then((data) => {
-                        res.json(data);
-
                     });
                 break;
             }

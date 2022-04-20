@@ -75,6 +75,8 @@ router.post("/deletePosts", function(req,res)
 {
   const user = req.body.username;
   Post.deleteMany({postedBy: user}).exec(); //removes all posts by the users
+  User.updateMany({},{$pull: {recentLikes: {postedBy: req.body.username}}}).exec();
+  Notif.deleteMany({$and: [{toUser: req.body.username}, {$or: [{notifType: "comment"}, {notifType: "like"}] }] }).exec();
 });
 
 
@@ -87,6 +89,7 @@ router.post("/deleteUser", function (req, res) {
   Notif.deleteMany({$or: [{toUser: user}, {fromUser: user}]}).exec(); //removes all notifications a user is a part of
   User.updateMany({}, {$pull: {followers: user}}).exec(); //removes the user from other's follower/following lists
   User.updateMany({}, {$pull: {following: user}}).exec();
+  User.updateMany({},{$pull: {recentLikes: {postedBy: req.body.username}}}).exec();
   User.deleteOne({username: user}).exec(); //removes the user themselves
   res.send(true);
 });
