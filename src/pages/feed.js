@@ -6,20 +6,20 @@ import { ReactSession } from 'react-client-session';
 import pagecss from './page.css'
 
 import MustLogin from '../components/mustLogin';
-import Comments from '../components/Comments';
-import Likes from '../components/Likes';
 import PlaceholderPost from '../components/placeholderPost/placeholderPost';
 import NoPostsPlaceholder from '../components/placeholderPost/noPostsPlaceholder';
 import Post from '../components/post';
 import '../components/placeholderPost/placeholderpost.css';
-import { Carousel } from 'react-responsive-carousel';
 import '../../node_modules/react-responsive-carousel/lib/styles/carousel.min.css';
 
 class feed extends Component {
 	
 	state = 
 	{
-		posts:[]
+		posts:[],
+		firstPostTime: null,
+		currPage: 0,
+		morePosts: true,
 	}
 
 	//retrieves posts whenever component mounts
@@ -31,15 +31,35 @@ class feed extends Component {
 	//retrieves our posts from people that are currently followed
 	getPosts = () => {
 		axios.post('/api/contentfeedAPI/getFollowingPosts', {
+			username: ReactSession.get('username'),
+			firstPostTime: this.state.firstPostTime,
+			page: this.state.currPage
+
 			username: ReactSession.get('username')
+
 		}) //api route goes here
 		.then((response) => {
 			const data = response.data;
-		  	this.setState({ posts: data });
+		  	this.setState({ posts: this.state.posts.concat(data.posts), morePosts: data.more });
+			if(this.state.posts.length > 1) {
+				this.setState({firstPostTime: this.state.posts[0].time})
+			}
+			this.setState({currPage: this.state.currPage+1});
 		})
 		.catch(() => {
 		  	console.log('Error retrieving data!');
 		});
+	}
+
+
+
+	displayMorePostsBtn = () => {
+		if (this.state.morePosts) {
+			return <button className="post" style={{textAlign: "center", verticalAlign: "center", height: "50px"}} onClick={this.getPosts}>
+					Load more posts
+				   </button>
+		}
+		else return null;
 	}
 	
 	//maps each post
@@ -61,7 +81,11 @@ class feed extends Component {
 				<MustLogin />
 				<Navigation />
 				{this.displayPosts(this.state.posts)}
+
+				{this.state.posts.length ==0? <NoPostsPlaceholder /> : this.state.morePosts? this.displayMorePostsBtn() : <PlaceholderPost />}
+
 				{this.state.posts.length ==0? <NoPostsPlaceholder /> : <PlaceholderPost />}
+
 			</div> 
 		);
 	}
