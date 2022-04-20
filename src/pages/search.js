@@ -107,6 +107,7 @@ class search extends Component {
 			page: this.state.currPage
         }).then((response) => {
 			const data = response.data;
+
             if(this.state.selectedType === "posts") {
                 this.setState({results: this.state.results.concat(data.posts), gotResults: true, morePosts: data.more});
                 if(this.state.results.length > 1) {
@@ -116,6 +117,9 @@ class search extends Component {
             }
             else
                 this.setState({results: data, gotResults: true});
+
+            this.setState({results: data, gotResults: true});
+
             
 		})
 		.catch(() => {

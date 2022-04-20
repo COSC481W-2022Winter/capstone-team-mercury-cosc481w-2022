@@ -18,8 +18,7 @@ class logout extends React.Component {
 
     render(){
         return(
-           
-        <div>
+        <div style={{display: 'inline'}}>
              { this.state.redir  ? (<Navigate  to="../" />) : null }
             <input type="submit" value="Logout" onClick={this.LogoutClick.bind(this)} />
         </div>

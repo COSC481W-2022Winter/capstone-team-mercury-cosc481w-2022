@@ -31,6 +31,8 @@ app.use('/api/loginAPI', loginAPI);
 
 const searchAPI = require('./api/searchAPI');
 app.use('/api/searchAPI', searchAPI);
+const notificationAPI = require('./api/notificationAPI');
+app.use('/api/notificationAPI', notificationAPI);
 //-----
 //app.use(express.static(path.join(__dirname, '../build/')))
 

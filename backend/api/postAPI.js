@@ -7,10 +7,10 @@ var bodyParser = require('body-parser');
 
 
 const Post = require('../models/post');
+const User = require('../models/user');
+const Notif = require('../models/notification');
 
 router.use(bodyParser.urlencoded({ extended: true }));
-
-
 
 //new post callback
 //puts a new post into the database
@@ -21,21 +21,16 @@ router.post("/newPost", function(req, res) {
     var attachments = req.body.attachments;
     var tags = req.body.tags || [];
     var postData = { postedBy: poster, tags: tags };
-    console.log("Entering a new post by " + poster);
     if (text) {
         postData.content = text;
-        console.log(text);
     }
     if (attachments) {
         postData.attachments = attachments;
-        console.log(attachments);
     }
 
     //add post to the database
     const post = new Post(postData);
     post.save().then((result) => {
-        console.log(result);
-        console.log("Success!");
     })
     .catch((err) => {
         console.log(err);
@@ -48,13 +43,11 @@ router.post("/newPost", function(req, res) {
 
 router.post("/getAllComments", function(req,res){
     const postID = req.body.postID;
-    console.log("Getting all comments for post: "+postID);
 
     Post.findOne({_id:  postID }).then(post => {
             res.send(post.comments);
     }); 
 
-    //console.log(comment);
 });
 
 
@@ -62,19 +55,31 @@ router.post("/getAllComments", function(req,res){
 // Attach a new comment to a post
 
 router.post("/writeNewComment", function(req,res){
-
-    console.log("Adding a new comment on " +req.body.postID)
-    console.log(req.body.commenter);
-    console.log(req.body.comment);
     var comment = {
         commenter: req.body.commenter,
         comment: req.body.comment
     };
+    var postAuthor = "";
     Post.findOneAndUpdate(
         { _id: req.body.postID }, 
         { $push: { comments: comment } },
     ).then(post => {
-        console.log(post.comments)
+
+        var fromUser = req.body.commenter + "";
+        var toUser = post.postedBy + "";
+        var notifType = "comment";
+        var context = req.body.postID;
+        if(fromUser !== toUser) {
+            var notifData = {fromUser: fromUser, toUser: toUser, notifType: notifType, context: context};
+            const notif = new Notif(notifData);
+            notif.save()
+        }
+
+
+
+    })
+    .catch((err) => {
+        console.log(err);
     });
 
 });
@@ -82,7 +87,6 @@ router.post("/writeNewComment", function(req,res){
 
 //API like button 
 router.post('/getLikes', function(req, res){
-    console.log("Getting like information for " +req.body.postID)
     
     Post.findById(
         { _id: req.body.postID }
@@ -96,7 +100,6 @@ router.post('/getLikes', function(req, res){
 });
 
 router.post('/didUserLike', async(req, res) =>{
-    console.log("Getting like information for " +req.body.postID)
     
     Post.findById( {_id: req.body.postID }).then(post => {
         res.send(post.likers.includes(req.body.username))
@@ -104,7 +107,6 @@ router.post('/didUserLike', async(req, res) =>{
 });
 
 router.post('/like', async(req, res) =>{
-    console.log("Liking " +req.body.postID)
     
     Post.findById( {_id: req.body.postID }).then(post => {
         if(post.likers.includes(req.body.username))
@@ -112,21 +114,37 @@ router.post('/like', async(req, res) =>{
     });
 
 
-    Post.findOneAndUpdate(
-        { _id: req.body.postID }, 
-        { $push: {likers: req.body.username}}
-    ).then(post => {
-        console.log("liked!");
-    });
 
     Post.findOneAndUpdate(
         { _id: req.body.postID }, 
-        { $inc: {likeCt: 1}  }
+        { $push: {likers: req.body.username}, $inc: {likeCt: 1}  }
     ).then(post => {
-        console.log("liked!");
+        var fromUser = req.body.username + "";
+        var toUser = post.postedBy + "";
+        var notifType = "like";
+        var context = req.body.postID;
+        if(fromUser !== toUser) {
+            var notifData = {fromUser: fromUser, toUser: toUser, notifType: notifType, context: context};
+            const notif = new Notif(notifData);
+            notif.save()
+        }
     });
+});
 
 
+router.post("/getPost", function (req, res) {
+    const postId = req.body.postId;
+
+    Post.findById(
+        { _id: postId }
+    ).then(post => {
+        User.findOne({ username: post.postedBy }).then((user) => {
+            res.send({
+                user: user,
+                post: post
+            });
+        })
+    });
 });
 
 module.exports = router;

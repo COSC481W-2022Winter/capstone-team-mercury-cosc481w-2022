@@ -75,7 +75,6 @@ class login extends React.Component {
     })
     .then(res => res.json())
     .then(data => {
-      console.log(data)
       var result = data.secure_url;
       resolve(result);
     })
@@ -131,7 +130,7 @@ class login extends React.Component {
           <MustLogin />
           <Navigation />
             <h1 className='header'>New Post</h1>
-        <div className='post'>
+        <div className="default-div">
             <label>
             Image: &nbsp;
               <input type="file"  onChange={this.onFileChange} multiple accept="image/"/>

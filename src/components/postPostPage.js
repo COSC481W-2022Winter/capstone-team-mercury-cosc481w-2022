@@ -32,17 +32,6 @@ class post extends Component {
       });
   }
 
-  handleClick  = (e) => {
-    var container = e.target;
-    var disallow = ["IMG", "UL", "LI", "BUTTON", "INPUT", "SELECT", "TEXTAREA"];
-
-    if (disallow.indexOf(container.nodeName) !== -1) {
-      // e.stopPropagation();
-      // e.stopImmediatePropagation();
-      e.preventDefault();
-    }
-  }
-
   carouselImages = (attachments) => {
     return attachments.map((attachment) => {
       return (
@@ -61,9 +50,9 @@ class post extends Component {
   displayImages = (attachments) => {
     if (attachments.length > 1) {
       return (
-          <Carousel onClickCapture={this.handleClick} showArrows={true} width={500} height={300}>
-            {this.carouselImages(attachments)}
-          </Carousel>
+        <Carousel showArrows={true} width={500} height={300}>
+          {this.carouselImages(attachments)}
+        </Carousel>
       );
     } else if (attachments.length == 1) {
       return (
@@ -80,28 +69,24 @@ class post extends Component {
 
   //maps each post
   displayPost = (post) => {
-    return (      
-      <div className="post" style={{ margin: "auto" }}>
-        <NavLink className="post-link" onClickCapture={this.handleClick} to={"/post/" + post._id}>
-          <div style={{padding: "20px"}}>
-            <h4 className="margin-zero">
-              {" "}
-              <NavLink to={"/user/" + post.postedBy}><img src={this.state.posterProfilePic} alt="Profile Picture" className="pfpOnPosts"></img>{post.postedBy}</NavLink>
-            </h4>
-            <p>
-              <small>{post.time}</small>
-            </p>
-            <p>{post.content}</p>
-            {this.displayImages(post.attachments)}
-            <div>
-              <b>Tags: </b>
-              <Tags tagList={post.tags} />
-            </div>
-            <br />
-            <Likes postID={"" + post._id} />
-            <Comments postID={"" + post._id} />
-          </div>
-        </NavLink>
+    return (
+      <div className="post-page">
+        <h4>
+          {" "}
+          <NavLink to={"/user/" + post.postedBy}><img src={this.state.posterProfilePic} alt="Profile Picture" className="pfpOnPosts"></img>{post.postedBy}</NavLink>
+        </h4>
+        <p>
+          <small>{post.time}</small>
+        </p>
+        <p>{post.content}</p>
+        {this.displayImages(post.attachments)}
+        <div>
+          <b>Tags: </b>
+          <Tags tagList={post.tags} />
+        </div>
+        <br />
+        <Likes postID={"" + post._id} />
+        <Comments postID={"" + post._id} />
       </div>
     );
   };

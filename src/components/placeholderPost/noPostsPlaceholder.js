@@ -1,16 +1,16 @@
 import React from 'react';
 import './placeholderpost.css';
  
-const placeholderPost = () => {
+const noPostsPlaceholder = () => {
 	return (
 		<div className="default-div">
 			<h4></h4>
 			<p><small></small></p>
-			<p>You've reached the end of the posts...</p>
+			<p>There's nothing here... yet! Follow other users and their posts will show up here.</p>
 		</div>
 	);
 }
  
  
  
-export default placeholderPost;
+export default noPostsPlaceholder;

@@ -15,10 +15,10 @@ class profile extends Component {
             user: null,
             posts: [],
             likes: [],
-            redir: false
+            redir: false,
+            loaded: false
         }
-    
-
+        
     componentDidMount() {
 
         axios.post('/api/userAPI/checkUser',  {
@@ -36,7 +36,8 @@ class profile extends Component {
         axios.post('/api/profileAPI/getUserDetails',  {
             username: this.state.username
         }).then((response) => {
-            this.setState({user: response.data[0]});
+            this.setState({user: response.data[0], loaded: true});
+            console.log(response.data[0]);
         })
                 .catch(() => {
                         console.log('An error occoured');
@@ -49,20 +50,26 @@ class profile extends Component {
         if(this.state.redir) 
             return (<Navigate  to="../../feed" />);
         else 
-            return (  
-                <div>
+            if(this.state.loaded) {
+                return (  
                     
-                    <Navigation />;
-                    <div className='userRelatedPosts'>
-                        <h2>Likes go here</h2>
+                    <div>
+                        
+                        <Navigation />
+                        {this.state.user!=null ?<ProfileBlock user={this.state.user} align={"right"}/> : null}
+
+                        <div className='userRelatedPosts'>
+                            {this.state.user.likesVisible?  <h2>Likes go here</h2> : <h2>This user's likes are hidden.</h2>}
+                        
+                        </div>
+                        <div className='userRelatedPosts'>
+                            <h2>Posts go here</h2>
+                        </div>
+                        
                     </div>
-                    <div className='userRelatedPosts'>
-                        <h2>Posts go here</h2>
-                    </div>
-                    {this.state.user!=null ?<ProfileBlock user={this.state.user} align={"right"}/> : null}
-                    
-                </div>
-		);
+                );
+            }
+            else return null;
 	}
 }
 export default profile;
