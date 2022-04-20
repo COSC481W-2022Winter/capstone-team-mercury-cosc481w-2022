@@ -77,6 +77,7 @@ router.post("/deletePosts", function(req,res)
   Post.deleteMany({postedBy: user}).exec(); //removes all posts by the users
   User.updateMany({},{$pull: {recentLikes: {postedBy: req.body.username}}}).exec();
   Notif.deleteMany({$and: [{toUser: req.body.username}, {$or: [{notifType: "comment"}, {notifType: "like"}] }] }).exec();
+  res.send(true);
 });
 
 

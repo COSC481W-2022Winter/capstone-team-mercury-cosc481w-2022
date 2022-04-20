@@ -12,10 +12,38 @@ class post extends Component {
     super();
     this.state = {
       post: props.post,
-      posterProfilePic: ""
+      posterProfilePic: "",
+      now: Date.now()
     };
   }
 
+  timeSinceNow = () => {
+
+    var seconds = Math.floor((this.state.now - Date.parse(this.state.post.time)) / 1000);
+  
+    var interval = seconds / 31536000;
+  
+    if (interval > 1) {
+      return (Math.floor(interval) + " year" + (interval >=2 ? "s": "") +" ago");
+    }
+    interval = seconds / 2592000;
+    if (interval > 1) {
+      return (Math.floor(interval) + " month" + (interval >=2 ? "s": "") +" ago");
+    }
+    interval = seconds / 86400;
+    if (interval > 1) {
+      return (Math.floor(interval) + " day" +(interval >=2 ? "s": "") +" ago");
+    }
+    interval = seconds / 3600;
+    if (interval > 1) {
+      return (Math.floor(interval) + " hour" + (interval >=2 ? "s": "") +" ago");
+    }
+    interval = seconds / 60;
+    if (interval > 1) {
+      return (Math.floor(interval) + " minute" + (interval >=2 ? "s": "") +" ago");
+    }
+    return "just now";
+  }
 
   componentDidMount() {
     axios
@@ -87,11 +115,9 @@ class post extends Component {
           <div style={{padding: "20px"}}>
             <h4 className="margin-zero">
               {" "}
-              <NavLink to={"/user/" + post.postedBy}><img src={this.state.posterProfilePic} alt="Profile Picture" className="pfpOnPosts"></img>{post.postedBy}</NavLink>
+              <img src={this.state.posterProfilePic} alt="Pfp" className="pfpOnPosts"/><NavLink to={"/user/" + post.postedBy}>{post.postedBy}</NavLink>
             </h4>
-            <p>
-              <small>{post.time}</small>
-            </p>
+            <p style={{float: "right"}}>Posted {this.timeSinceNow()}</p>
             <p>{post.content}</p>
             {this.displayImages(post.attachments)}
             <div>

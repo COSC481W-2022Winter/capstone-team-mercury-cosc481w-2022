@@ -89,7 +89,7 @@ class changePassword extends React.Component {
 
    render() {
      return (
-       <div>
+      <div style={{marginLeft: "2%"}}>
           <h3>Change Password</h3>
             <label>
             Old Password: &nbsp;

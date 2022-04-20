@@ -44,7 +44,7 @@ class search extends Component {
     }
 
     handleTypeChange(event) {
-        this.setState({results: [], selectedType: event.target.value, gotResults: false});
+        this.setState({results: [], selectedType: event.target.value, gotResults: false, morePosts: false});
     }
     handleOrderChange(event) {
         this.setState({selectedOrder: event.target.value});
@@ -64,7 +64,7 @@ class search extends Component {
 
     displayMorePostsBtn = () => {
 		if (this.state.morePosts) {
-			return <button className="post" style={{textAlign: "center", verticalAlign: "center", height: "50px"}} onClick={this.getResults}>
+			return <button className="post" style={{textAlign: "center", verticalAlign: "center", height: "50px",  width: "50%"}} onClick={this.getResults}>
 					Load more posts
 				   </button>
 		}
@@ -115,7 +115,7 @@ class search extends Component {
                 this.setState({currPage: this.state.currPage+1});
             }
             else
-                this.setState({results: data, gotResults: true});
+                this.setState({results: data, gotResults: true, morePosts: false});
             
 		})
 		.catch(() => {
@@ -174,6 +174,7 @@ class search extends Component {
                 < br/>
 				{this.displayResults()}
                 {this.displayMorePostsBtn()}
+                <br/>
 			</div> 
 		);
 	}

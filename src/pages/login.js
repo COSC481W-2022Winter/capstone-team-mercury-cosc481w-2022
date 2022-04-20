@@ -18,6 +18,11 @@ class login extends React.Component {
      this.handlePassChange = this.handlePassChange.bind(this);
      this.handleSubmit = this.handleSubmit.bind(this);
    }
+
+   componentDidMount() {
+    if(ReactSession.get("username") !== "" && ReactSession.get("username") != undefined)
+    this.setState({redir: true});
+   }
  
    //runs and updates the state whenever the form's value changes
    handleUsernameChange(event) {

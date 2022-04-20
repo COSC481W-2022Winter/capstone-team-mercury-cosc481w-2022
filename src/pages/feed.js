@@ -52,7 +52,7 @@ class feed extends Component {
 
 	displayMorePostsBtn = () => {
 		if (this.state.morePosts) {
-			return <button className="post" style={{textAlign: "center", verticalAlign: "center", height: "50px"}} onClick={this.getPosts}>
+			return <button className="post" style={{textAlign: "center", verticalAlign: "center", height: "50px", width: "45%"}} onClick={this.getPosts}>
 					Load more posts
 				   </button>
 		}
@@ -79,6 +79,7 @@ class feed extends Component {
 				<Navigation />
 				{this.displayPosts(this.state.posts)}
 				{this.state.posts.length ==0? <NoPostsPlaceholder /> : this.state.morePosts? this.displayMorePostsBtn() : <PlaceholderPost />}
+				<br/>
 			</div> 
 		);
 	}

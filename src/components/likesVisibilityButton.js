@@ -41,7 +41,7 @@ class likesVisibleButton extends React.Component {
   render() {
     if (this.state.visible) {
       return (
-        <div>
+        <div style={{marginLeft: "2%"}}>
               <h3>Toggle likes visibility</h3>
               <p>Toggle if your liked posts are shown on your profile</p>
               <p>Your Likes are currently visible</p>
@@ -53,7 +53,7 @@ class likesVisibleButton extends React.Component {
     }
     else {
       return (
-        <div>
+        <div style={{marginLeft: "2%"}}>
             <h3>Toggle likes visibility</h3>
               <p>Toggle if your liked posts are shown on your profile</p>
               <p>Your likes are currently not visible</p>
