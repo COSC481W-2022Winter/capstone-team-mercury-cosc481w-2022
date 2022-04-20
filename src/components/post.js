@@ -81,6 +81,7 @@ class post extends Component {
   //maps each post
   displayPost = (post) => {
     return (      
+      <div>
       <div className="post" style={{ margin: "auto" }}>
         <NavLink className="post-link" onClickCapture={this.handleClick} to={"/post/" + post._id}>
           <div style={{padding: "20px"}}>
@@ -102,6 +103,7 @@ class post extends Component {
             <Comments postID={"" + post._id} />
           </div>
         </NavLink>
+      </div>
       </div>
     );
   };

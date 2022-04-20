@@ -10,7 +10,7 @@ class mustLogin extends React.Component {
     }
 
     render(){
-        if(ReactSession.get("username") == ""|| ReactSession.get("username") == 'undefined') 
+        if(ReactSession.get("username") == "" || ReactSession.get("username") == 'undefined') 
             return(<Navigate  to="../" /> );
         else 
             return (null);

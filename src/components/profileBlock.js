@@ -46,7 +46,7 @@ class profileBLock extends Component {
               <NavLink to="../../editProfile">
                 <input type="submit" value="Edit Profile" />
               </NavLink>{" "}
-              <Logout />{" "}
+              {/* <Logout />{" "} */}
         </div> 
          ) : null}
          {!(((ReactSession.get("username") == this.state.user.username) || ReactSession.get("username") == "")) && <FollowButton username={this.state.user.username}/>}

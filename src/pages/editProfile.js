@@ -142,7 +142,7 @@ class profile extends Component {
       return (
         <div>
           <MustLogin />
-          <Navigation />;
+          <Navigation />
           <div class="userRelatedPosts">
             <label>
               Banner image &nbsp;
@@ -201,7 +201,7 @@ class profile extends Component {
               onClick={this.handleSubmit}
             />
           </div>
-          <div class="profile">
+          <div class="edit-profile">
             <h2 class="editPreview">Preview</h2>
             <div class="card">
               <div class="ds-top">

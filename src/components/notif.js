@@ -77,7 +77,7 @@ class notif extends Component {
   displayNotif = () => {
     return (
       <>
-          <NavLink to={"/user/" +this.state.notif.fromUser} ><img src={this.state.notifProfilePic} className="notifPFP"/> </NavLink>
+          <NavLink to={"/user/" + this.state.notif.fromUser}><img src={this.state.notifProfilePic} className="notifPFP"/></NavLink>
           {this.displayNotifText()}
           <small style={{float: "right"}}>{this.timeSinceNow()}</small>
       </>

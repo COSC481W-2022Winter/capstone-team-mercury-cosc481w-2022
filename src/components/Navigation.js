@@ -1,55 +1,62 @@
 import React from 'react';
 import { ReactSession } from 'react-client-session';
 import logo from '../img/logo.png';
-import pagecss from '../pages/page.css'
-
+import pagecss from '../pages/page.css';
+import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 import Logout from './logout';
- 
+
+/* React Bootstrap Components */
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import Container from 'react-bootstrap/Container';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 const Navigation = () => {
-   if(ReactSession.get("username") !=="") {
-    return (
-       <>
-       <div className='navbar'>
-          
-          &nbsp; &nbsp; &nbsp;
-          <NavLink to="/feed"><img src={logo} className ='navbarLogo'/>Content Feed</NavLink>
-          &nbsp; &nbsp; &nbsp;
-          <NavLink to="/newpost">New Post</NavLink>
-          &nbsp; &nbsp; &nbsp;
-          <NavLink to="/search">Search</NavLink>
-          &nbsp; &nbsp; &nbsp;
-          <NavLink to="/explore">Explore</NavLink>
-          &nbsp; &nbsp; &nbsp;
-          <NavLink to="/notifications">Notifications</NavLink>
-          &nbsp; &nbsp; &nbsp;
-            <NavLink to={"/user/" +ReactSession.get('username')} >My Profile</NavLink>
-            &nbsp; &nbsp; &nbsp;
-            You are logged in as: {ReactSession.get('username')}
-            &nbsp; &nbsp;
-            <Logout />
-            <NavLink to="/settings" style={{float: 'right'}}>Account Settings</NavLink>
-         </div>
-         <br />
-        </>
-    );
+
+   if(ReactSession.get("username") !== "" && ReactSession.get("username") != 'undefined') {
+      return (
+         <Navbar className="nav-color" activeClassName="active" collapseOnSelect expand="lg" variant="dark">
+            <Container>
+               <Navbar.Brand> <NavLink to="/feed"><img src={logo} className ='navbarLogo'/></NavLink> </Navbar.Brand>
+               <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+               <Navbar.Collapse id="responsive-navbar-nav">
+                  <Nav className="me-auto">
+                     <Nav.Link activeClassName="active" exact href="/feed">Content Feed</Nav.Link>
+                     <Nav.Link activeClassName="active" exact href="/newpost">New Post</Nav.Link>
+                     <Nav.Link activeClassName="active" exact href="/search">Search</Nav.Link>
+                     <Nav.Link activeClassName="active" exact href="/explore">Explore</Nav.Link>
+                     <Nav.Link activeClassName="active" exact href="/notifications">Notifications</Nav.Link>
+                  </Nav>
+                  <Nav>
+                     <NavDropdown title={ReactSession.get('username')} id="collasible-nav-dropdown">
+                        <NavDropdown.Item href="/settings"> Account Settings </NavDropdown.Item>
+                        <NavDropdown.Item href={"/user/" + ReactSession.get('username')}>My Profile</NavDropdown.Item>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item> <Logout /> </NavDropdown.Item>
+                     </NavDropdown>
+                  </Nav>
+               </Navbar.Collapse>
+            </Container>
+         </Navbar>
+      );
    }
    else {
       return(
-         <>
-         <div className='navbar'>
-          
-          <NavLink to="/" > <img src={logo} className ='navbarLogo'/>Login</NavLink>
-            &nbsp; &nbsp; &nbsp;
-          <NavLink to="/signup" >Create Account</NavLink>
-          &nbsp; &nbsp; &nbsp;
-          <NavLink to="/explore">Explore</NavLink>
-         </div>
-         <br />
-         </>
+         <Navbar className="nav-color" activeClassName="active" collapseOnSelect expand="lg" variant="dark">
+            <Container>
+                  <Navbar.Brand><NavLink to="/" > <img src={logo} className ='navbarLogo'/></NavLink></Navbar.Brand>
+               <Nav className="me-auto">
+                  <Nav.Link href="/" >Login</Nav.Link>
+                  <Nav.Link href="/signup" >Create Account</Nav.Link>
+                  <Nav.Link href="/explore">Explore</Nav.Link>
+               </Nav>
+            </Container>
+         </Navbar>
       );
-
    }
 }
- 
+
 export default Navigation;

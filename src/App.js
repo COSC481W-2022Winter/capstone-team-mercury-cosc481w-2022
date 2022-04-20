@@ -19,9 +19,9 @@ class App extends Component {
   render() {
     return (      
        <BrowserRouter>
-        <div>
+        <div style={{marginTop: "40px"}}>
             <Routes>
-             <Route path="/" element={<Login />} exact/>
+             <Route path="/" element={<Login />}/>
              <Route path="/newpost" element = {<NewPost />}/>
              <Route path="/feed" element={<Feed />}/>
              <Route path="/search" element={<Search />}/>

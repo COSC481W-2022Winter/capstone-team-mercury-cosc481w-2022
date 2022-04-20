@@ -20,7 +20,7 @@ class logout extends React.Component {
         return(
         <div style={{display: 'inline'}}>
              { this.state.redir  ? (<Navigate  to="../" />) : null }
-            <input type="submit" value="Logout" onClick={this.LogoutClick.bind(this)} />
+            <p onClick={this.LogoutClick.bind(this)}>Logout</p>
         </div>
         )
     }

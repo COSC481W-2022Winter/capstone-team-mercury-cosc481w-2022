@@ -55,13 +55,13 @@ class search extends Component {
             alert("Please enter a valid search query!")
             return;
         }
-       this.setState({results: [], gotResults: false});
-       this.getResults();
+        this.setState({results: [], gotResults: false});
+        this.getResults();
     }
 
     displayResults() {
 		//if there are no posts
-		 if (!this.state.results.length && this.state.gotResults) {
+        if (!this.state.results.length && this.state.gotResults) {
             return(<h2 style={{textAlign: "center"}}>This query did not match any  {this.state.selectedType}  </h2>)
         } 
         else if(this.state.selectedType === "posts") {
@@ -97,28 +97,31 @@ class search extends Component {
             
 		})
 		.catch(() => {
-		  	console.log('Error retrieving data!');
+            console.log('Error retrieving data!');
 		});
 	}
 
 	
 
     dispPostOptions() {
-         if(this.state.selectedType === "posts")
+        if(this.state.selectedType === "posts")
             return (
                     <div>
                     <select className="searchOrder" onChange={this.handleSortChange}>
                         <option value="recent" selected={this.state.selectedSort === "recent"}>Most Recent</option>
                         <option value="popular" selected={this.state.selectedSort === "popular"}>Most Popular</option>
                     </select>
+                    &nbsp;
                     <label>
                         <input type="radio" name="order" id="asc" value="ascending" checked={this.state.selectedOrder === "ascending"} onChange={this.handleOrderChange}/>
                         Ascending
                     </label>
+                    &nbsp;
                     <label>
                         <input type="radio" name="order" id="dec" value="descending" checked={this.state.selectedOrder === "descending"} onChange={this.handleOrderChange}/>
                         Decending
                     </label>
+                    &nbsp;
                     </div>
             );
         else return null;
@@ -136,14 +139,17 @@ class search extends Component {
                         <input type="radio" name="type" id="post" value="posts" checked={this.state.selectedType === "posts"} onChange={this.handleTypeChange}/>
                         Posts
                     </label>
+                    &nbsp;
                     <label>
                         <input type="radio" name="type" id="user" value="users" checked={this.state.selectedType === "users"} onChange={this.handleTypeChange}/>
                         Users
                     </label>
+                    &nbsp;
                     <label>
                     <input type="checkbox" id="exact" name="exact" value="exact" checked={this.state.searchExact} onChange={this.handleExactChange}></input>
                     Exact matches only
                     </label>
+                    &nbsp;
                     <br/>
                     {this.dispPostOptions()}
                     <br />
