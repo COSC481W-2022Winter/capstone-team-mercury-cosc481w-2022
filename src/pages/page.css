@@ -150,6 +150,19 @@ a.nav-link {
 	overflow-y:scroll;
 }
 
+.editProfile {
+    float: left;
+    width: 850px;
+    margin: 5px;
+    border: 2px ridge #999;
+	padding: 3px;
+	text-align:left;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
 .editPreview {
     text-align: center;
 }

@@ -150,7 +150,7 @@ class profile extends Component {
         <div>
           <MustLogin />
           <Navigation />
-          <div class="userRelatedPosts">
+          <div class="editProfile">
             <label>
               Banner image &nbsp;
               <input
