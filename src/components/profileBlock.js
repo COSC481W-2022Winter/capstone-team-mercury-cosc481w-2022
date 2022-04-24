@@ -32,15 +32,16 @@ class profileBLock extends Component {
           </div>
         </div>
         <div class="profiledata">
-          <h2>{this.state.user.username}</h2>
+          <h2><NavLink to={"/user/"+this.state.user.username} style={{textDecoration: "none", color: "black"}}>{this.state.user.username}</NavLink></h2>
           <h3>{this.state.user.name}</h3>
           <p>{this.state.user.bio}</p>
-          {this.state.user.website != undefined ||
-          this.state.user.website != "" ? (
-            <p>
-              <a href={this.state.user.website}>Website</a>
-            </p>
-          ) : null}
+          {console.log(this.state.user.website)}
+          {this.state.user.website == undefined ||
+          this.state.user.website == "" ||this.state.user.website == null ? 
+            
+           null: <p>
+          <a href={this.state.user.website}>Website</a>
+        </p>}
           {ReactSession.get("username") == this.state.user.username ? (
             <div>
               <NavLink to="../../editProfile">

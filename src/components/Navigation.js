@@ -53,6 +53,7 @@ const Navigation = () => {
                   <Nav.Link href="/" >Login</Nav.Link>
                   <Nav.Link href="/signup" >Create Account</Nav.Link>
                   <Nav.Link href="/explore">Explore</Nav.Link>
+                  <Nav.Link activeClassName="active" exact href="/search">Search</Nav.Link>
                </Nav>
             </Container>
          </Navbar>

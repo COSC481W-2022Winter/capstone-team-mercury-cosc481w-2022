@@ -150,7 +150,6 @@ class search extends Component {
 	render() {
 		return (  
 			<div>
-				<MustLogin />
 				<Navigation />
                 <div className="default-div">
                     <input type="text" className='searchbox' value={this.state.query} placeholder="Search..." onChange={this.handleQueryChange} required/>
